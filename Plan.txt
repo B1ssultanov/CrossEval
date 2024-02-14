@@ -35,16 +35,7 @@ Deployment:
 Optional:
 7. SSL(https)
 8. SEO optimization
-
-
-
-
-
-
-
-
-
-
+9. Corporative mail
 
 
 
