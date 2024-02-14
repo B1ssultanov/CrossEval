@@ -1,0 +1,50 @@
+1. Database		
+2. Design-UX		2 week
+3. FrontEnd\BackEnd	1-2 mounth
+4. Testing		1 mounth
+5. Deployment		1-2 mounth
+
+
+FrontEnd:
+1. Libraries
+2. Layout
+3. Adaptive layout
+4. API connection(Wait to backEnd)
+5. Functions adding
+
+BackEnd:
+1. libraries
+2. Database configuration
+3. Models creation
+4. Migrations
+5. Controllers, API, routes
+
+Testing:
+1. Student Ex
+2. Supervisor Ex
+3. Fix bugs
+4. Security
+
+Deployment:
+1. Server administration(Buy Ubuntu Server)
+2. Router configuration(Nginx)
+3. Database configuration
+4. Phpmyadmin(admin)
+5. Git connection
+6. Migration
+Optional:
+7. SSL(https)
+8. SEO optimization
+
+
+
+
+
+
+
+
+
+
+
+
+
