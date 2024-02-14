@@ -1,8 +1,8 @@
 1. Database		
 2. Design-UX		2 week
-3. FrontEnd\BackEnd	1-2 mounth
+3. FrontEnd\BackEnd	2 mounth
 4. Testing		1 mounth
-5. Deployment		1-2 mounth
+5. Deployment		2 mounth
 
 
 FrontEnd:
