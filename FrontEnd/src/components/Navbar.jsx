@@ -30,8 +30,8 @@ const Navbar = () => {
     };
 
     return (
-        <div className="w-full h-[60px] flex items-center justify-between shadow-lg">
-            <Image src={crossEvalLogo} width={103} height={45} />
+        <div className="w-full h-[60px] flex items-center justify-between shadow-lg z-50">
+            <Image src={crossEvalLogo} className="ml-4" width={103} height={45} alt="logo"/>
             <div className="flex items-center relative">
                 <input
                     className={`py-2  px-3 w-[150px] ${isSearchOpen ? 'block' : 'hidden'} rounded-3xl bg-gray-200 mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-500`}
@@ -52,7 +52,7 @@ const Navbar = () => {
                     />
                 </button>
                 <button onClick={handleMenuOpen}>
-                    <Image src={burger} className="w-[29px] h-[29px]" />
+                    <Image src={burger} className="w-[29px] h-[29px] mr-4" alt="burger menu" />
                 </button>
                 {
                     isMenuOpen && 
