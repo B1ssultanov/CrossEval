@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\UploadedFile;
@@ -19,6 +21,7 @@ class Student extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
     ];
@@ -58,6 +61,35 @@ class Student extends Authenticatable
      */
     public const STATUS_BAN = 'ban';
 
+    /**
+     * Returns the Students city
+     *
+     * @return BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    /**
+     * Returns the Students country
+     *
+     * @return BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Returns the Students courses
+     *
+     * @return HasMany
+     */
+    public function student_courses()
+    {
+        return $this->hasMany(Student_course::class, 'student_id', 'id');
+    }
 
     /**
      * Сохрание фотографии
