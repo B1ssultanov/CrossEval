@@ -60,6 +60,16 @@ return [
     */
 
     'providers' => [
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],
+
+        'supervisors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supervisor::class,
+        ],
+
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
@@ -93,6 +103,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'students' => [
+            'provider' => 'students',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'supervisors' => [
+            'provider' => 'supervisors',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
