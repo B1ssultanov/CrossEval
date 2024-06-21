@@ -65,7 +65,7 @@ class StudentSeeder extends Seeder
     {
         $student = new User;
 
-        $student->student_id = rand(210000000,210999999);
+        $student->university_id = rand(210000000,210999999);
         $student->name = $this->name[rand(0,6)];
         $student->surname = $this->surname[rand(0,6)];
         $student->email = Str::random('10') . '@mail.ru';
@@ -75,6 +75,7 @@ class StudentSeeder extends Seeder
         $student->gender = $this->gender[rand(0,1)];
         $student->course_grade = rand(1,4);
         $student->faculty = $this->faculty[rand(0,6)];
+        $student->academic_degree = 'Bachelor';
         $student->speciality = $this->speciality[rand(0,3)];
         $student->status = $this->status[rand(0,2)];
         $student->token = Str::random(40);

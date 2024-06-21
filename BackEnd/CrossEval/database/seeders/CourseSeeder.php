@@ -16,9 +16,10 @@ class CourseSeeder extends Seeder
     {
         $course = new Course;
 
-        $course->course_id = 'MDE' . rand(100, 400);
-        $course->course_name = Str::random(15);
+        $course->code = 'MDE' . rand(100, 400);
+        $course->name = Str::random(15);
         $course->course_group = '0' . rand(1,9) . '-N';
+        $course->invite_code = Str::random(6);
 
         $course->save();
     }

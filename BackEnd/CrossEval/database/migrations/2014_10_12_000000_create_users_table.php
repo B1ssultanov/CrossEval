@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('login');
             $table->string('password');
             $table->enum('gender',['male','female','other'])->nullable();
-            $table->string('course_grade');
+            $table->string('course_grade')->nullable();
             $table->string('faculty');
             $table->string('speciality');
             $table->enum('status',['active','inactive', 'ban'])->default('inactive');

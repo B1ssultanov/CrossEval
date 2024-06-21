@@ -58,9 +58,9 @@ class SupervisorSeeder extends Seeder
         'inactive'
     ];
 
-    public $education_grade = [
+    public $academic_degree = [
         'Master',
-        'Doctor'
+        'Doctorate',
     ];
 
     /**
@@ -70,7 +70,7 @@ class SupervisorSeeder extends Seeder
     {
         $supervisor = new User;
 
-        $supervisor->supervisor_id = rand(210000000, 210999999);
+        $supervisor->university_id = rand(210000000, 210999999);
         $supervisor->name = $this->name[rand(0, 6)];
         $supervisor->surname = $this->surname[rand(0, 6)];
         $supervisor->email = Str::random('10') . '@mail.ru';
@@ -78,11 +78,13 @@ class SupervisorSeeder extends Seeder
         $supervisor->login = Str::random(10);
         $supervisor->password = Hash::make('12345678');
         $supervisor->gender = $this->gender[rand(0, 1)];
-        $supervisor->education_grade = $this->education_grade[rand(0,1)];
+        $supervisor->academic_degree = $this->academic_degree[rand(0,1)];
         $supervisor->faculty = $this->faculty[rand(0, 6)];
         $supervisor->status = $this->status[rand(0, 2)];
+        $supervisor->speciality = $this->speciality[rand(0,3)];
         $supervisor->token = Str::random(40);
         $supervisor->birthday = '1999-07-11';
+        $supervisor->role = 'supervisor';
         $supervisor->city_id = 1;
         $supervisor->country_id = 1;
 
