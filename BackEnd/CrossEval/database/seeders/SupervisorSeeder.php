@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Supervisor;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class SupervisorSeeder extends Seeder
@@ -67,7 +68,7 @@ class SupervisorSeeder extends Seeder
      */
     public function run(): void
     {
-        $supervisor = new Supervisor;
+        $supervisor = new User;
 
         $supervisor->supervisor_id = rand(210000000, 210999999);
         $supervisor->name = $this->name[rand(0, 6)];
@@ -75,7 +76,7 @@ class SupervisorSeeder extends Seeder
         $supervisor->email = Str::random('10') . '@mail.ru';
         $supervisor->phone_number = rand(80000000000, 89999999999);
         $supervisor->login = Str::random(10);
-        $supervisor->password = 'password';
+        $supervisor->password = Hash::make('12345678');
         $supervisor->gender = $this->gender[rand(0, 1)];
         $supervisor->education_grade = $this->education_grade[rand(0,1)];
         $supervisor->faculty = $this->faculty[rand(0, 6)];

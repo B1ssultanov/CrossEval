@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -60,6 +62,35 @@ class User extends Authenticatable
      */
     public const STATUS_BAN = 'ban';
 
+    /**
+     * Returns the Students city
+     *
+     * @return BelongsTo
+     */
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    /**
+     * Returns the Students country
+     *
+     * @return BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    /**
+     * Returns the Students courses
+     *
+     * @return HasMany
+     */
+    public function user_courses()
+    {
+        return $this->hasMany(User_course::class, 'user_id', 'id');
+    }
 
     /**
      * Сохрание фотографии

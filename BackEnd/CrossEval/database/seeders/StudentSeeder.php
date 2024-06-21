@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class StudentSeeder extends Seeder
@@ -62,7 +63,7 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $student = new Student;
+        $student = new User;
 
         $student->student_id = rand(210000000,210999999);
         $student->name = $this->name[rand(0,6)];
@@ -70,7 +71,7 @@ class StudentSeeder extends Seeder
         $student->email = Str::random('10') . '@mail.ru';
         $student->phone_number = rand(80000000000,89999999999);
         $student->login = Str::random(10);
-        $student->password = 'password';
+        $student->password = Hash::make('12345678');
         $student->gender = $this->gender[rand(0,1)];
         $student->course_grade = rand(1,4);
         $student->faculty = $this->faculty[rand(0,6)];
@@ -78,6 +79,7 @@ class StudentSeeder extends Seeder
         $student->status = $this->status[rand(0,2)];
         $student->token = Str::random(40);
         $student->birthday = '2004-08-09';
+        $student->role = 'student';
         $student->city_id = 1;
         $student->country_id = 1;
 
