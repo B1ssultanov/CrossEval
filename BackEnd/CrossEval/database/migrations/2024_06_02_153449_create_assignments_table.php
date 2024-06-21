@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->integer('supervisor_id');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
-            $table->enum('type',['quiz','project','presentation','code','essay'])->nullable();
+            $table->text('course_group')->nullable();
+            $table->enum('type',['quiz','project','presentation','code','essay']);
             $table->string('title');
             $table->text('description');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->integer('weight');
+            $table->boolean('cross_check');
+            $table->string('criteria');
             $table->timestamps();
         });
     }

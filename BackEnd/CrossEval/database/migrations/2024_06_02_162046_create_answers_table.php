@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('assignment_id')->constrained('assignments')->onDelete('cascade');
-            $table->integer('student_id');
-            $table->text('answer');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->enum('status',['Available','Missed','Submitted','Future','Done'])->nullable();
+            $table->text('submission');
+            $table->integer('grade');
+            $table->dateTime('grade_date');
+            $table->text('comment');
             $table->timestamps();
         });
     }

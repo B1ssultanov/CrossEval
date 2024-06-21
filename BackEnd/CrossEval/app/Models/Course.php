@@ -15,8 +15,8 @@ class Course extends Model
      *
      * @return HasMany
      */
-    public function students()
+    public function users()
     {
-        return $this->hasMany(Student_course::class, 'course_id', 'id');
+        return $this->hasMany(User_course::class, 'course_id', 'id');
     }
 }
