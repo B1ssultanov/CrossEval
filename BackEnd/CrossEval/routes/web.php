@@ -23,9 +23,11 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 //});
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('welcome');
+//    Route::get('/', [HomeController::class, 'index'])->name('welcome');
 });
 
-Auth::routes();
+Route::get('/token', function () {return csrf_token();});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Auth::routes();
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

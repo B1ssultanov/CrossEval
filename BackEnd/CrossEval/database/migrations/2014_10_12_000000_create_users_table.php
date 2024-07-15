@@ -31,8 +31,8 @@ return new class extends Migration
             $table->text('image')->nullable();
             $table->date('birthday')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('city_id');
-            $table->string('country_id');
+            $table->string('city_id')->nullable();
+            $table->string('country_id')->nullable();
             $table->enum('academic_degree',['Bachelor','Master','Doctorate'])->nullable();
             $table->enum('role', ['student','supervisor']);
             $table->timestamps();

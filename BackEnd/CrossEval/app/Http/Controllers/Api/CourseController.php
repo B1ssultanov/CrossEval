@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use app\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseSummaryResource;
 use App\Models\Course;
 use App\Models\UserCourse;
