@@ -15,6 +15,35 @@ use Illuminate\View\View;
 class AuthenticatedSessionController extends Controller
 {
     /**
+     * Handle an incoming authentication request.
+     *
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
+    public function store(LoginRequest $request): JsonResponse
+    {
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $sessionToken = $request->session()->getId();
+
+            $user = Auth::user();
+            if ($user) {
+                $user->token = $sessionToken;
+                $user->save();
+            }
+
+            $request->session()->regenerate();
+
+            return response()->json([
+                'token' => $sessionToken,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
+    }
+
+    /**
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
