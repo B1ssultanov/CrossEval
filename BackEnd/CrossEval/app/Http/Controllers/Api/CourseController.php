@@ -14,11 +14,10 @@ class CourseController extends Controller
 {
     public function mainInfo(Request $request): JsonResponse
     {
-        $course_list = UserCourse::where('user_id', $request->id)->pluck('course_id')->toArray();
-        $courses = Course::whereIn('id', $course_list)->get();
+        $user = User::where('token', $request->bearerToken())->first();
 
-        $user = User::where('id', $request->id)->first();
-
+        $course_list = UserCourse::where('user_id', $user->id)->pluck('course_id')->toArray();
+        $courses     = Course::whereIn('id', $course_list)->get();
 
         return response()->json([
             'courses' => CourseSummaryResource::collection($courses),

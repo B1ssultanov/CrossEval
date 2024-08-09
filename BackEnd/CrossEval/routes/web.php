@@ -26,8 +26,6 @@ Route::middleware('auth')->group(function () {
 //    Route::get('/', [HomeController::class, 'index'])->name('welcome');
 });
 
-Route::get('/token', function () {return csrf_token();});
-
 //Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

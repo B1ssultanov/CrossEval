@@ -90,6 +90,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return response()->json([
+            'token'   => $user->token,
             'message' => 'User successfully created',
         ]);
     }
