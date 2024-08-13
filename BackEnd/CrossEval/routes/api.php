@@ -28,6 +28,8 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
     });
 
     Route::middleware('auth')->group(function () {
-        Route::get('/course', 'CourseController@mainInfo');
+        Route::get('/main', 'CourseController@mainInfo');
+
+        Route::get('/course', 'CourseController@detail');
     });
 });
