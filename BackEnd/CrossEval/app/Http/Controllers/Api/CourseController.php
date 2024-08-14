@@ -32,7 +32,7 @@ class CourseController extends Controller
     {
         $user        = User::where('token', $request->bearerToken())->first();
         $course      = Course::where('id', $request->id)->first();
-        $assignments = Assignment::where('course_id', $course->id)->where('user_id', $user->id)->get();
+        $assignments = Assignment::where('course_id', $course->id)->get();
 
         return response()->json([
             'course'      => new CourseSummaryResource($course),
