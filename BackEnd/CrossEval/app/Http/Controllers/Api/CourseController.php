@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
+    /**
+     * API for main page to give Course and User info
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function mainInfo(Request $request): JsonResponse
     {
         $user = User::where('token', $request->bearerToken())->first();
@@ -28,9 +34,14 @@ class CourseController extends Controller
         ], 200 );
     }
 
+    /**
+     * API that gives info about course for the user. With the assignments' data.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function detail(Request $request): JsonResponse
     {
-        $user        = User::where('token', $request->bearerToken())->first();
         $course      = Course::where('id', $request->id)->first();
         $assignments = Assignment::where('course_id', $course->id)->get();
 
