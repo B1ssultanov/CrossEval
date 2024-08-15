@@ -31,5 +31,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::get('/main', 'CourseController@mainInfo');
 
         Route::get('/course', 'CourseController@detail');
+
+        Route::get('/schedule', 'AssignmentController@schedule');
     });
 });
