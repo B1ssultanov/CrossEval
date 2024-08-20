@@ -33,5 +33,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::get('/course', 'CourseController@detail');
 
         Route::get('/schedule', 'AssignmentController@schedule');
+
+        Route::post('/assignment', 'AssignmentController@create');
     });
 });
