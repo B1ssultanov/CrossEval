@@ -25,6 +25,7 @@ class AssignmentSummaryResource extends JsonResource
             'id'           => $this->id,
             'title'        => $this->title,
             'type'         => $this->type,
+            'description'  => $this->description,
             'start_date'   => $this->start_date,
             'end_date'     => $this->end_date,
             'weight'       => $this->weight,
