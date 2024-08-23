@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\User;
 use App\Models\UserAssignments;
 use App\Models\UserCourse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -119,5 +120,21 @@ class AssignmentController extends Controller
         }
 
         return response()->json( $assignment, 200);
+    }
+
+    /**
+     * API for getting Assignment summary data
+     *
+     * @param Request $request
+     * @param         $id
+     * @return JsonResponse
+     */
+    public function get(Request $request, $id)
+    {
+        $assignment = Assignment::where('id', $id)->first();
+
+        return response()->json([
+            'assignment' => new AssignmentSummaryResource($assignment),
+        ], 200 );
     }
 }
