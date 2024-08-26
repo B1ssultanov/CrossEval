@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAssignments extends Model
+class File extends Model
 {
     use HasFactory;
 
@@ -15,9 +15,8 @@ class UserAssignments extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'assignment_id',
-        'status',
-        'submitted_date'
+        'path',
+        'link',
+        'storage',
     ];
 }
