@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\UserAssignments;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Cache;
@@ -16,7 +16,7 @@ class AssignmentSummaryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $status = UserAssignments::where('assignment_id', $this->id)
+        $status = Answer::where('assignment_id', $this->id)
             ->where('user_id', $request->user->id)
             ->first()
             ->status;

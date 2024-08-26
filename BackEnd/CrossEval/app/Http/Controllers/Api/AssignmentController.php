@@ -7,7 +7,7 @@ use App\Http\Resources\AssignmentSummaryResource;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\User;
-use App\Models\UserAssignments;
+use App\Models\Answer;
 use App\Models\UserCourse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +25,7 @@ class AssignmentController extends Controller
     public function schedule(Request $request)
     {
         $user           = User::where('token', $request->bearerToken())->first();
-        $assignments_id = UserAssignments::where('user_id', $user->id)->pluck('assignment_id');
+        $assignments_id = Answer::where('user_id', $user->id)->pluck('assignment_id');
         $assignments    = Assignment::whereIn('id', $assignments_id)->orderBy('start_date')->get();
 
         return response()->json([
@@ -116,7 +116,7 @@ class AssignmentController extends Controller
                 ];
             });
 
-            UserAssignments::insert($data->toArray());
+            Answer::insert($data->toArray());
         }
 
         return response()->json( $assignment, 200);

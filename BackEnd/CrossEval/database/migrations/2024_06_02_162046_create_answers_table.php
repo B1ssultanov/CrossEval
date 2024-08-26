@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('assignment_id')->constrained('assignments')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('status',['Available','Missed','Submitted','Future','Done'])->nullable();
-            $table->text('submission');
-            $table->integer('grade');
-            $table->dateTime('grade_date');
-            $table->text('comment');
+            $table->enum('status',['Available','Missed','Submitted','Future','Done'])->default('Available');
+            $table->dateTime('submitted_date')->nullable();
+            $table->bigInteger('file_id')->nullable();
+            $table->integer('grade')->nullable();
+            $table->dateTime('grade_date')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
