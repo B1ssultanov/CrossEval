@@ -10,6 +10,19 @@ class Course extends Model
 {
     use HasFactory;
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'code',
+        'name',
+        'course_group',
+        'invite_code',
+    ];
+
     /**
      * Returns the Students courses
      *

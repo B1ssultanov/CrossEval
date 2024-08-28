@@ -11,7 +11,8 @@ use App\Models\UserCourse;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -48,6 +49,54 @@ class CourseController extends Controller
         return response()->json([
             'course'      => new CourseSummaryResource($course),
             'assignments' => AssignmentSummaryResource::collection($assignments),
+        ], 200 );
+    }
+
+    /**
+     * Function that creates course
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function create(Request $request): JsonResponse
+    {
+        $validateData = Validator::make($request->all(), [
+            'id'  => 'required|string', // course->code
+            'name'  => 'required|string', // course->course_group
+            'group' => 'required|string', // "24-p, 25-p"
+        ], [
+            'id.required'    => 'The course ID is required.',
+            'id.string'      => 'The course ID must be a valid string.',
+            'name.required'  => 'The course Name is required.',
+            'name.string'    => 'The course Name must be a valid string.',
+            'group.required' => 'The course group is required.',
+            'group.string'   => 'The course group must be a valid string.',
+        ]);
+
+        if ($validateData->fails()) {
+            return response()->json($validateData->errors(), 400);
+        }
+
+        $groups = explode(', ', $request->group);
+
+        $user = User::where('token', $request->bearerToken())->first();
+
+        foreach ($groups as $group) {
+            $course = Course::create([
+                'code'          => $request->id,
+                'name'          => $request->name,
+                'course_group'  => $group,
+                'invite_code'   => Str::random(6),
+            ]);
+
+            UserCourse::create([
+                'user_id'   => $user->id,
+                'course_id' => $course->id,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Course created successfully'
         ], 200 );
     }
 }
