@@ -39,5 +39,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::get('/assignment/{id}', 'AssignmentController@get');
 
         Route::post('/answer', 'AnswerController@store');
+
+        Route::get('/user/student/grades', 'UserController@student_grades');
     });
 });
