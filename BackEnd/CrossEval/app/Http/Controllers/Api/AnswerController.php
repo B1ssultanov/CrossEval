@@ -22,7 +22,7 @@ class AnswerController extends Controller
             ->id;
 
         $service = new CreateAnswerService();
-        $answer = $service->execute($request->answer_file, $answer_id, $request->comment);
+        $answer  = $service->execute($request->answer_file, $answer_id, $request->comment);
 
         return response()->json([
             'message' => 'Answer saved successfully',
