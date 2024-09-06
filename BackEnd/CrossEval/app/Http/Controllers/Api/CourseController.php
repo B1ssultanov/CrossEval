@@ -9,6 +9,7 @@ use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\UserCourse;
 use App\Models\User;
+use App\Services\Course\Syllabus\Create\Service as AddSyllabusService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -97,6 +98,24 @@ class CourseController extends Controller
 
         return response()->json([
             'message' => 'Course created successfully'
+        ], 200 );
+    }
+
+    /**
+     * This method creates syllabus for the course
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     * @throws \Exception
+     */
+    public function syllabus(Request $request): JsonResponse
+    {
+        $service = new AddSyllabusService();
+        $course  = $service->execute($request->syllabus_file, $request->course_id);
+
+        return response()->json([
+            'course'  => $course,
+            'message' => 'Course syllabus added successfully!',
         ], 200 );
     }
 }
