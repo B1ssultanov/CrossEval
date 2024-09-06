@@ -9,6 +9,7 @@ use App\Models\Course;
 use App\Models\User;
 use App\Models\Answer;
 use App\Models\UserCourse;
+use App\Services\Assignment\Rubrics\Create\Service as AddRubricsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -36,8 +37,9 @@ class AssignmentController extends Controller
     /**
      * This method creates/updates Assignment.
      *
-     * @param Request                        $request
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function create(Request $request)
     {
@@ -105,6 +107,11 @@ class AssignmentController extends Controller
         $assignment->cross_check = $request->isCrossCheck ?? $assignment->cross_check;
 
         $assignment->save();
+
+        if (isset($request->rubrics_file)) {
+            $service    = new AddRubricsService();
+            $assignment = $service->execute($request->rubrics_file, $assignment->id);
+        }
 
         if (!isset($request->assignment_id)) {
             $users_assignment = UserCourse::where('course_id', $course->id)->pluck('user_id');
