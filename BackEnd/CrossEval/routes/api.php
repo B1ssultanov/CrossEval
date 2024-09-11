@@ -41,6 +41,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::post('/answer', 'AnswerController@store');
 
-        Route::get('/user/student/grades', 'UserController@student_grades');
+        Route::get('/user/student/grades',    'UserController@student_grades');
+        Route::get('/user/supervisor/grades', 'UserController@supervisor_grades');
     });
 });
