@@ -74,4 +74,42 @@ class UserController extends Controller
             'nbTotal'   => $nbTotal,
         ], 200);
     }
+
+    /**
+     * This method updates User info in profile page.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function profile_update(Request $request): JsonResponse
+    {
+        $user = User::where('token', $request->bearerToken())->first();
+
+        $user->university_id   = $request->university_id   ?? $user->university_id;
+        $user->name            = $request->name            ?? $user->name;
+        $user->surname         = $request->surname         ?? $user->surname;
+        $user->phone_number    = $request->phone_number    ?? $user->phone_number;
+        $user->login           = $request->login           ?? $user->login;
+        $user->gender          = $request->gender          ?? $user->gender;
+        $user->birthday        = $request->birthday        ?? $user->birthday;
+        $user->course_grade    = $request->course_grade    ?? $user->course_grade;
+        $user->faculty         = $request->faculty         ?? $user->faculty;
+        $user->speciality      = $request->speciality      ?? $user->speciality;
+        $user->city_id         = $request->city_id         ?? $user->city_id;
+        $user->country_id      = $request->country_id      ?? $user->country_id;
+        $user->academic_degree = $request->academic_degree ?? $user->academic_degree;
+
+        if (isset($request->image) and !isset($user->image)) {
+            $user->saveImage($request->image);
+        } elseif (isset($request->image) and isset($user->image)) {
+            $user->updateImage($request->image);
+        }
+
+        $user->save();
+
+        return response()->json([
+            'User'    => $user,
+            'message' => 'User successfully updated'
+        ], 200);
+    }
 }
