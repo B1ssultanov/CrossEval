@@ -35,6 +35,7 @@ class AuthenticatedSessionController extends Controller
 
             return response()->json([
                 'token' => $sessionToken,
+                'role'  => $user->role,
             ]);
         }
 
