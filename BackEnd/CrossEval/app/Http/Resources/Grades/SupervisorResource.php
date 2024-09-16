@@ -24,6 +24,7 @@ class SupervisorResource extends JsonResource
 
         $data = [
             'name'          => $this->name,
+            'surname'       => $this->surname,
             'university_id' => $this->university_id,
             'assignments'   => StudentResource::collection($answers),
         ];
