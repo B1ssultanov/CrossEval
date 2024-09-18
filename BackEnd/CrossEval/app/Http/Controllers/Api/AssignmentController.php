@@ -45,8 +45,7 @@ class AssignmentController extends Controller
     {
         if ( !isset($request->assignment_id) ) {
             $validateData = Validator::make($request->all(), [
-                'course_id'    => 'required|string', // course->code
-                'course_group' => 'required|string', // course->course_group
+                'course_id'    => 'required|string',
                 'title'        => 'required|string',
                 'description'  => 'required|string',
                 'type'         => 'required|string|in:quiz,project,presentation,code,essay',
@@ -58,8 +57,6 @@ class AssignmentController extends Controller
             ], [
                 'course_id.required'    => 'The course ID is required.',
                 'course_id.string'      => 'The course ID must be a valid string.',
-                'course_group.required' => 'The course group is required.',
-                'course_group.string'   => 'The course group must be a valid string.',
                 'title.required'        => 'The title is required.',
                 'title.string'          => 'The title must be a valid string.',
                 'description.required'  => 'The description is required.',
@@ -83,14 +80,9 @@ class AssignmentController extends Controller
                 return response()->json($validateData->errors(), 400);
             }
 
-            $course = Course::where('code', $request->course_id)
-                ->where('course_group', $request->course_group)
-                ->first();
-            $teacher = DB::table('user_courses')
-                ->join('users', 'user_courses.user_id', '=', 'users.id')
-                ->where('user_courses.course_id', $course->id)
-                ->where('users.role', 'supervisor')
-                ->select('users.*')
+            $course  = Course::where('id', $request->course_id)->first();
+            $teacher = User::where('token', $request->bearerToken())
+                ->where('role', 'supervisor')
                 ->first();
         }
 
