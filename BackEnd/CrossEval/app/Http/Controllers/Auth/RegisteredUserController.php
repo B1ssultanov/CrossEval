@@ -91,6 +91,7 @@ class RegisteredUserController extends Controller
 
         return response()->json([
             'token'   => $user->token,
+            'role'    => $user->role,
             'message' => 'User successfully created',
         ]);
     }
