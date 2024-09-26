@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Assignment extends Model
+class AnswerReview extends Model
 {
     use HasFactory;
 
@@ -16,27 +16,29 @@ class Assignment extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'title',
-        'description'
+        'answer_id',
+        'reviewer_id',
+        'criteria_grade',
+        'comment'
     ];
 
     /**
-     * Returns the Assignments course
+     * Returns the AnswerReviews Answer
      *
      * @return BelongsTo
      */
-    public function course()
+    public function answer(): BelongsTo
     {
-        return $this->belongsTo(Course::class, 'course_id');
+        return $this->belongsTo(Answer::class, 'answer_id');
     }
 
     /**
-     * Returns the Assignments File
+     * Returns the AnswerReviews reviewer
      *
      * @return BelongsTo
      */
-    public function file(): BelongsTo
+    public function reviewer(): BelongsTo
     {
-        return $this->belongsTo(File::class, 'rubrics_file_id');
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 }

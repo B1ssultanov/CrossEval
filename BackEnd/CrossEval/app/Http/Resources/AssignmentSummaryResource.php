@@ -30,6 +30,8 @@ class AssignmentSummaryResource extends JsonResource
             'end_date'     => $this->end_date,
             'weight'       => $this->weight,
             'isCrossCheck' => $this->cross_check,
+            'criteria'     => $this->criteria,
+            'rubrics_id'   => $this->rubrics_file_id,
             'status'       => $status,
         ];
 
