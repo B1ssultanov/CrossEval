@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CrossCheckController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display all information for the Cross-Review page.
      */
     public function getReview(Request $request, $answer_review_id)
     {
