@@ -86,17 +86,18 @@ class AssignmentController extends Controller
                 ->first();
         }
 
-        $assignment              = Assignment::where('id', $request->assignment_id)->first() ?? new Assignment;
-        $assignment->user_id     = $teacher->id           ?? $assignment->user_id;
-        $assignment->course_id   = $course->id            ?? $assignment->course_id;
-        $assignment->type        = $request->type         ?? $assignment->type;
-        $assignment->title       = $request->title        ?? $assignment->title;
-        $assignment->description = $request->description  ?? $assignment->description;
-        $assignment->start_date  = $request->start_date   ?? $assignment->start_date;
-        $assignment->end_date    = $request->end_date     ?? $assignment->end_date;
-        $assignment->weight      = $request->weight       ?? $assignment->weight;
-        $assignment->criteria    = $request->criteria     ?? $assignment->criteria;
-        $assignment->cross_check = $request->isCrossCheck ?? $assignment->cross_check;
+        $assignment                 = Assignment::where('id', $request->assignment_id)->first() ?? new Assignment;
+        $assignment->user_id        = $teacher->id             ?? $assignment->user_id;
+        $assignment->course_id      = $course->id              ?? $assignment->course_id;
+        $assignment->type           = $request->type           ?? $assignment->type;
+        $assignment->title          = $request->title          ?? $assignment->title;
+        $assignment->description    = $request->description    ?? $assignment->description;
+        $assignment->start_date     = $request->start_date     ?? $assignment->start_date;
+        $assignment->end_date       = $request->end_date       ?? $assignment->end_date;
+        $assignment->weight         = $request->weight         ?? $assignment->weight;
+        $assignment->criteria       = $request->criteria       ?? $assignment->criteria;
+        $assignment->cross_check    = $request->isCrossCheck   ?? $assignment->cross_check;
+        $assignment->end_cross_date = $request->end_cross_date ?? $assignment->end_cross_date;
 
         $assignment->save();
 

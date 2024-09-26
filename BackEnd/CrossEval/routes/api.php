@@ -25,6 +25,8 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::post('register', [RegisteredUserController::class, 'store']);
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+        Route::get('test', [\App\Http\Controllers\HomeController::class, 'test']);
     });
 
     Route::middleware('auth')->group(function () {
@@ -32,6 +34,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::get('/course',    'CourseController@detail');
         Route::post('/course',   'CourseController@create');
+
         Route::post('/syllabus', 'CourseController@syllabus');
 
         Route::get('/schedule', 'AssignmentController@schedule');
@@ -40,6 +43,8 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::get('/assignment/{id}', 'AssignmentController@get');
 
         Route::post('/answer', 'AnswerController@store');
+
+        Route::get('/cross_review/{answer_review_id}', 'CrossCheckController@getReview');
 
         Route::get('/user/student/grades',    'UserController@student_grades');
         Route::get('/user/supervisor/grades', 'UserController@supervisor_grades');

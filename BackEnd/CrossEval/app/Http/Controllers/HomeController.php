@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
+use App\Models\AnswerReview;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,5 +27,13 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    /**
+     * Controller for tests on project
+     */
+    public function test(Request $request)
+    {
+        return $request;
     }
 }

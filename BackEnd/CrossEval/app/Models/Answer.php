@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Answer extends Model
 {
@@ -31,4 +32,24 @@ class Answer extends Model
         'grade_date',
         'comment'
     ];
+
+    /**
+     * Returns the Answers course
+     *
+     * @return BelongsTo
+     */
+    public function assignment(): BelongsTo
+    {
+        return $this->belongsTo(Assignment::class, 'assignment_id');
+    }
+
+    /**
+     * Returns the Answers File
+     *
+     * @return BelongsTo
+     */
+    public function file(): BelongsTo
+    {
+        return $this->belongsTo(File::class, 'file_id');
+    }
 }
