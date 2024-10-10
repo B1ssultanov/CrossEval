@@ -1,81 +1,28 @@
-const CrossChecks = () => {
-    const data = [
-        {
-            status: "Available",
-            data: [
-                {
-                    status: "available",
-                    title: "Code Challenge",
-                    type: "Code",
-                    startDate: "2023-11-08 05:00",
-                    endDate: "2023-11-15 05:00",
-                    weight: 25,
-                    isDone: false,
-                },
-            ],
-        },
-        {
-            status: "Missed",
-            data: [
-                {
-                    status: "missed",
-                    title: "Essay Deadline",
-                    type: "Essay",
-                    startDate: "2023-10-28 05:00",
-                    endDate: "2023-11-04 05:00",
-                    weight: 20,
-                    isDone: false,
-                },
-            ],
-        },
-        {
-            status: "Submitted",
-            data: [
-                {
-                    status: "submitted",
-                    title: "Quiz 1",
-                    type: "Quiz",
-                    startDate: "2023-11-02 05:00",
-                    endDate: "2023-11-09 05:00",
-                    weight: 15,
-                    isDone: true,
-                },
-            ],
-        },
-        {
-            status: "Future",
-            data: [
-                {
-                    status: "future",
-                    title: "Group Presentation",
-                    type: "Presentation",
-                    startDate: "2024-01-10 05:00",
-                    endDate: "2024-01-17 05:00",
-                    weight: 10,
-                    isDone: false,
-                },
-            ],
-        },
-        {
-            status: "Done",
-            data: [
-                {
-                    status: "done",
-                    title: "Final Project",
-                    type: "Project",
-                    startDate: "2023-12-15 05:00",
-                    endDate: "2023-12-22 05:00",
-                    weight: 20,
-                    isDone: true,
-                },
-            ],
-        },
-    ];
+import OneCrossCheck from "@/components/coursePage/OneCrossCheck";
 
-    return 
-    <div>
-        <h1>hello</h1>
-    </div>;
+const CrossChecks = ({ data }) => {
+    
+    return (
+        data.length ? (
+            <div className="flex flex-col items-center">
+            <div className="w-full h-[30px] font-semibold mt-3 mb-3 pl-2 pr-2 flex items-center justify-between text-[11px] ">
+                <div className="w-[70px]">Status</div>
+                <div className="w-[95px]">Title</div>
+                <div className="w-[70px]">Type</div>
+                <div className="w-[55px]">Start date</div>
+                <div className="w-[55px]">End date</div>
+                <div>Weight</div>
+            </div>
+
+            {data.map((assignment, index) => (
+                <OneCrossCheck data={assignment} key={assignment.id} index={index} />
+            ))}
+        </div>
+        ) : (
+            <div className="w-full flex justify-center h-[40vh] items-center uppercase text-gray-500 text-3xl">No assignments yet</div>
+        )
+       
+    );
 };
 
 export default CrossChecks;

@@ -77,7 +77,7 @@ const App = () => {
     };
     return (
         <div
-            className="absolute right-0 top-12 z-30"
+            className="absolute right-0 top-12 z-30 bg-white"
             style={{ height: "90vh", borderLeft: "4px solid lightgray" }}
         >
             {/* <Switch onChange={changeMode} /> Change Mode
