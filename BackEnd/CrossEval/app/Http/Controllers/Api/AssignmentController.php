@@ -51,7 +51,7 @@ class AssignmentController extends Controller
                 'type'         => 'required|string|in:quiz,project,presentation,code,essay',
                 'isCrossCheck' => 'required|boolean',
                 'criteria'     => 'required|string',
-                'start_date'   => 'required|date|after:tomorrow',
+                'start_date'   => 'required|date|after:today',
                 'end_date'     => 'required|date|after:start_date',
                 'weight'       => 'required|numeric',
             ], [
@@ -98,6 +98,7 @@ class AssignmentController extends Controller
         $assignment->criteria       = $request->criteria       ?? $assignment->criteria;
         $assignment->cross_check    = $request->isCrossCheck   ?? $assignment->cross_check;
         $assignment->end_cross_date = $request->end_cross_date ?? $assignment->end_cross_date;
+        $assignment->cross_check_processed = false;
 
         $assignment->save();
 
