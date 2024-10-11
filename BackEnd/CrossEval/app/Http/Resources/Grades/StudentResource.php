@@ -18,12 +18,14 @@ class StudentResource extends JsonResource
         $grade      = $this->grade ?? 0;
         $weight     = $this->weight ?? 0;
         $percentage = ($grade * $weight) / 100;
+        $status     = $this->status;
 
         $data = [
             'title'      => $this->title,
             'grade'      => $grade,
             'weight'     => $weight . '%',
             'percentage' => $percentage . '%',
+            'status'     => $status,
         ];
 
         return $data;
