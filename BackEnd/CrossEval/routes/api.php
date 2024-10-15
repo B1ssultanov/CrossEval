@@ -47,6 +47,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::post('/answer', 'AnswerController@store');
 
+        Route::get('/cross_review/check',              'CrossCheckController@allAnswers');
         Route::get('/cross_review/{answer_review_id}', 'CrossCheckController@getReview');
 
         Route::get('/user/student/grades',    'UserController@student_grades');
