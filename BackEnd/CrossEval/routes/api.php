@@ -26,7 +26,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-        Route::get('test', [\App\Http\Controllers\HomeController::class, 'test']);
+        Route::post('test', [\App\Http\Controllers\HomeController::class, 'test']);
     });
 
     Route::middleware('auth')->group(function () {
@@ -41,6 +41,9 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::post('/assignment',     'AssignmentController@create');
         Route::get('/assignment/{id}', 'AssignmentController@get');
+
+        Route::post('answer_review/groups/create', 'AnswerReviewController@cross_check_grouping');
+        Route::post('answer_review/review/submit', 'AnswerReviewController@review_submit');
 
         Route::post('/answer', 'AnswerController@store');
 
