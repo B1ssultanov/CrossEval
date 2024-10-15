@@ -15,8 +15,11 @@ class AnswerReviewController extends Controller
 {
     /**
      * Controller for creating answer review groups
+     *
+     * @param Request $request
+     * @return array|string
      */
-    public function cross_check_grouping(Request $request)
+    public function cross_check_grouping(Request $request): array|string
     {
         $assignment  = Assignment::where('id', $request->assignment_id)->first();
         if($assignment->cross_check_processed != 1) {
