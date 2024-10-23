@@ -26,8 +26,8 @@ class RegisteredUserController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-//            'name'          => ['required', 'string', 'max:255'],
-//            'surname'       => ['required', 'string', 'max:255'],
+            'name'          => ['required', 'string', 'max:255'],
+            'surname'       => ['required', 'string', 'max:255'],
 //            'login'         => ['required', 'string', 'max:255'],
 //            'gender'        => ['string', 'max:255'],
 //            'faculty'       => ['required', 'string', 'max:255'],
@@ -35,14 +35,14 @@ class RegisteredUserController extends Controller
 //            'birthday'      => ['date_format:Y-m-d', 'max:255'],
             'email'         => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password'      => ['required', 'confirmed', Rules\Password::defaults()],
-//            'university_id' => ['required', 'integer'],
+            'university_id' => ['required', 'integer'],
         ], [
-//            'name.required'          => 'The name field is required.',
-//            'name.string'            => 'The name must be a string.',
-//            'name.max'               => 'The name may not be greater than :max characters.',
-//            'surname.required'       => 'The surname field is required.',
-//            'surname.string'         => 'The surname must be a string.',
-//            'surname.max'            => 'The surname may not be greater than :max characters.',
+            'name.required'          => 'The name field is required.',
+            'name.string'            => 'The name must be a string.',
+            'name.max'               => 'The name may not be greater than :max characters.',
+            'surname.required'       => 'The surname field is required.',
+            'surname.string'         => 'The surname must be a string.',
+            'surname.max'            => 'The surname may not be greater than :max characters.',
 //            'login.required'         => 'The login field is required.',
 //            'login.string'           => 'The login must be a string.',
 //            'login.max'              => 'The login may not be greater than :max characters.',
@@ -62,7 +62,7 @@ class RegisteredUserController extends Controller
             'email.unique'           => 'The email has already been taken.',
             'password.required'      => 'The password field is required.',
             'password.confirmed'     => 'The password confirmation does not match.',
-//            'university_id.required' => 'The university_ud field is required.',
+            'university_id.required' => 'The university_ud field is required.',
         ]);
 
         if ($validator->fails()) {
