@@ -28,7 +28,9 @@ class CourseController extends Controller
         $user = User::where('token', $request->bearerToken())->first();
 
         $course_list = UserCourse::where('user_id', $user->id)->pluck('course_id')->toArray();
-        $courses     = Course::whereIn('id', $course_list)->get();
+        $courses     = Course::whereIn('id', $course_list)
+            ->where('name', 'like', '%' . $request->search . '%')
+            ->get();
 
         return response()->json([
             'courses' => CourseSummaryResource::collection($courses),
