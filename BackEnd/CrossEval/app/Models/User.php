@@ -99,7 +99,17 @@ class User extends Authenticatable
      */
     public function user_courses()
     {
-        return $this->hasMany(User_course::class, 'user_id', 'id');
+        return $this->hasMany(UserCourse::class, 'user_id', 'id');
+    }
+
+    /**
+     * Returns the supervising courses
+     *
+     * @return HasMany
+     */
+    public function supervisor_courses()
+    {
+        return $this->hasMany(Course::class, 'supervisor_id', 'id');
     }
 
     /**

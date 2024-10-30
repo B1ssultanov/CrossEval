@@ -91,6 +91,7 @@ class CourseController extends Controller
                 'name'          => $request->name,
                 'course_group'  => $group,
                 'invite_code'   => Str::random(6),
+                'supervisor_id' => $user->id,
             ]);
 
             UserCourse::create([
