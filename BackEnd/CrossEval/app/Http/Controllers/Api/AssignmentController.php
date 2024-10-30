@@ -43,52 +43,54 @@ class AssignmentController extends Controller
      */
     public function create(Request $request)
     {
-        if ( !isset($request->assignment_id) ) {
-            $validateData = Validator::make($request->all(), [
-                'course_id'    => 'required|string',
-                'title'        => 'required|string',
-                'description'  => 'required|string',
-                'type'         => 'required|string|in:quiz,project,presentation,code,essay',
-                'isCrossCheck' => 'required|boolean',
-                'criteria'     => 'required|string',
-                'start_date'   => 'required|date|after:today',
-                'end_date'     => 'required|date|after:start_date',
-                'weight'       => 'required|numeric',
-            ], [
-                'course_id.required'    => 'The course ID is required.',
-                'course_id.string'      => 'The course ID must be a valid string.',
-                'title.required'        => 'The title is required.',
-                'title.string'          => 'The title must be a valid string.',
-                'description.required'  => 'The description is required.',
-                'description.string'    => 'The description must be a valid string.',
-                'type.required'         => 'The type is required.',
-                'type.string'           => 'The type must be a string.',
-                'type.in'               => 'The type must be one of the following: quiz,project,presentation,code,essay.',
-                'isCrossCheck.required' => 'The cross-check flag is required.',
-                'isCrossCheck.boolean'  => 'The cross-check flag must be true or false.',
-                'criteria.required'     => 'The criteria is required.',
-                'criteria.string'       => 'The criteria must be a valid string.',
-                'start_date.required'   => 'The start date is required.',
-                'start_date.date'       => 'The start date must be a valid date and time.',
-                'end_date.required'     => 'The end date is required.',
-                'end_date.date'         => 'The end date must be a valid date and time.',
-                'weight.required'       => 'The weight is required.',
-                'weight.numeric'        => 'The weight must be a number.',
-            ]);
+        $validateData = Validator::make($request->all(), [
+            'course_id'    => 'required|string',
+            'title'        => 'required|string',
+            'description'  => 'required|string',
+            'type'         => 'required|string|in:quiz,project,presentation,code,essay',
+            'isCrossCheck' => 'required|boolean',
+            'criteria'     => 'required|string',
+            'start_date'   => 'required|date|after:today',
+            'end_date'     => 'required|date|after:start_date',
+            'weight'       => 'required|numeric',
+        ], [
+            'course_id.required'    => 'The course ID is required.',
+            'course_id.string'      => 'The course ID must be a valid string.',
+            'title.required'        => 'The title is required.',
+            'title.string'          => 'The title must be a valid string.',
+            'description.required'  => 'The description is required.',
+            'description.string'    => 'The description must be a valid string.',
+            'type.required'         => 'The type is required.',
+            'type.string'           => 'The type must be a string.',
+            'type.in'               => 'The type must be one of the following: quiz,project,presentation,code,essay.',
+            'isCrossCheck.required' => 'The cross-check flag is required.',
+            'isCrossCheck.boolean'  => 'The cross-check flag must be true or false.',
+            'criteria.required'     => 'The criteria is required.',
+            'criteria.string'       => 'The criteria must be a valid string.',
+            'start_date.required'   => 'The start date is required.',
+            'start_date.date'       => 'The start date must be a valid date and time.',
+            'end_date.required'     => 'The end date is required.',
+            'end_date.date'         => 'The end date must be a valid date and time.',
+            'weight.required'       => 'The weight is required.',
+            'weight.numeric'        => 'The weight must be a number.',
+        ]);
 
-            if ($validateData->fails()) {
-                return response()->json($validateData->errors(), 400);
-            }
+        if ($validateData->fails()) {
+            return response()->json($validateData->errors(), 400);
+        }
 
-            $course  = Course::where('id', $request->course_id)->first();
-            $teacher = User::where('token', $request->bearerToken())
-                ->where('role', 'supervisor')
-                ->first();
+        $course  = Course::where('id', $request->course_id)->first();
+        $teacher = User::where('token', $request->bearerToken())
+            ->where('id', $course->supervisor_id)
+            ->first();
+
+        if ( !isset($teacher) ){
+            return response()->json( 'You are not the course supervisor.', 200);
         }
 
         $assignment                 = Assignment::where('id', $request->assignment_id)->first() ?? new Assignment;
-        $assignment->user_id        = $teacher->id             ?? $assignment->user_id;
-        $assignment->course_id      = $course->id              ?? $assignment->course_id;
+        $assignment->user_id        = $teacher->id;
+        $assignment->course_id      = $course->id;
         $assignment->type           = $request->type           ?? $assignment->type;
         $assignment->title          = $request->title          ?? $assignment->title;
         $assignment->description    = $request->description    ?? $assignment->description;
