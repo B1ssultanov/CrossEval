@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssignmentSummaryResource;
 use App\Http\Resources\CourseSummaryResource;
+use App\Models\Answer;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\UserCourse;
@@ -90,6 +91,7 @@ class CourseController extends Controller
                 'name'          => $request->name,
                 'course_group'  => $group,
                 'invite_code'   => Str::random(6),
+                'supervisor_id' => $user->id,
             ]);
 
             UserCourse::create([
@@ -119,5 +121,38 @@ class CourseController extends Controller
             'course'  => $course,
             'message' => 'Course syllabus added successfully!',
         ], 200 );
+    }
+
+    /**
+     * API to register student to the course
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     */
+    public function invite(Request $request): JsonResponse
+    {
+        $user   = User::where('token', $request->bearerToken())->first();
+        $course = Course::where('invite_code', $request->invite_code)->first();
+
+        UserCourse::firstOrCreate([
+            'user_id'   => $user->id,
+            'course_id' => $course->id,
+        ]);
+
+        $assignments = Assignment::where('course_id', $course->id)->pluck('id');
+
+        $data = $assignments->map(function ($assignment_id) use ($user) {
+            return [
+                'user_id' => $user->id,
+                'assignment_id' => $assignment_id,
+            ];
+        });
+
+        Answer::insertOrIgnore($data->toArray());
+
+        return response()->json([
+            'student' => $user->name,
+            'message' => 'Successfully added to course',
+        ]);
     }
 }

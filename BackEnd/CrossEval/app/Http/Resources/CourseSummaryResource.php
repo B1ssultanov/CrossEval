@@ -17,10 +17,8 @@ class CourseSummaryResource extends JsonResource
     public function toArray(Request $request): array
     {
         $teacher = DB::table('courses')
-            ->join('user_courses', 'user_courses.course_id', '=', 'courses.id')
-            ->join('users', 'users.id', '=', 'user_courses.user_id')
+            ->join('users', 'users.id', '=', 'courses.supervisor_id')
             ->where('courses.id', $this->id)
-            ->where('users.role', 'supervisor')
             ->select('users.*')
             ->first();
 
