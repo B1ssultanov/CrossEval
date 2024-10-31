@@ -84,7 +84,6 @@ class SupervisorSeeder extends Seeder
         $supervisor->speciality = $this->speciality[rand(0,3)];
         $supervisor->token = Str::random(40);
         $supervisor->birthday = '1999-07-11';
-        $supervisor->role = 'supervisor';
         $supervisor->city_id = 1;
         $supervisor->country_id = 1;
 
