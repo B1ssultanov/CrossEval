@@ -79,7 +79,6 @@ class RegisteredUserController extends Controller
             'birthday'      => $request->birthday,
             'email'         => $request->email,
             'password'      => Hash::make($request->password),
-            'role'          => ($request->isSupervisor == 'on' ? 'supervisor' : 'student'),
             'token'         => \Str::random(40),
             'university_id' => $request->university_id,
             'status'        => 'active',
@@ -91,7 +90,6 @@ class RegisteredUserController extends Controller
 
         return response()->json([
             'token'   => $user->token,
-            'role'    => $user->role,
             'message' => 'User successfully created',
         ]);
     }

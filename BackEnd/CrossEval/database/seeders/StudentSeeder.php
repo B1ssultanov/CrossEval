@@ -80,7 +80,6 @@ class StudentSeeder extends Seeder
         $student->status = $this->status[rand(0,2)];
         $student->token = Str::random(40);
         $student->birthday = '2004-08-09';
-        $student->role = 'student';
         $student->city_id = 1;
         $student->country_id = 1;
 
