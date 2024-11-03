@@ -114,8 +114,9 @@ class AssignmentController extends Controller
 
             $data = $users_assignment->map(function ($user_id) use ($assignment) {
                 return [
-                    'user_id' => $user_id,
+                    'user_id'       => $user_id,
                     'assignment_id' => $assignment->id,
+                    'status'        => Answer::STATUS_FUTURE,
                 ];
             });
 

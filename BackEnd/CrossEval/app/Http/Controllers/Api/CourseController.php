@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\UserCourse;
 use App\Models\User;
 use App\Services\Course\Syllabus\Create\Service as AddSyllabusService;
+use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -32,6 +33,12 @@ class CourseController extends Controller
         $courses     = Course::whereIn('id', $course_list)
             ->where('name', 'like', '%' . $request->search . '%')
             ->get();
+
+        if (!isset($courses)){
+            return response()->json([
+                'message' => 'You are not enrolled to this course',
+            ]);
+        }
 
         return response()->json([
             'courses' => CourseSummaryResource::collection($courses),
