@@ -5,7 +5,11 @@ namespace app\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Grades\StudentResource;
 use App\Http\Resources\Grades\SupervisorResource;
+use App\Models\Answer;
+use App\Models\Assignment;
+use App\Models\Course;
 use app\Models\User;
+use App\Models\UserCourse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -130,6 +134,45 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'Successfully deleted user'
+        ]);
+    }
+
+    /**
+     * Function to remove the student from the course
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     */
+    public function remove_from_course(Request $request): JsonResponse
+    {
+        $user        = User::where('token', $request->bearerToken())->first();
+        $course      = Course::where('id', $request->course_id)->first();
+        $assignments = Assignment::where('course_id', $request->course_id)->pluck('id')->toArray();
+
+        if(!isset($request->user_id)){
+            $userCourse = UserCourse::where('user_id', $user->id)->where('course_id', $request->course_id)->first();
+            $userCourse->delete();
+
+            $answers = Answer::whereIn('assignment_id', $assignments)->where('user_id', $user->id);
+            $answers->delete();
+
+            return response()->json([
+                'message' => 'You successfully removed from the course.'
+            ]);
+        } else if ($user->id == $course->supervisor_id){
+            $userCourse = UserCourse::where('user_id', $request->user_id)->where('course_id', $request->course_id)->first();
+            $userCourse->delete();
+
+            $answers = Answer::whereIn('assignment_id', $assignments)->where('user_id', $request->user_id);
+            $answers->delete();
+
+            return response()->json([
+                'message' => 'You successfully removed student from the course.'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'You are not allowed to do it.'
         ]);
     }
 }

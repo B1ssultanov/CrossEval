@@ -55,5 +55,6 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::get('/user/supervisor/grades', 'UserController@supervisor_grades');
         Route::post('/user/profile',          'UserController@profile_update');
         Route::delete('/user',                'UserController@delete');
+        Route::delete('/user/course',         'UserController@remove_from_course');
     });
 });
