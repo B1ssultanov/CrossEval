@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\CreateCrossCheckReviews::class,
+        \App\Console\Commands\FindMissedAssignments::class,
     ];
 
     /**
@@ -34,6 +35,8 @@ class Kernel extends ConsoleKernel
                 $assignment->update(['cross_check_processed' => true]);
             }
         })->everyMinute();
+
+        $schedule->command('app:find-missed-assignments')->everyMinute();
     }
 
     /**

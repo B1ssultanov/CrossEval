@@ -40,8 +40,9 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
 
         Route::get('/schedule', 'AssignmentController@schedule');
 
-        Route::post('/assignment',     'AssignmentController@create');
-        Route::get('/assignment/{id}', 'AssignmentController@get');
+        Route::post('/assignment',        'AssignmentController@create');
+        Route::post('/assignment/missed', 'AssignmentController@missed_assignment');
+        Route::get('/assignment/{id}',    'AssignmentController@get');
 
         Route::post('answer_review/groups/create', 'AnswerReviewController@cross_check_grouping');
         Route::post('answer_review/review/submit', 'AnswerReviewController@review_submit');
