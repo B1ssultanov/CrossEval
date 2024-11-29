@@ -26,10 +26,11 @@ class AnswerReviewResource extends JsonResource
         $status = ($this->criteria_grade !== null) ? 'Checked' : 'To Check';
 
         $data = [
-            'grade'    => $overall,
-            'criteria' => $this->criteria_grade,
-            'comment'  => $this->comment,
-            'status'   => $status,
+            'answer_id' => $this->answer_id,
+            'grade'     => $overall,
+            'criteria'  => $this->criteria_grade,
+            'comment'   => $this->comment,
+            'status'    => $status,
         ];
 
         return $data;

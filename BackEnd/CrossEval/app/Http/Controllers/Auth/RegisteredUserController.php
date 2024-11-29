@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
 //            'birthday'      => ['date_format:Y-m-d', 'max:255'],
             'email'         => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password'      => ['required', 'confirmed', Rules\Password::defaults()],
-            'university_id' => ['required', 'integer'],
+            'university_id' => ['integer'],
         ], [
             'name.required'          => 'The name field is required.',
             'name.string'            => 'The name must be a string.',
@@ -62,7 +62,6 @@ class RegisteredUserController extends Controller
             'email.unique'           => 'The email has already been taken.',
             'password.required'      => 'The password field is required.',
             'password.confirmed'     => 'The password confirmation does not match.',
-            'university_id.required' => 'The university_ud field is required.',
         ]);
 
         if ($validator->fails()) {

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Answer;
 use App\Models\UserCourse;
 use App\Services\Assignment\Rubrics\Create\Service as AddRubricsService;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -114,8 +115,9 @@ class AssignmentController extends Controller
 
             $data = $users_assignment->map(function ($user_id) use ($assignment) {
                 return [
-                    'user_id' => $user_id,
+                    'user_id'       => $user_id,
                     'assignment_id' => $assignment->id,
+                    'status'        => Answer::STATUS_FUTURE,
                 ];
             });
 
@@ -139,5 +141,41 @@ class AssignmentController extends Controller
         return response()->json([
             'assignment' => new AssignmentSummaryResource($assignment),
         ], 200 );
+    }
+
+    /**
+     * This API would give the answers which was not submitted
+     *
+     * @return JsonResponse
+     */
+    public function missed_assignment(): JsonResponse
+    {
+        $currentDateTime = Carbon::now();
+
+        $assignments = Assignment::where('end_date', '<=', $currentDateTime)->get();
+
+        if (isset($assignments)) {
+
+            $answers = Answer::whereIn('assignment_id', $assignments->pluck('id'))->where('status', 'Available')->get();
+
+            foreach ($answers as $answer) {
+                $answer->status = 'Missed';
+                $answer->save();
+            }
+
+            $filtered = $answers->map(function ($user) {
+                return $user->only(['assignment_id', 'user_id']);
+            });
+
+            $filteredArray = $filtered->toArray();
+
+            return response()->json([
+                'message' => 'This students are missed the assignment for this moment',
+                'answers' => $filteredArray
+            ]);
+        }
+        return response()->json([
+            'message' => 'Nobody missed the assignment for this moment.'
+        ]);
     }
 }
