@@ -56,10 +56,12 @@ class CourseController extends Controller
     {
         $course      = Course::where('id', $request->id)->first();
         $assignments = Assignment::where('course_id', $course->id)->get();
+        $user        = User::where('token', $request->bearerToken())->first();
 
         return response()->json([
             'course'      => new CourseSummaryResource($course),
             'assignments' => AssignmentSummaryResource::collection($assignments),
+            'role'        => ($course->user_id = $user->id) ? 'Supervisor' : 'Student',
         ], 200 );
     }
 
