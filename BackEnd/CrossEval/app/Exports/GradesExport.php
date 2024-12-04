@@ -40,7 +40,8 @@ class GradesExport implements FromCollection, WithHeadings, WithStyles, ShouldAu
 
                 if (!isset($studentGrades[$studentKey])) {
                     $studentGrades[$studentKey] = [
-                        'Name' => $answer->user->name,
+                        'ID'      => $answer->user->university_id,
+                        'Name'    => $answer->user->name,
                         'Surname' => $answer->user->surname,
                     ];
 
@@ -58,7 +59,7 @@ class GradesExport implements FromCollection, WithHeadings, WithStyles, ShouldAu
 
     public function headings(): array
     {
-        return array_merge(['Name', 'Surname'], $this->getAssignmentTitles());
+        return array_merge(['ID', 'Name', 'Surname'], $this->getAssignmentTitles());
     }
 
     /**
