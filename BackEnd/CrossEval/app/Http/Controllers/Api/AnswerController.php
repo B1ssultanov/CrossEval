@@ -2,11 +2,14 @@
 
 namespace app\Http\Controllers\Api;
 
+use App\Exports\GradesExport;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
+use App\Models\Course;
 use App\Models\User;
 use App\Services\Answer\Create\Service as CreateAnswerService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AnswerController extends Controller
 {
@@ -28,5 +31,20 @@ class AnswerController extends Controller
             'message' => 'Answer saved successfully',
             'answer'  => $answer
         ], 200 );
+    }
+
+    /**
+     * Exports Grades of Students into Excel table
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function export(Request $request): mixed
+    {
+        $course_id     = (int)$request->input('course_id');
+        $assignmentIds = $request->input('assignment_ids', []);
+        $course        = Course::where('id', $course_id)->first();
+
+        return Excel::download(new GradesExport($assignmentIds), 'grades_' . $course->code . '.xlsx');
     }
 }

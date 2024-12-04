@@ -34,13 +34,23 @@ class Answer extends Model
     ];
 
     /**
-     * Returns the Answers course
+     * Returns the Answers assignment
      *
      * @return BelongsTo
      */
     public function assignment(): BelongsTo
     {
         return $this->belongsTo(Assignment::class, 'assignment_id');
+    }
+
+    /**
+     * Returns the Answers user
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /**
