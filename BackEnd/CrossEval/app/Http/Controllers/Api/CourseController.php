@@ -32,7 +32,9 @@ class CourseController extends Controller
         $course_list = UserCourse::where('user_id', $user->id)->pluck('course_id')->toArray();
         $courses     = Course::whereIn('id', $course_list)
             ->where('name', 'like', '%' . $request->search . '%')
-            ->get();
+            ->where('supervisor_id',
+            ($request->role == 'Supervisor') ? '=' : '!=',
+            $user->id)->get();
 
         if (!isset($courses)){
             return response()->json([
