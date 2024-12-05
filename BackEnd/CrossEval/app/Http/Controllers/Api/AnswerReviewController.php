@@ -23,7 +23,7 @@ class AnswerReviewController extends Controller
     {
         $assignment  = Assignment::where('id', $request->assignment_id)->first();
         if($assignment->cross_check_processed != 1) {
-            $user_answer = Answer::select('id', 'user_id')->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
+            $user_answer = Answer::select('id', 'user_id')->where('status', Answer::STATUS_SUBMITTED)->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
             $user_ids = $user_answer->pluck('user_id')->toArray();
 
             $groups = [];
