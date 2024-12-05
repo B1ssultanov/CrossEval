@@ -61,7 +61,7 @@ class CourseController extends Controller
         return response()->json([
             'course'      => new CourseSummaryResource($course),
             'assignments' => AssignmentSummaryResource::collection($assignments),
-            'role'        => ($course->user_id = $user->id) ? 'Supervisor' : 'Student',
+            'role'        => ($course->supervisor_id == $user->id) ? 'Supervisor' : 'Student',
         ], 200 );
     }
 
