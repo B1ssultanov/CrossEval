@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\AnswerReview;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,14 +24,16 @@ class AnswerReviewResource extends JsonResource
             }
         }
 
-        $status = ($this->criteria_grade !== null) ? 'Checked' : 'To Check';
+        $status        = ($this->criteria_grade !== null) ? 'Checked' : 'To Check';
+        $answer_review = AnswerReview::where('reviewer_id', $this->reviewer_id)->where('answer_id', $this->answer_id)->first();
 
         $data = [
-            'answer_id' => $this->answer_id,
-            'grade'     => $overall,
-            'criteria'  => $this->criteria_grade,
-            'comment'   => $this->comment,
-            'status'    => $status,
+            'answer_review_id' => $answer_review->id,
+            'answer_id'        => $this->answer_id,
+            'grade'            => $overall,
+            'criteria'         => $this->criteria_grade,
+            'comment'          => $this->comment,
+            'status'           => $status,
         ];
 
         return $data;
