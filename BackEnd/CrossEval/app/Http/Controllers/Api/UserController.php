@@ -175,4 +175,19 @@ class UserController extends Controller
             'message' => 'You are not allowed to do it.'
         ]);
     }
+
+    /**
+     * Gets full information about the user
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     */
+    public function info(Request $request)
+    {
+        $user = User::where('token', $request->bearerToken())->first();
+
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
 }
