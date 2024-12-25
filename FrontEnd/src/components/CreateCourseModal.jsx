@@ -1,7 +1,7 @@
 // components/CourseModal.jsx
 import React, { useState } from "react";
 
-const CreateCourseModal = ({accessToken, isOpen, onClose }) => {
+const CreateCourseModal = ({isOpen, onClose }) => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [group, setGroup] = useState("");
@@ -16,7 +16,7 @@ const CreateCourseModal = ({accessToken, isOpen, onClose }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Authorization': `Bearer ${accessToken}`,
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
 
         },
         body: JSON.stringify(courseData),

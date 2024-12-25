@@ -1,108 +1,141 @@
-// const OneCrossCheck = ({ data, index }) => {
+"use client";
+import React from "react";
+import Link from "next/link";
+import clsx from "clsx";
 
-//     const getStatusColor = () => {
-//         let statusColor = "bg-yellow-500";
-//         if (data.status === "Submitted") statusColor = "bg-green-600";
-//         else if (data.status === "Available") statusColor = "bg-yellow-400";
-//         else if (data.status === "Done") statusColor = "bg-green-500";
-//         else if (data.status === "Missed") statusColor = "bg-red-600";
-//         else statusColor = "bg-blue-400";
-//         return statusColor;
-//     };
+// Function to check if the end date has passed
+const isEndDatePassed = (endDate) => {
+  const endDateObj = new Date(endDate);
+  const currentDate = new Date();
+  return endDateObj > currentDate;
+};
 
-//     const getBgColor = () => {
-//         let bg = "bg-white";
-//         if (index % 2 === 0) {
-//             bg = "bg-[#EBEEF3]";
-//         }
-//         return bg;
-//     }
+const OneCrossCheck = ({ data, index, assignmentId, courseId }) => {
+  const { end_date, status, type, title, start_date, weight } = data;
+  const result = isEndDatePassed(end_date);
 
-//     console.log(data);
+  const crossCheckValue = result ? "submit" : "review";
 
-//     const cutTitle = () => {
-//         let text = data.title;
-//         if (data.title.length > 15) {
-//             text = `${data.title.substring(0, 15)}...`;
-//         }
+  const getStatusColor = () => {
+    switch (status) {
+      case "Submitted":
+        return "bg-green-600";
+      case "Available":
+        return "bg-yellow-400";
+      case "Done":
+        return "bg-green-500";
+      case "Missed":
+        return "bg-red-600";
+      default:
+        return "bg-blue-400";
+    }
+  };
 
-//         return text;
-//     };
+  const getTypeStyles = () => {
+    switch (type) {
+      case "essay":
+        return {
+          bgColor: "bg-green-200",
+          textColor: "text-green-700",
+          borderColor: "border-green-600",
+        };
+      case "project":
+        return {
+          bgColor: "bg-blue-200",
+          textColor: "text-blue-700",
+          borderColor: "border-blue-600",
+        };
+      case "quiz":
+        return {
+          bgColor: "bg-red-200",
+          textColor: "text-red-700",
+          borderColor: "border-red-600",
+        };
+      case "code":
+        return {
+          bgColor: "bg-purple-200",
+          textColor: "text-purple-700",
+          borderColor: "border-purple-600",
+        };
+      case "presentation":
+        return {
+          bgColor: "bg-yellow-200",
+          textColor: "text-yellow-700",
+          borderColor: "border-yellow-600",
+        };
+      default:
+        return {
+          bgColor: "bg-gray-200",
+          textColor: "text-gray-700",
+          borderColor: "border-gray-600",
+        };
+    }
+  };
 
-//     return (
-//         <div
-//             className={`w-full h-[40px] flex  text-[10px] items-center justify-between ${getBgColor()} rounded-xl pl-2 pr-2`}
-//         >
-//             <div className="flex items-center justify-start space-x-1 w-[70px]">
-//                 <div
-//                     className={`w-[7px] h-[7px] flex items-center justify-center rounded-full ${getStatusColor()}`}
-//                 ></div>
-//                 <div className="w-[57px]">{data.status}</div>
-//             </div>
-//             <div className="w-[95px]">{cutTitle()}</div>
-//             <div className="w-[70px]">{data.type}</div>
-//             <div className="w-[55px] break-words flex items-center text-center mr-2">{data.startDate}</div>
-//             <div className="w-[55px] break-words flex items-center text-center">{data.endDate}</div>
-//             <div>{data.weight}</div>
-//         </div>
-//     );
-// };
+  const getBgColor = () => {
+    return index % 2 === 0 ? "bg-[#EBEEF3]" : "bg-white";
+  };
 
-// export default OneCrossCheck;
+  const cutTitle = () => {
+    return title.length > 15 ? `${title.substring(0, 15)}...` : title;
+  };
 
-const OneCrossCheck = ({ data, index }) => {
-    const getStatusColor = () => {
-        switch (data.status) {
-            case "Submitted":
-                return "bg-green-600";
-            case "Available":
-                return "bg-yellow-400";
-            case "Done":
-                return "bg-green-500";
-            case "Missed":
-                return "bg-red-600";
-            default:
-                return "bg-blue-400";
-        }
-    };
+  const typeStyles = getTypeStyles();
 
-    const getBgColor = () => {
-        return index % 2 === 0 ? "bg-[#EBEEF3]" : "bg-white";
-    };
+  return (
+    <Link
+      href={{
+        pathname: `/${crossCheckValue}/${assignmentId}`,
+        query: { courseId: courseId },
+      }}
+      className={clsx(
+        "flex w-full items-center space-x-3 hover:bg-green-100 transition-all duration-300 hover:scale-[100.5%]",
+        index >= 0
+          ? "rounded-3xl pl-2 pr-2"
+          : "border-4 mb-3 rounded-xl border-blue-400"
+      )}
+    >
+      {index >= 0 && <div className="text-xs font-bold">{index + 1}</div>}
 
-    const cutTitle = () => {
-        return data.title.length > 15
-            ? `${data.title.substring(0, 15)}...`
-            : data.title;
-    };
-
-    return (
-        <div className="flex w-full items-center space-x-3 hover:bg-green-100 transition-all duration-300 rounded-3xl pl-2 pr-2">
-            <div className="text-xs font-bold">{index+1}</div>
-
-            <div
-                className={`w-full pt-3 pb-3  flex text-[10px] items-center hover:bg-green-100 transition-all duration-300  justify-between ${getBgColor()} rounded-xl pl-5 pr-5`}
-            >
-                <div className="flex items-center justify-start space-x-1 w-[70px]">
-                    <div
-                        className={`w-[7px] h-[7px] flex items-center justify-center rounded-full ${getStatusColor()}`}
-                    ></div>
-                    <div className="w-[57px]">{data.status}</div>
-                </div>
-                <div className="w-[95px] text-[0.8rem] font-bold">{cutTitle()}</div>
-                <div className="w-[70px] p-2 border-2 border-yellow-500 bg-yellow-200 rounded-full text-center text-yellow-600">
-                    {data.type}
-                </div>
-                <div className="w-[105px] text-gray-500 font-bold break-words flex items-center text-center mr-2">
-                    {data.start_date}
-                </div>
-                <div className="w-[105px] text-gray-500 font-bold break-words flex items-center text-center">
-                    {data.end_date}
-                </div>
-                <div className="font-bold text-[0.7rem]"><span className="text-green-500 font-bold mr-1 text-[0.8rem]">{data.weight}</span>p</div>
-            </div>
+      <div
+        className={clsx(
+          "w-full pt-3 pb-3 flex text-[10px] items-center justify-between hover:bg-green-100 transition-colors duration-200 rounded-xl pl-5 pr-5",
+          getBgColor()
+        )}
+      >
+        <div className="flex items-center justify-start space-x-1 w-[70px]">
+          <div
+            className={clsx(
+              "w-[7px] h-[7px] flex items-center justify-center rounded-full",
+              getStatusColor()
+            )}
+          ></div>
+          <div className="w-[57px] text-sm">{status}</div>
         </div>
-    );
+        <div className="w-[145px] text-sm font-bold">{cutTitle()}</div>
+        <div
+          className={clsx(
+            "min-w-[100px] text-sm p-2 font-bold border-2 rounded-full text-center",
+            typeStyles.borderColor,
+            typeStyles.bgColor,
+            typeStyles.textColor
+          )}
+        >
+          {type}
+        </div>
+        <div className="w-[105px] text-sm text-gray-500 font-bold break-words flex items-center text-center mr-2">
+          {start_date}
+        </div>
+        <div className="w-[105px] text-sm text-gray-500 font-bold break-words flex items-center text-center">
+          {end_date}
+        </div>
+        <div className="font-bold text-base">
+          <span className="text-green-500 font-bold mr-1 text-lg">{weight}</span>
+          p
+        </div>
+      </div>
+    </Link>
+  );
 };
 
 export default OneCrossCheck;

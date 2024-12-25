@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,6 +10,7 @@ import {
 import imagePaths from "../data/imagePaths";
 import coursesIcon from "../../public/images/sideBarIcons/courses.png";
 import { getCourseColor } from "../utils/courseColors";
+import { useRouter } from "next/navigation";
 
 const SideBar = ({ role, courses }) => {
     const sidebarItems =
@@ -18,7 +19,7 @@ const SideBar = ({ role, courses }) => {
     const [showCourses, setShowCourses] = useState(true);
     const [isUserAuthorized, setIsUserAuthorized] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState("");
-
+    const router = useRouter();
     useEffect(() => {
         if (!window) return;
         setSelectedCourse(localStorage.getItem("selectedCourse"));
@@ -33,6 +34,11 @@ const SideBar = ({ role, courses }) => {
         setShowCourses(!showCourses);
     };
 
+    const handleGradesClick = () => {
+        const selected = localStorage.getItem("selectedCourse")
+        router.push(`/grades/${selected}`)
+    }
+
     return (
         isUserAuthorized && (
             <div className="w-[280px] min-h-screen bg-white  border-[#D1D1D1] border-2  border-b-transparent hidden lg:block">
@@ -43,18 +49,8 @@ const SideBar = ({ role, courses }) => {
                                 key={item.label}
                                 className="px-4 flex items-center rounded-r-xl h-[55px] "
                             >
-                                <Link
-                                    href={
-                                        item.label === "Grades"
-                                            ? selectedCourse
-                                                ? `/grades/${selectedCourse}`
-                                                : "/grades"
-                                            : (localStorage.setItem(
-                                                  "selectedCourse",
-                                                  ""
-                                              ),
-                                              item.href) // Replace '/someOtherPath' with your desired path
-                                    }
+                                <button
+                                    onClick={() => handleGradesClick()}
                                     className="w-full"
                                 >
                                     <div className="flex space-x-3 items-center p-2 text-gray-700 w-full rounded-full hover:bg-gray-200">
@@ -68,7 +64,7 @@ const SideBar = ({ role, courses }) => {
                                             {item.label}
                                         </span>
                                     </div>
-                                </Link>
+                                </button>
                             </li>
                         ))}
                     </ul>

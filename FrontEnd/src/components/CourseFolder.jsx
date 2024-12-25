@@ -11,18 +11,29 @@ const CourseFolder = ({ color, course }) => {
         image = folderGreen;
     }
 
+    function truncateText(text, limit) {
+        if (text.length <= limit) {
+          return text;
+        }
+        return text.slice(0, limit) + '...';
+      }
+      
+      // Example usage:
+
+
+      
     return (
-        <div className="w-[220px] h-auto relative">
-            <h1 className="absolute text-lg font-bold left-16 top-20 text-pretty w-[75px] text-gray-700 flex justify-center">
-                {course[1]}
+        <div className="w-[220px]  h-[300px] relative flex flex-col items-center justify-evenly">
+            <h1 className=" text-lg font-bold text-pretty w-[75px] text-gray-700 flex justify-center z-10">
+                {truncateText(course[1], 10)}
             </h1>
-            <p className="absolute text-[0.9rem] leading-4 font-semibold left-20 text-gray-600 top-56  w-[40px] flex justify-center text-center">
+            <p className="text-[0.9rem] leading-4 font-semibold  text-gray-600   w-[40px] flex justify-center z-10 text-center">
                 {course[0]} <br /> {course[2]}
             </p>
             <Image
                 src={image}
                 alt="course"
-                className="w-[220px]"
+                className="w-[220px] absolute z-0"
                 
             />
         </div>

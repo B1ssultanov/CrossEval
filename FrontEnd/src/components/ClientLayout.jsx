@@ -1,4 +1,4 @@
-"use client"; // Mark this as a Client Component
+"use client"; 
 
 import Navbar from '../components/Navbar';
 import SideBar from '../components/SideBar';
@@ -9,47 +9,47 @@ export default function ClientLayout({ children }) {
   const [isUserAuthorized, setIsUserAuthorized] = useState(false);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState('');
 
   useEffect(() => {
-    // Check if the user is authenticated by checking localStorage for the accessToken
     const token = localStorage.getItem('accessToken');
 
-    if (token) {
-      setIsUserAuthorized(true); // Set user as authorized if token is found
+    if(window){
+      setRole(localStorage.getItem('role'))
+    }
 
-      // Fetch the user's courses
+    if (token) {
+      setIsUserAuthorized(true);
+
       const fetchCourses = async () => {
         try {
-          const response = await axios.get('http://127.0.0.1:8000/api/v1/main', {
+          const response = await axios.get(`http://127.0.0.1:8000/api/v1/main?role=${role}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          setCourses(response.data.courses); // Save courses to state
+          setCourses(response.data.courses); 
         } catch (error) {
           console.error('Failed to fetch courses', error);
         } finally {
-          setLoading(false); // Stop loading once the data is fetched
+          setLoading(false);
         }
       };
 
       fetchCourses();
     } else {
-      setLoading(false); // If no token, just stop loading without fetching courses
+      setLoading(false); 
     }
   }, []);
 
-  // Loading state while fetching courses and checking auth
   
   return (
-    <div className="flex flex-col w-full min-h-[100vh]">
-      {/* Sidebar will be visible on all pages */ }
-      <Navbar isUserAuthorized={isUserAuthorized} /> {/* Pass auth status to Navbar */}
+    <div className="flex flex-col w-full min-h-[100vh] dinround">
+      <Navbar isUserAuthorized={isUserAuthorized} />
       
-      {/* Main content area */}
       <div className="flex">
         <SideBar role={isUserAuthorized ? "student" : "guest"} courses={isUserAuthorized ? courses : []} />
-        {children} {/* The content of each page */}
+        {children}
       </div>
     </div>
   );

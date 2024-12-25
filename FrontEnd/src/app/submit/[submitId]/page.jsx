@@ -51,7 +51,7 @@ const AssignmentSubmit = () => {
                     <h2 className="text-gray-700">Course</h2>
                     <p>{courseInfo && courseInfo.name}</p>
                 </div>
-                <h1 className="font-bold text-xl">Cross-Check: Review</h1>
+                <h1 className="font-bold text-xl">Cross-Check: Submit</h1>
                 <div>
                     <h2 className="text-gray-700">Course ID</h2>
                     <p>{courseInfo && courseInfo.code}</p> 
