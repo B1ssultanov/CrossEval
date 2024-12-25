@@ -14,7 +14,7 @@ use App\Http\Controllers\FileController;
 |
 */
 
-Route::middleware(['auth', 'cors'])->group(function () {
+Route::middleware(['cors', 'auth'])->group(function () {
     Route::get('file/{id}', [FileController::class, 'get']);
 });
 

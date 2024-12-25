@@ -15,9 +15,16 @@ class Cors
      */
     public function handle(Request $request, Closure $next): Response
     {
-        header('Access-Control-Allow-Origin:  http://localhost:3000');
-        header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization, Origin');
-        header('Access-Control-Allow-Methods:  POST, PUT, GET');
+        if ($request->getMethod() === "OPTIONS") {
+            return response('', 204)
+                ->header('Access-Control-Allow-Origin', 'http://localhost:3000')
+                ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Authorization, Origin')
+                ->header('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
+        }
+
+        header('Access-Control-Allow-Origin: http://localhost:3000');
+        header('Access-Control-Allow-Headers: Content-Type, X-Auth-Token, Authorization, Origin');
+        header('Access-Control-Allow-Methods: POST, PUT, GET, OPTIONS');
 
         return $next($request);
     }
