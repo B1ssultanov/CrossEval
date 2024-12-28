@@ -11,6 +11,7 @@ use App\Models\Course;
 use App\Models\UserCourse;
 use App\Models\User;
 use App\Services\Course\Syllabus\Create\Service as AddSyllabusService;
+use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -150,12 +151,22 @@ class CourseController extends Controller
             'course_id' => $course->id,
         ]);
 
-        $assignments = Assignment::where('course_id', $course->id)->pluck('id');
+        $assignments = Assignment::where('course_id', $course->id)->pluck('end_date', 'id');
 
-        $data = $assignments->map(function ($assignment_id) use ($user) {
+        $data = $assignments->map(function ($end_date, $assignment_id) use ($user) {
+            $status = '';
+
+            if (Carbon::now() < $end_date) {
+                $status = 'Available';
+            }
+            else {
+                $status = 'Missed';
+            }
+
             return [
-                'user_id' => $user->id,
+                'user_id'       => $user->id,
                 'assignment_id' => $assignment_id,
+                'status'        => $status,
             ];
         });
 
