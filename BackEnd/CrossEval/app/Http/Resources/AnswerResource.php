@@ -15,9 +15,11 @@ class AnswerResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = [
-            'status' => $this->status,
-            'file_id' => $this->file_id,
-            'comment' => $this->comment,
+            'status'     => $this->status,
+            'file_id'    => $this->file_id,
+            'comment'    => $this->comment,
+            'grade'      => $this->grade,
+            'grade_date' => $this->grade_date,
         ];
 
         return $data;

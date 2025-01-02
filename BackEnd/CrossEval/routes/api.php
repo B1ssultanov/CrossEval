@@ -48,6 +48,7 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
         Route::post('answer_review/review/submit', 'AnswerReviewController@review_submit');
 
         Route::post('/answer',       'AnswerController@store');
+        Route::get('/answer',        'AnswerController@get');
         Route::get('/grades/export', 'AnswerController@export');
 
         Route::get('/cross_review/check',              'CrossCheckController@allAnswers');
