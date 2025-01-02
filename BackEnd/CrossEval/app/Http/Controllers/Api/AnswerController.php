@@ -4,10 +4,12 @@ namespace app\Http\Controllers\Api;
 
 use App\Exports\GradesExport;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AnswerResource;
 use App\Models\Answer;
 use App\Models\Course;
 use App\Models\User;
 use App\Services\Answer\Create\Service as CreateAnswerService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -46,5 +48,21 @@ class AnswerController extends Controller
         $course        = Course::where('id', $course_id)->first();
 
         return Excel::download(new GradesExport($assignmentIds), 'grades_' . $course->code . '.xlsx');
+    }
+
+    /**
+     * Provide information about student submissions.
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     */
+    public function get(Request $request): JsonResponse
+    {
+        $user = User::where('token', $request->bearerToken())->first();
+        $answer = Answer::where('assignment_id', $request->assignment_id)->where('user_id', $user->id)->first();
+
+        return response()->json([
+            'answer' => new AnswerResource($answer),
+        ]);
     }
 }
