@@ -12,7 +12,6 @@ use App\Models\UserCourse;
 use App\Models\User;
 use App\Services\Course\Syllabus\Create\Service as AddSyllabusService;
 use Carbon\Carbon;
-use http\Env\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -34,7 +33,7 @@ class CourseController extends Controller
         $courses     = Course::whereIn('id', $course_list)
             ->where('name', 'like', '%' . $request->search . '%')
             ->where('supervisor_id',
-            ($request->role == 'Supervisor') ? '=' : '!=',
+            (Str::lower($request->role) == 'supervisor') ? '=' : '!=',
             $user->id)->get();
 
         if (!isset($courses)){
