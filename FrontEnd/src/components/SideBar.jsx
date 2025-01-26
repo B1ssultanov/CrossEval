@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 const SideBar = ({ role, courses }) => {
     const sidebarItems =
-        role === "teacher" ? teacherSidebarItems : studentSidebarItems;
+        role === "Supervisor" ? teacherSidebarItems : studentSidebarItems;
 
     const [showCourses, setShowCourses] = useState(true);
     const [isUserAuthorized, setIsUserAuthorized] = useState(false);
@@ -22,6 +22,7 @@ const SideBar = ({ role, courses }) => {
     const router = useRouter();
     useEffect(() => {
         if (!window) return;
+        const storedRole = localStorage.getItem("role");
         setSelectedCourse(localStorage.getItem("selectedCourse"));
         console.log("checking for auth in SideBar");
         const token = localStorage.getItem("accessToken");
@@ -39,6 +40,10 @@ const SideBar = ({ role, courses }) => {
         router.push(`/grades/${selected}`)
     }
 
+    const handleClick = (href) => {
+        router.push(href);
+    };
+
     return (
         isUserAuthorized && (
             <div className="w-[280px] min-h-screen bg-white  border-[#D1D1D1] border-2  border-b-transparent hidden lg:block">
@@ -50,7 +55,7 @@ const SideBar = ({ role, courses }) => {
                                 className="px-4 flex items-center rounded-r-xl h-[55px] "
                             >
                                 <button
-                                    onClick={() => handleGradesClick()}
+                                    onClick={() => handleClick(item.href)}
                                     className="w-full"
                                 >
                                     <div className="flex space-x-3 items-center p-2 text-gray-700 w-full rounded-full hover:bg-gray-200">

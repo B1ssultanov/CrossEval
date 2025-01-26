@@ -67,7 +67,7 @@ const AssignmentCreateForm = () => {
     e.preventDefault();
 
     const criteriaString = criteriaRows
-      .map((row) => `${row.criteria}:${row.points}`)
+      .map((row) => `${row.criteria} ${row.points}`)
       .join(",");
 
     const formData = new FormData();

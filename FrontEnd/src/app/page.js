@@ -50,7 +50,8 @@ export default function Home() {
         }
       );
 
-      alert("Joined successfully!");
+      window.location.reload();
+      // alert("Joined successfully!");
       window.location.reload();
 
       // setCourses([...courses, response.data.course]);
@@ -78,6 +79,7 @@ export default function Home() {
     if (role) {
       const fetchCourses = async () => {
         try {
+          console.log("fetching courses for role", role);
           const response = await axios.get(
             `http://127.0.0.1:8000/api/v1/main?role=${role}`,
             {

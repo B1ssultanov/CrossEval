@@ -199,7 +199,7 @@ const Register = () => {
                 console.log(response);
                 if (response.status === 200) {
                     setSuccess(true);
-                    router.push("/login");
+                    router.push("/");
                 }
             } catch (err) {
                 if (err.response && err.response.data) {

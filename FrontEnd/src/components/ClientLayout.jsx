@@ -29,6 +29,7 @@ export default function ClientLayout({ children }) {
             },
           });
           setCourses(response.data.courses); 
+          console.log('courses in client layout', response.data);
         } catch (error) {
           console.error('Failed to fetch courses', error);
         } finally {

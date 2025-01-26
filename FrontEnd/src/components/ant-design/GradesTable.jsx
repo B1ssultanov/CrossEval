@@ -22,7 +22,13 @@ const GradesTable = () => {
       const role = localStorage.getItem('role');
       setCourseId(selectedCourse);
       setAccessToken(token);
-      setUserRole(role.toLowerCase());
+      if(role){
+        setUserRole(role.toLowerCase());
+      }else{
+      setUserRole((''));
+
+      }
+
     }
   }, []);
 
