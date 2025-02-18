@@ -146,6 +146,6 @@ body {
 .register-bg{
   background-image: url('../../public/assets/images/decoration/bg.jpg');
   background-repeat: no-repeat;
-  background-size: 100%;
+  /* background-size: 100%; */
   background-position: center;
 }

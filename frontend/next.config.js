@@ -1,6 +1,6 @@
 const { NextConfig } = require('next');
 
-/** @type {NextConbfig} */
+/** @type {import('next').NextConfig} */
 const config = {
   // Your configuration options here
 };

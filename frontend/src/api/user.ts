@@ -31,16 +31,34 @@ interface Course {
   course_group: string;
   teacher_name: string;
 }
-
 interface User {
   id: number;
   university_id: number;
   name: string;
   surname: string;
   email: string;
+  phone_number: string | null;
+  login: string | null;
+  gender: string | null;
+  course_grade: string | null;
+  faculty: string | null;
+  speciality: string | null;
+  academic_degree: string | null;
+  birthday: string | null;
   status: string;
-  token: string;
+  image: string | null;
 }
+
+
+// interface User {
+//   id: number;
+//   university_id: number;
+//   name: string;
+//   surname: string;
+//   email: string;
+//   status: string;
+//   token: string;
+// }
 
 interface UserDataResponse {
   courses: Course[];
@@ -143,11 +161,11 @@ export const loginUser = async (
 };
 
 // MAIN PAGE API Function to fetch user data and courses
-export const fetchUserData = async (
-  accessToken: string
-): Promise<UserDataResponse> => {
+export const fetchUserData = async (role: "supervisor" | "student"): Promise<UserDataResponse> => {
   try {
-    const response = await backendApiInstance.get<UserDataResponse>("/main");
+    const response = await backendApiInstance.get<UserDataResponse>(`/main`, {
+      params: { role }, // Pass role as a query parameter
+    });
 
     return response.data;
   } catch (error: unknown) {
@@ -160,17 +178,56 @@ export const fetchUserData = async (
   }
 };
 
+
 // Function to fetch the current user
+// export const fetchCurrentUser = async (): Promise<User> => {
+//   try {
+//     const response = await backendApiInstance.get<UserResponse>("/user");
+//     return response.data.user;
+//   } catch (error: unknown) {
+//     if (isAxiosError<UserErrorResponse>(error)) {
+//       throw new Error(
+//         error.response?.data?.message || "Failed to fetch user data."
+//       );
+//     }
+//     throw new Error("An unknown error occurred while fetching user data.");
+//   }
+// };
 export const fetchCurrentUser = async (): Promise<User> => {
   try {
-    const response = await backendApiInstance.get<UserResponse>("/user");
-    return response.data.user;
+    const response = await backendApiInstance.get<{ user: User }>("/user");
+    return response.data.user; // ✅ Now correctly returns full user details
   } catch (error: unknown) {
-    if (isAxiosError<UserErrorResponse>(error)) {
-      throw new Error(
-        error.response?.data?.message || "Failed to fetch user data."
-      );
+    if (isAxiosError<{ message: string }>(error)) {
+      throw new Error(error.response?.data?.message || "Failed to fetch user data.");
     }
     throw new Error("An unknown error occurred while fetching user data.");
+  }
+};
+
+// Update user profile data with form-data
+export const updateUserProfile = async (updatedData: Record<string, any>, imageFile?: File) => {
+  try {
+    const formData = new FormData();
+    Object.entries(updatedData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value);
+      }
+    });
+
+    // Append image file if provided
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    const response = await backendApiInstance.post("/user/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error("Failed to update profile.");
   }
 };

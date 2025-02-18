@@ -14,6 +14,7 @@ import {
 import { usePathname } from "next/navigation";
 import BreadCrumbs from "../shadcn-custom/breadcrumps";
 import ModeSwitch from "../shadcn-custom/modeSwitch";
+import CreateOrJoinCourse from "../page-components/main-page/create-or-join-course";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -39,7 +40,10 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
                       <BreadCrumbs />
                     </div>
 
-                    <ModeSwitch />
+                    <div className="flex">
+                      <CreateOrJoinCourse />
+                      <ModeSwitch />
+                    </div>
                   </div>
                 </div>
               </header>

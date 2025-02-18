@@ -25,8 +25,10 @@ const buttonVariants = cva(
         cyan: "bg-mycyan rounded-sm text-white hover:bg-mycyan/80",
         green: "bg-green-600 rounded-sm text-white text-xs hover:bg-emerald-500/80",
         lightcyan: "bg-[#E6EDF5] rounded-sm hover:bg-mycyan hover:text-white text-[#8C8C8C] shadow-md",
-        gray: "bg-[#E6EDF5] rounded-sm hover:bg-mycyan/30 text-mygray shadow-md",
+        gray: "bg-gray-500 rounded-sm hover:bg-indigo-500 rounded-3xl text-white shadow-md",
+        indigo: "bg-indigo-500 text-white hover:bg-indigo-400",
         none: "",
+
       },
       size: {
         default: "h-9 px-4 py-2",

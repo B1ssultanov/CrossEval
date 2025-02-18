@@ -98,10 +98,13 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Profile
-              </DropdownMenuItem>
+              <Link href={"/profile"}>
+                <DropdownMenuItem>
+                  <BadgeCheck />
+                  Profile
+                </DropdownMenuItem>
+              </Link>
+
               <Link href={"/billing"}>
                 <DropdownMenuItem>
                   <CreditCard />

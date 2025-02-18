@@ -29,7 +29,7 @@ export default function ModeSwitch() {
 
   return (
     <div className="flex items-center space-x-2">
-      <span className="font-bold text-base">{mode === "student" ? "Student" : "Supervisor"}</span>
+      <span className="text-gray-700 font-bold text-base">{mode === "student" ? "Student" : "Teacher"}</span>
       <GraduationCap size={25} className="text-orange-400" />
       <Switch
         checked={mode === "supervisor"}

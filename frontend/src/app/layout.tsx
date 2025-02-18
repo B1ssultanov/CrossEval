@@ -14,7 +14,7 @@ export default function RootLayout({
         <meta name="description" content="The best way to evaluate" />
 
         {/* Yandex.Metrika Counter */}
-        <script
+        {/* <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `
@@ -41,7 +41,7 @@ export default function RootLayout({
               alt=""
             />
           </div>
-        </noscript>
+        </noscript> */}
         {/* End Yandex.Metrika Counter */}
       </head>
       <body>

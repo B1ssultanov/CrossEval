@@ -6,7 +6,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Image from "next/image";
-// import CreateCourseModal from "@/components/CreateCourseModal"; // Ensure this component exists
+import Link from "next/link";
+import { Loader } from "lucide-react";
 
 interface Course {
   id: number;
@@ -19,86 +20,110 @@ interface Course {
 
 const Page = () => {
   const [courses, setCourses] = useState<Course[]>([]);
-  const [isCreateCourseModalOpen, setIsCreateCourseModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // ✅ New loading state
   const { toast } = useToast();
+
+  const folderColors = ["folderBlue.svg", "folderGreen.svg", "folderRed.svg"]; // Folder images
 
   // Get mode from Redux store
   const mode = useSelector((state: RootState) => state.mode.mode);
+  const shouldFetch = useSelector(
+    (state: RootState) => state.fetchTrigger.shouldFetch
+  );
+
+  // Function to fetch user courses
+  const fetchCourses = async () => {
+    setLoading(true); // ✅ Start loading
+    try {
+      const userData = await fetchUserData(mode);
+      setCourses(userData.courses);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: (error as Error).message,
+      });
+    } finally {
+      setLoading(false); // ✅ Stop loading
+    }
+  };
 
   useEffect(() => {
-    const loadUserData = async () => {
-      try {
-        const accessToken = localStorage.getItem("accessToken");
-        if (!accessToken) throw new Error("No access token found.");
-
-        const userData = await fetchUserData(accessToken);
-        setCourses(userData.courses);
-      } catch (error) {
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: (error as Error).message,
-        });
-      }
-    };
-
-    loadUserData();
-  }, []);
-
-  const openCreateModal = () => setIsCreateCourseModalOpen(true);
-  const closeCreateModal = () => setIsCreateCourseModalOpen(false);
+    fetchCourses(); // Fetch courses on mount and when shouldFetch changes
+  }, [mode, shouldFetch]); // Refetch when mode changes or trigger is toggled
 
   return (
-    <div className="p-6">
+    <div className="pt-6 px-14">
       <h1 className="text-lg font-bold mb-4 text-gray-700">My Courses</h1>
 
-      {courses.length > 0 ? (
-        <ul className="space-y-3">
-          {courses.map((course) => (
-            <li key={course.id} className="p-4 border rounded-lg shadow-md bg-white">
-              <h2 className="text-lg font-semibold">{course.name} ({course.code})</h2>
-              <p className="text-sm text-gray-600">Group: {course.course_group}</p>
-              <p className="text-sm text-gray-600">Instructor: {course.teacher_name}</p>
-              <p className="text-sm text-gray-500">Invite Code: {course.invite_code}</p>
-            </li>
+      {/* ✅ Show loading indicator while fetching */}
+      {loading ? (
+        <div className="flex justify-center items-center mt-20">
+          <div className="text-gray-500 text-lg animate-pulse flex flex-col items-center mt-20">
+            <Loader className="animate-spin h-10 w-10" />
+            <p>Loading courses...</p>
+          </div>
+        </div>
+      ) : courses.length > 0 ? (
+        <div className="flex justify-center md:justify-start gap-3 md:gap-6 flex-wrap">
+          {courses.map((course, index) => (
+            <Link
+              key={course.id}
+              href={`/course/${course.id}`}
+              className="relative w-32 h-44 md:w-48 md:h-72 flex flex-col items-center text-center hover:-mt-2 transition-all duration-100"
+            >
+              {/* Folder Image */}
+              <Image
+                src={`/assets/images/decoration/${
+                  folderColors[index % folderColors.length]
+                }`}
+                alt={`${course.name} folder`}
+                width={180}
+                height={250}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+
+              {/* Course Name */}
+              <div className="absolute top-10 md:top-16 -left-4 right-0 px-4 font-bold text-base md:text-xl text-gray-800">
+                {course.name}
+              </div>
+
+              {/* Course Code */}
+              <div className="absolute bottom-12 md:bottom-24 -left-4 right-0 text-xs md:text-sm text-gray-800">
+                {course.code}
+              </div>
+
+              {/* Instructor Name */}
+              <div className="absolute bottom-8 md:bottom-20 -left-4 right-0 text-xs md:text-sm text-gray-800 font-bold">
+                {course.teacher_name}
+              </div>
+            </Link>
           ))}
-        </ul>
+        </div>
       ) : (
-        mode === "supervisor" ? (
-          <div className="text-3xl flex flex-col items-center mt-40 font-bold text-gray-500">
-            You have not created any course yet
-            <Image
-              src={'/assets/images/decoration/happy-woman-vector.png'}
-              width={200}
-              height={200}
-              alt="vector image"
-            />
-            {/* <CreateCourseModal isOpen={isCreateCourseModalOpen} onClose={closeCreateModal} /> */}
-            <button
-              onClick={openCreateModal}
-              className="text-base rounded-full bg-gray-500 border-2 border-white w-52 py-2 text-white mt-4 hover:bg-indigo-500 hover:scale-105 transition-all duration-300"
-            >
-              Create course
-            </button>
-          </div>
-        ) : (
-          <div className="text-3xl flex flex-col items-center mt-40 font-bold text-gray-500">
-            No courses yet, start joining!
-            <Image
-              src={'/assets/images/decoration/happy-woman-vector.png'}
-              width={200}
-              height={200}
-              alt="vector image"
-            />
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="text-base rounded-full bg-gray-500 border-2 border-white w-52 py-2 text-white mt-4 hover:bg-indigo-500 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-indigo-600 hover:scale-105 transition-all duration-300"
-            >
-              Join by code
-            </button>
-          </div>
-        )
+        <div className="text-3xl flex flex-col items-center mt-40 font-bold text-gray-500">
+          {mode === "supervisor" ? (
+            <>
+              You have not created any course yet
+              <Image
+                src={"/assets/images/decoration/happy-woman-vector.png"}
+                width={200}
+                height={200}
+                alt="vector image"
+              />
+            </>
+          ) : (
+            <>
+              No courses yet, start joining!
+              <Image
+                src={"/assets/images/decoration/happy-woman-vector.png"}
+                width={200}
+                height={200}
+                alt="vector image"
+              />
+            </>
+          )}
+        </div>
       )}
     </div>
   );
