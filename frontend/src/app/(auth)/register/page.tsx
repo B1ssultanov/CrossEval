@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 interface FormData {
   email: string;
@@ -26,6 +27,8 @@ export default function RegisterPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  
 
   // Single useForm instance for all steps
   const {
@@ -51,6 +54,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: FormData) => {
     try {
+      setIsLoading(true);
       const response = await registerUser({ ...data });
       console.log(response)
       toast({
@@ -59,8 +63,10 @@ export default function RegisterPage() {
         description: "Your account has been created successfully!",
       });
       localStorage.setItem('accessToken', response.token)
+      setIsLoading(false);
       router.push("/");
     } catch (error) {
+      setIsLoading(false);
       toast({
         variant: "destructive",
         title: "Registration Failed",
@@ -120,7 +126,7 @@ export default function RegisterPage() {
               </div>
               <div className="flex justify-between">
                 <Button type="button" onClick={prevStep} variant="secondary">Back</Button>
-                <Button type="submit">Register</Button>
+                <Button type="submit" disabled={isLoading}> {isLoading ? <Loader className="animate-spin text-white" /> : 'Register'}</Button>
               </div>
             </form>
           )}

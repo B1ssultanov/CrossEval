@@ -1,56 +1,7 @@
 import { backendApiInstance } from "./index";
 import { AxiosError } from "axios";
+import {CreateCourseParams, AssignmentPayload, AssignmentAnswerPayload, FileBlob} from "@/types/courses";
 
-interface CreateCourseParams {
-  id: string;
-  name: string;
-  group: string;
-}
-
-// Define Course type
-export interface Course {
-  id: number;
-  name: string;
-  code: string;
-  invite_code: string;
-  course_group: string;
-  teacher_name: string;
-}
-
-// For a single assignment
-export interface Assignment {
-  id: number;
-  title: string;
-  type: "essay" | "presentation" | "code" | "quiz" | "project";
-  description: string;
-  start_date: string;
-  end_date: string;
-  weight: number;
-  isCrossCheck: number;
-  criteria: { name: string; weight: number }[];
-  rubrics_id: number;
-  status: string;
-}
-
-export interface AssignmentPayload {
-  course_id: number;
-  type: "essay" | "presentation" | "code" | "quiz" | "project";
-  title: string;
-  description: string;
-  start_date: string;
-  end_date: string;
-  weight: number;
-  criteria: { name: string; weight: number }[];
-  isCrossCheck: string;
-  rubrics_file?: File | null;
-}
-
-// Interface for answer submission payload
-export interface AssignmentAnswerPayload {
-  assignment_id: string;
-  comment: string;
-  answer_file: File;
-}
 
 
 // Create the course
@@ -160,3 +111,34 @@ export const submitAssignmentAnswer = async (payload: AssignmentAnswerPayload): 
   }
 };
 
+
+
+// Download the rubrics file
+export const downloadRubricsFile = async (assignmentName:string, rubricsId:number): Promise<void> => {
+  try {
+    const response: Response = await fetch(`http://127.0.0.1:8000/file/${rubricsId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to download rubrics file");
+    }
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = `Rubrics_for_${assignmentName}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    throw new Error(`Failed to download rubrics file: ${(error as Error).message}`);
+  }
+};

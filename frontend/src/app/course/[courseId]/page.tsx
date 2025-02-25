@@ -7,7 +7,10 @@ import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import Link from "next/link";
 import CourseCode from "@/components/page-components/course-page/course-code";
+import CourseSyllabus from "@/components/page-components/course-page/course-syllabus";
+import CreateCourseSyllabus from "@/components/page-components/course-page/create-course-syllabus";
 import { CrossChecksTable } from "@/components/page-components/course-page/cross-check-table";
+import { Course } from "@/types/courses";
 
 interface Assignment {
   id: number;
@@ -18,15 +21,6 @@ interface Assignment {
   end_date: string;
   weight: number;
   status: string;
-}
-
-interface Course {
-  id: number;
-  name: string;
-  code: string;
-  invite_code: string;
-  course_group: string;
-  teacher_name: string;
 }
 
 const CoursePage = () => {
@@ -43,6 +37,7 @@ const CoursePage = () => {
         setCourse(data.course);
         setAssignments(data.assignments);
         setRole(data.role);
+        console.log(data.role);
       } catch (error) {
         toast({
           variant: "destructive",
@@ -78,17 +73,30 @@ const CoursePage = () => {
 
       {/* Course Info */}
       <section className="flex w-full justify-between items-center">
-        <CourseCode inviteCode={course.invite_code} />
-        <Link
-          className="px-3 py-2 bg-mycyan text-white rounded-lg hover:bg-mycyan/80 transition-colors duration-100"
-          href={`/course/${courseId}/create-assignment`}
-        >
-          Create assignment
-        </Link>
+        <div className="flex item-center gap-3">
+          <CourseCode inviteCode={course.invite_code} />
+          {course?.syllabus_file_id ? (
+            <CourseSyllabus syllabusId={course.syllabus_file_id} />
+          ) : (
+            <CreateCourseSyllabus courseId={courseId as string} />
+          )}
+        </div>
+
+        {role === "Supervisor" && (
+          <Link
+            className="px-3 py-2 bg-mycyan text-white rounded-lg hover:bg-mycyan/80 transition-colors duration-100"
+            href={`/course/${courseId}/create-assignment`}
+          >
+            Create assignment
+          </Link>
+        )}
       </section>
 
       {/* Assignments */}
-      <CrossChecksTable courseId={courseId as string} assignments={assignments} />
+      <CrossChecksTable
+        courseId={courseId as string}
+        assignments={assignments}
+      />
     </div>
   );
 };

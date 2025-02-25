@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 import {
   fetchAssignment,
   fetchCourseById,
-  Assignment,
-  Course,
 } from "@/api/courses";
+import { Course, Assignment } from "@/types/courses";
 import SingleAssignment from "@/components/page-components/course-page/single-assignment"; // ✅ Import the new component
 import { Loader } from "lucide-react";
 import AssignmentSubmission from "@/components/page-components/course-page/assignment-submission"; // Import the new component

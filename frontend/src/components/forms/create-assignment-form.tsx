@@ -50,6 +50,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
   const [endDate, setEndDate] = useState<Date | undefined>(
     addDays(new Date(), 2)
   );
+  const [endCrossDate, setEndCrossDate] = useState<Date | undefined>();
   const [description, setDescription] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +98,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         title: "Error",
         description: "Total criteria weight must equal the assignment weight",
         variant: "destructive",
-      })
+      });
       return;
     }
 
@@ -109,6 +110,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         description,
         start_date: startDate ? format(startDate, "yyyy-MM-dd") : "",
         end_date: endDate ? format(endDate, "yyyy-MM-dd") : "",
+        end_cross_date: endCrossDate ? format(endCrossDate, "yyyy-MM-dd") : "",
         weight,
         criteria,
         isCrossCheck: crossCheck ? "1" : "0",
@@ -121,7 +123,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         title: "Success",
         description: "Assignment created successfully",
         variant: "success",
-      })
+      });
 
       router.push(`/course/${courseId}`);
       // Handle success (e.g., show a success message, reset form, etc.)
@@ -131,7 +133,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         title: "Error",
         description: "Failed to create assignment",
         variant: "destructive",
-      })
+      });
       // Handle error (e.g., show error message)
     }
   };
@@ -151,7 +153,9 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           required
         />
 
-        <h3 className="text-lg font-semibold text-indigo-500">Assignment type</h3>
+        <h3 className="text-lg font-semibold text-indigo-500">
+          Assignment type
+        </h3>
 
         <Select
           value={type}
@@ -195,7 +199,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           />
           <label
             htmlFor="file-upload"
-            className="cursor-pointer flex flex-col items-center justify-center text-sm text-gray-600 py-10 hover:bg-mylightcyan transition-colors duration-100 rounded-lg" 
+            className="cursor-pointer flex flex-col items-center justify-center text-sm text-gray-600 py-10 hover:bg-mylightcyan transition-colors duration-100 rounded-lg"
           >
             <Upload className="h-8 w-8" />
             <span>Drop file here or click to upload</span>
@@ -249,7 +253,6 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
             <Plus className="h-4 w-4 mr-2" /> Add Criteria
           </Button>
         </div>
-
         {/* Start Date Picker */}
         <h3 className="text-lg font-semibold text-indigo-500">Dates</h3>
         <Popover>
@@ -279,7 +282,6 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
             />
           </PopoverContent>
         </Popover>
-
         {/* End Date Picker */}
         <Popover>
           <PopoverTrigger asChild>
@@ -307,7 +309,42 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
             />
           </PopoverContent>
         </Popover>
-
+        {crossCheck && (
+          <div>
+            <h3 className="text-lg font-semibold text-indigo-500 mb-4">
+              Cross-Check End Date
+            </h3>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline">
+                  {endCrossDate
+                    ? format(endCrossDate, "PPP")
+                    : "Choose the end date for cross-check"}
+                  <CalendarIcon className="ml-2 h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={endCrossDate}
+                  onSelect={(date) => {
+                    if (date && endDate && date <= endDate) {
+                      toast({
+                        title: "Ошибка",
+                        description:
+                          "Дата окончания кросс-проверки должна быть позже даты окончания задания",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    setEndCrossDate(date || undefined);
+                  }}
+                  disabled={(date) => (endDate ? date <= endDate : false)} // Ensure cross-check end date is after assignment end date
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        )}
         <h3 className="text-lg font-semibold text-indigo-500">Description</h3>
         <Textarea
           placeholder="Assignment Description"
@@ -315,7 +352,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <Button variant={'indigo'} type="submit" className="w-full">
+        <Button variant={"indigo"} type="submit" className="w-full">
           Create Assignment
         </Button>
       </div>

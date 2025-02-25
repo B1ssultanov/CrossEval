@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 interface LoginFormData {
   email: string;
@@ -22,6 +23,7 @@ interface LoginFormData {
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
   const {
@@ -34,6 +36,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
+      setIsLoading(true);
       const response = await loginUser(data);
       
       toast({
@@ -46,8 +49,10 @@ export default function LoginPage() {
       localStorage.setItem("accessToken", response.token);
 
       // Redirect to homepage after login
+      setIsLoading(false);
       router.push("/");
     } catch (error) {
+      setIsLoading(false);
       setError((error as Error).message);
       toast({
         variant: "destructive",
@@ -80,14 +85,14 @@ export default function LoginPage() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <Button type="submit" className="w-full">Login</Button>
+            <Button type="submit" className="w-full" disabled={isLoading}> {isLoading ? <Loader className="animate-spin text-white text-center" /> : 'Login'}</Button>
           </form>
         </CardContent>
         <CardFooter>
           <p className="text-sm text-center w-full">
             Don't have an account?{" "}
             <Link href="/register" className="text-blue-500 hover:underline">
-              Register
+             Register
             </Link>
           </p>
         </CardFooter>
