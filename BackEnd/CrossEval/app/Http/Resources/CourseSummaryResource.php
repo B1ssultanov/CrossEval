@@ -25,12 +25,13 @@ class CourseSummaryResource extends JsonResource
         $teacherName = $teacher ? $teacher->name . ' ' . $teacher->surname : 'No teacher assigned';
 
         $data = [
-            'id'           => $this->id,
-            'name'         => $this->name,
-            'code'         => $this->code,
-            'invite_code'  => $this->invite_code,
-            'course_group' => $this->course_group,
-            'teacher_name' => $teacherName,
+            'id'               => $this->id,
+            'name'             => $this->name,
+            'code'             => $this->code,
+            'invite_code'      => $this->invite_code,
+            'course_group'     => $this->course_group,
+            'teacher_name'     => $teacherName,
+            'syllabus_file_id' => $this->syllabus_file_id,
         ];
 
         return $data;
