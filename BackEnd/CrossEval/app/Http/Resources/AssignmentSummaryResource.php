@@ -22,17 +22,17 @@ class AssignmentSummaryResource extends JsonResource
             ->status;
 
         $data = [
-            'id'           => $this->id,
-            'title'        => $this->title,
-            'type'         => $this->type,
-            'description'  => $this->description,
-            'start_date'   => $this->start_date,
-            'end_date'     => $this->end_date,
-            'weight'       => $this->weight,
-            'isCrossCheck' => $this->cross_check,
-            'criteria'     => $this->criteria,
-            'rubrics_id'   => $this->rubrics_file_id,
-            'status'       => $status,
+            'id'                => $this->id,
+            'title'             => $this->title,
+            'type'              => $this->type,
+            'description'       => $this->description,
+            'start_date'        => $this->start_date,
+            'end_date'          => $this->end_date,
+            'weight'            => $this->weight,
+            'evaluation_method' => $this->evaluation_method,
+            'criteria'          => $this->criteria,
+            'rubrics_id'        => $this->rubrics_file_id,
+            'status'            => $status,
         ];
 
         return $data;

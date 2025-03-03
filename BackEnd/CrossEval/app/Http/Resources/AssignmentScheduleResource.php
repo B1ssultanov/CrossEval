@@ -15,12 +15,12 @@ class AssignmentScheduleResource extends JsonResource
     public function toArray(Request $request): array
     {
         $data = [
-            'id'           => $this->id,
-            'title'        => $this->title,
-            'type'         => $this->type,
-            'start_date'   => $this->start_date,
-            'end_date'     => $this->end_date,
-            'isCrossCheck' => $this->cross_check,
+            'id'                => $this->id,
+            'title'             => $this->title,
+            'type'              => $this->type,
+            'start_date'        => $this->start_date,
+            'end_date'          => $this->end_date,
+            'evaluation_method' => $this->evaluation_method,
         ];
 
         return $data;
