@@ -8,6 +8,8 @@ import { RootState } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "lucide-react";
+import { UserDataResponse } from "@/types/user";
+import { SearchComponent } from "@/components/page-components/main-page/search-component";
 
 interface Course {
   id: number;
@@ -20,7 +22,7 @@ interface Course {
 
 const Page = () => {
   const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true); // ✅ New loading state
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   const folderColors = ["folderBlue.svg", "folderGreen.svg", "folderRed.svg"]; // Folder images
@@ -31,11 +33,11 @@ const Page = () => {
     (state: RootState) => state.fetchTrigger.shouldFetch
   );
 
-  // Function to fetch user courses
-  const fetchCourses = async () => {
-    setLoading(true); // ✅ Start loading
+  // Function to fetch user courses (includes search parameter)
+  const fetchCourses = async (search?: string) => {
+    setLoading(true);
     try {
-      const userData = await fetchUserData(mode);
+      const userData = await fetchUserData(mode, search); // ✅ Pass search parameter
       setCourses(userData.courses);
     } catch (error) {
       toast({
@@ -44,16 +46,19 @@ const Page = () => {
         description: (error as Error).message,
       });
     } finally {
-      setLoading(false); // ✅ Stop loading
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchCourses(); // Fetch courses on mount and when shouldFetch changes
-  }, [mode, shouldFetch]); // Refetch when mode changes or trigger is toggled
+  }, [mode, shouldFetch]);
 
   return (
     <div className="pt-6 px-14">
+      {/* Search Component */}
+      <SearchComponent role={mode} onSearchResults={(data) => setCourses(data.courses)} />
+
       <h1 className="text-lg font-bold mb-4 text-gray-700">My Courses</h1>
 
       {/* ✅ Show loading indicator while fetching */}

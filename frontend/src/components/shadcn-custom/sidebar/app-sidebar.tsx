@@ -36,9 +36,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     navMain: [
       { title: "Home page", url: "/", icon: House },
-      { title: "Schedule", url: "/company", icon: CalendarCheck },
-      { title: "Tasks", url: "/settings", icon: ClipboardList },
-      { title: "Grades", url: "/billing", icon: BookA },
+      { title: "Schedule", url: "/schedule", icon: CalendarCheck },
+      { title: "Tasks", url: "/tasks", icon: ClipboardList },
+      { title: "Grades", url: "/grades", icon: BookA },
     ],
   };
 

@@ -4,8 +4,8 @@ import { useState } from "react";
 import type React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
+import TooltipInfo from "@/components/shadcn-custom/tooltip-info"; // Import the reusable component
 import {
   Select,
   SelectContent,
@@ -38,7 +38,8 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
   const [type, setType] = useState<
     "essay" | "presentation" | "code" | "quiz" | "project"
   >("essay");
-  const [crossCheck, setCrossCheck] = useState<boolean>(false);
+  // const [crossCheck, setCrossCheck] = useState<boolean>(false);
+  const [evaluationMethod, setEvaluationMethod] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [weight, setWeight] = useState<number | "">("");
   const [criteria, setCriteria] = useState<{ name: string; weight: number }[]>([
@@ -113,7 +114,8 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         end_cross_date: endCrossDate ? format(endCrossDate, "yyyy-MM-dd") : "",
         weight,
         criteria,
-        isCrossCheck: crossCheck ? "1" : "0",
+        // isCrossCheck: crossCheck ? "1" : "0",
+        evaluation_method: evaluationMethod,
         rubrics_file: file,
       };
       console.log(assignmentData);
@@ -177,15 +179,35 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           </SelectContent>
         </Select>
 
-        <h3 className="text-lg font-semibold text-indigo-500">Cross-Check</h3>
+        <h3 className="text-lg font-semibold text-indigo-500">
+          Evalutaion method
+        </h3>
         <div className="flex items-center space-x-2">
-          <Checkbox
+          {/* <Checkbox
             id="cross-check"
             checked={crossCheck}
             onCheckedChange={(checked) => setCrossCheck(checked === true)}
-          />
+          /> */}
+          <Select onValueChange={setEvaluationMethod} value={evaluationMethod}>
+            <SelectTrigger id="evaluation-method">
+              <SelectValue placeholder="Select evaluation method" />
+              {/* Tooltip with explanations */}
+              <TooltipInfo
+                infoTexts={[
+                  "Cross-check: Peer-reviewed evaluation.",
+                  "System-check: Automated verification.",
+                  "Manual-check: Human-reviewed assessment.",
+                ]}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Cross-check">Cross-check</SelectItem>
+              <SelectItem value="System-check">System-check</SelectItem>
+              <SelectItem value="Manual-check">Manual-check</SelectItem>
+            </SelectContent>
+          </Select>
 
-          <label htmlFor="cross-check text-indigo-500">Cross-check</label>
+          {/* <label htmlFor="cross-check text-indigo-500">Cross-check</label> */}
         </div>
 
         <h3 className="text-lg font-semibold text-indigo-500">Rubrics</h3>
@@ -254,7 +276,13 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           </Button>
         </div>
         {/* Start Date Picker */}
-        <h3 className="text-lg font-semibold text-indigo-500">Dates</h3>
+        <h3 className="text-lg font-semibold text-indigo-500">
+          {evaluationMethod === "Cross-check" && "Cross-Check Submit "}Dates
+        </h3>
+        <div className="flex space-x-36 font-bold text-mylightgray">
+          <div>Start date</div>
+          <div>End date</div>
+        </div>
         <Popover>
           <PopoverTrigger asChild>
             <Button variant="outline" className="mr-4">
@@ -309,7 +337,7 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
             />
           </PopoverContent>
         </Popover>
-        {crossCheck && (
+        {evaluationMethod === "Cross-check" && (
           <div>
             <h3 className="text-lg font-semibold text-indigo-500 mb-4">
               Cross-Check End Date

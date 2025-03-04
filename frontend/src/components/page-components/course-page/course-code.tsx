@@ -19,9 +19,9 @@ const CourseCode = ({ inviteCode }: { inviteCode: string }) => {
       onClick={handleCopy}
     >
       <div className="text-lg flex flex-col items-center justify-center space-y-1">
-        <p className="text-sm font-semibold">Course Code:</p>{" "}
-        <p className="inline-block text-sky-600 font-bold hover:underline bg-sky-200 px-6 rounded-lg">
-          {copied ? "Copied!" : inviteCode}
+        <p className="text-sm font-semibold">Course Code</p>{" "}
+        <p className="inline-block text-sky-600 hover:underline undeline px-6 rounded-lg">
+          {/* {copied ? "Copied!" : inviteCode} */} open
         </p>
       </div>
     </div>

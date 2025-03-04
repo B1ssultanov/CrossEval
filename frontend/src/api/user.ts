@@ -1,113 +1,6 @@
 import { backendApiInstance } from "./index";
 import { AxiosError } from "axios";
-
-// Defined the expected user response structure from fetchCurrentUser api call
-interface User {
-  id: number;
-  university_id: number;
-  name: string;
-  surname: string;
-  email: string;
-  status: string;
-  token: string;
-}
-
-// Defined the expected response structure
-interface UserResponse {
-  user: User;
-}
-
-// Defined error response structure
-interface UserErrorResponse {
-  message: string;
-}
-
-//  the expected response structure
-interface Course {
-  id: number;
-  name: string;
-  code: string;
-  invite_code: string;
-  course_group: string;
-  teacher_name: string;
-}
-interface User {
-  id: number;
-  university_id: number;
-  name: string;
-  surname: string;
-  email: string;
-  phone_number: string | null;
-  login: string | null;
-  gender: string | null;
-  course_grade: string | null;
-  faculty: string | null;
-  speciality: string | null;
-  academic_degree: string | null;
-  birthday: string | null;
-  status: string;
-  image: string | null;
-}
-
-
-// interface User {
-//   id: number;
-//   university_id: number;
-//   name: string;
-//   surname: string;
-//   email: string;
-//   status: string;
-//   token: string;
-// }
-
-interface UserDataResponse {
-  courses: Course[];
-  user: User;
-}
-
-//  the error response structure
-interface UserDataErrorResponse {
-  message: string;
-}
-
-// the type for user registration data
-interface RegisterUserPayload {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
-  university_id: string;
-}
-
-// the type for a successful API response
-interface RegisterUserSuccessResponse {
-  data: any;
-  token: string;
-  message: string;
-}
-
-// the type for an error API response
-interface RegisterUserErrorResponse {
-  errors: Record<string, string[]>;
-}
-
-// login request payload
-interface LoginPayload {
-  email: string;
-  password: string;
-}
-
-// the success response from the API
-interface LoginSuccessResponse {
-  token: string;
-  role: string | null;
-}
-
-// the error response
-interface LoginErrorResponse {
-  message: string;
-}
+import { User, UserDataResponse, UserDataErrorResponse, RegisterUserPayload, RegisterUserSuccessResponse, RegisterUserErrorResponse, LoginPayload, LoginSuccessResponse, LoginErrorResponse } from '@/types/user'
 
 // Utility function to check if an error is an AxiosError
 function isAxiosError<T>(error: unknown): error is AxiosError<T> {
@@ -161,10 +54,37 @@ export const loginUser = async (
 };
 
 // MAIN PAGE API Function to fetch user data and courses
-export const fetchUserData = async (role: "supervisor" | "student"): Promise<UserDataResponse> => {
+// export const fetchUserData = async (role: "supervisor" | "student"): Promise<UserDataResponse> => {
+//   try {
+//     const response = await backendApiInstance.get<UserDataResponse>(`/main`, {
+//       params: { role }, // Pass role as a query parameter
+//     });
+
+//     return response.data;
+//   } catch (error: unknown) {
+//     if (isAxiosError<UserDataErrorResponse>(error)) {
+//       throw new Error(
+//         error.response?.data?.message || "Failed to fetch user data."
+//       );
+//     }
+//     throw new Error("An unknown error occurred while fetching user data.");
+//   }
+// };
+
+// Fetch user data and courses with optional search
+export const fetchUserData = async (
+  role: "supervisor" | "student",
+  search?: string // ✅ search is now optional
+): Promise<UserDataResponse> => {
   try {
-    const response = await backendApiInstance.get<UserDataResponse>(`/main`, {
-      params: { role }, // Pass role as a query parameter
+    // Construct params object dynamically
+    const params: Record<string, string> = { role };
+    if (search && search.trim() !== "") {
+      params.search = search; // ✅ Only add search if it's not empty
+    }
+
+    const response = await backendApiInstance.get<UserDataResponse>("/main", {
+      params,
     });
 
     return response.data;
@@ -177,7 +97,6 @@ export const fetchUserData = async (role: "supervisor" | "student"): Promise<Use
     throw new Error("An unknown error occurred while fetching user data.");
   }
 };
-
 
 // Function to fetch the current user
 // export const fetchCurrentUser = async (): Promise<User> => {

@@ -82,25 +82,7 @@ export default function CrossCheckSubmitPage() {
       {assignment && <SingleAssignment assignment={assignment} />}
 
       {assignment && <AssignmentSubmission courseId={courseId} assignment={assignment} />}
-{/*       
-      <h1 className="text-xl font-bold mt-6">Cross-Check Submission</h1>
-      <p><strong>Course ID:</strong> {courseId}</p>
-      <p><strong>Assignment ID:</strong> {assignment?.id}</p>
-      <p><strong>Title:</strong> {assignment?.title}</p>
-      <p><strong>Type:</strong> {assignment?.type}</p>
-      <p><strong>Description:</strong> {assignment?.description}</p>
-      <p><strong>Start Date:</strong> {assignment?.start_date}</p>
-      <p><strong>End Date:</strong> {assignment?.end_date}</p>
-      <p><strong>Weight:</strong> {assignment?.weight}</p>
-      <p><strong>Cross Check:</strong> {assignment?.isCrossCheck ? "Yes" : "No"}</p>
-      <p><strong>Status:</strong> {assignment?.status}</p>
 
-      <h3 className="mt-4 text-lg font-semibold">Criteria:</h3>
-      <ul className="list-disc ml-6">
-        {assignment?.criteria.map((c, index) => (
-          <li key={index}>{c.name} - {c.weight} points</li>
-        ))}
-      </ul> */}
     </div>
   );
 }

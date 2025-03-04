@@ -1,6 +1,6 @@
 import { backendApiInstance } from "./index";
 import { AxiosError } from "axios";
-import {CreateCourseParams, AssignmentPayload, AssignmentAnswerPayload, FileBlob} from "@/types/courses";
+import {CreateCourseParams, AssignmentPayload, AssignmentAnswerPayload, FileBlob, SyllabusPayload} from "@/types/courses";
 
 
 
@@ -60,8 +60,8 @@ export const createAssignment = async (payload: AssignmentPayload) => {
     formData.append("end_date", payload.end_date);
     formData.append("weight", payload.weight.toString());
     formData.append("criteria", JSON.stringify(payload.criteria));
-    formData.append("isCrossCheck", payload.isCrossCheck);
-
+    // formData.append("isCrossCheck", payload.isCrossCheck);
+    formData.append("evaluation_method", payload.evaluation_method);
     if (payload.rubrics_file) {
       formData.append("rubrics_file", payload.rubrics_file);
     }
@@ -114,7 +114,7 @@ export const submitAssignmentAnswer = async (payload: AssignmentAnswerPayload): 
 
 
 // Download the rubrics file
-export const downloadRubricsFile = async (assignmentName:string, rubricsId:number): Promise<void> => {
+export const downloadRubricsFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
   try {
     const response: Response = await fetch(`http://127.0.0.1:8000/file/${rubricsId}`, {
       method: "GET",
@@ -132,13 +132,36 @@ export const downloadRubricsFile = async (assignmentName:string, rubricsId:numbe
 
     const link = document.createElement("a");
     link.href = blobUrl;
-    link.download = `Rubrics_for_${assignmentName}.pdf`;
+    link.download = `${name}_for_${assignmentName}.pdf`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 
     window.URL.revokeObjectURL(blobUrl);
   } catch (error) {
-    throw new Error(`Failed to download rubrics file: ${(error as Error).message}`);
+    throw new Error(`Failed to download ${name} file: ${(error as Error).message}`);
+  }
+};
+
+// For adding rubrics file to course
+export const uploadSyllabus = async (payload: SyllabusPayload) => {
+  try {
+    const formData = new FormData();
+    formData.append("course_id", payload.course_id);
+    formData.append("syllabus_file", payload.file);
+
+    // Обратите внимание на правильный путь к эндпоинту
+    const response = await backendApiInstance.post(
+      "/syllabus",
+      formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
+    );
+
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || "Failed to upload syllabus");
+    }
+    throw error;
   }
 };

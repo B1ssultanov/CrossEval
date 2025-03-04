@@ -10,12 +10,6 @@ import { usePathname } from "next/navigation";
 
 // Map English page slugs to their Russian equivalents
 const pageNames: { [key: string]: string } = {
-  assistants: "Main Page",
-  company: "Schedule",
-  settings: "Tasks",
-  billing: "Grades",
-  hr: "ИИ Рекрутер",
-  orders: "Заказы",
 };
 
 export default function BreadCrumbs() {
@@ -26,7 +20,7 @@ export default function BreadCrumbs() {
 
   // If the path is empty, set default to 'assistants'
   if (crumbs.length === 0) {
-    crumbs[0] = "assistants";
+    crumbs[0] = "main page";
     currentLink = "";
   }
 
@@ -53,48 +47,3 @@ export default function BreadCrumbs() {
     </Breadcrumb>
   );
 }
-
-
-// import React from 'react';
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
-// import { usePathname } from "next/navigation";  
-
-
-// export default function BreadCrumbs() {
-//   const path = usePathname();  
-
-//   let currentLink: string = "";  
-//   const crumbs: string[] = path ? path.split("/").filter((crumb) => crumb !== "") : [];  
-
-//   if(crumbs.length === 0){
-//     crumbs[0] = 'assistants'
-//     currentLink = ''
-//   }
-
-//   return (
-//     <Breadcrumb>
-//       <BreadcrumbList>
-//         {crumbs.map((crumb, index) => {
-//           currentLink += `/${crumb}`;  
-
-//           return (
-//             <React.Fragment key={index}>
-//               <BreadcrumbItem className="hidden md:block">
-//                 <BreadcrumbLink href={currentLink}>{crumb}</BreadcrumbLink>
-//               </BreadcrumbItem>
-//               {index < crumbs.length - 1 && (
-//                 <BreadcrumbSeparator className="hidden md:block" />
-//               )}
-//             </React.Fragment>
-//           );
-//         })}
-//       </BreadcrumbList>
-//     </Breadcrumb>
-//   );
-// }

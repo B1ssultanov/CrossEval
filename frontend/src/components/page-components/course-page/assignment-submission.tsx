@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Download, Loader, UploadCloud } from "lucide-react";
 import { submitAssignmentAnswer, downloadRubricsFile } from "@/api/courses";
 import { useRouter } from "next/navigation";
+import { formatSubmissionDate } from "@/utils/dateConverter";
 
 interface AssignmentSubmissionProps {
   assignment: Assignment;
@@ -74,7 +75,11 @@ export default function AssignmentSubmission({
   const handleDownloadRubrics = async () => {
     try {
       // Преобразуем rubrics_id к числу, если это нужно
-      await downloadRubricsFile(assignment?.title, Number(assignment?.rubrics_id));
+      await downloadRubricsFile(
+        assignment?.title,
+        Number(assignment?.rubrics_id),
+        "rubrics"
+      );
       toast({
         title: "Success",
         description: "Rubrics downloaded successfully!",
@@ -103,7 +108,11 @@ export default function AssignmentSubmission({
           {/* <p className="text-gray-500 border rounded-lg mt-2 px-2 min-h-20">
             Rubrics ID: {assignment.rubrics_id}
           </p> */}
-          <Button variant="ghost" onClick={handleDownloadRubrics} className="underline text-mycyan font-bold text-sm">
+          <Button
+            variant="ghost"
+            onClick={handleDownloadRubrics}
+            className="underline text-mycyan font-bold text-sm"
+          >
             Download rubrics <Download />
           </Button>
         </div>
@@ -178,10 +187,10 @@ export default function AssignmentSubmission({
         <p className="text-mylightgray text-sm">
           Submission will be available on during{" "}
           <span className="text-mycyan font-bold">
-            {assignment?.start_date}
+            {formatSubmissionDate(assignment?.start_date)}
           </span>{" "}
           and{" "}
-          <span className="text-mycyan font-bold">{assignment?.end_date}</span>
+          <span className="text-mycyan font-bold">{formatSubmissionDate(assignment?.end_date)}</span>
         </p>
       </form>
     </div>

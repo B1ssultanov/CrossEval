@@ -76,11 +76,21 @@ const CoursePage = () => {
         <div className="flex item-center gap-3">
           <CourseCode inviteCode={course.invite_code} />
           {course?.syllabus_file_id ? (
-            <CourseSyllabus syllabusId={course.syllabus_file_id} />
+            <CourseSyllabus
+              courseTitle={course?.name}
+              syllabusId={course.syllabus_file_id}
+            />
           ) : (
-            <CreateCourseSyllabus courseId={courseId as string} />
+            role === "Supervisor" && (
+              <CreateCourseSyllabus courseId={courseId as string} />
+            )
           )}
+        {!course?.syllabus_file_id && <div className="flex items-center text-mylightgray font-bold">No Syllabus yet</div>}
+
         </div>
+
+       
+        
 
         {role === "Supervisor" && (
           <Link

@@ -27,7 +27,8 @@ export interface Assignment {
   start_date: string;
   end_date: string;
   weight: number;
-  isCrossCheck: number;
+  // isCrossCheck: number;
+  evaluation_method: string;
   criteria: { name: string; weight: number }[];
   rubrics_id: number;
   status: string;
@@ -44,7 +45,8 @@ export interface AssignmentPayload {
   end_date: string;
   weight: number;
   criteria: { name: string; weight: number }[];
-  isCrossCheck: string;
+  // isCrossCheck: string;
+  evaluation_method: string;
   rubrics_file?: File | null;
 }
 
@@ -59,3 +61,10 @@ export interface AssignmentAnswerPayload {
 
 //For downloading the rubrics file endpoint
 export type FileBlob = Blob;
+
+
+//For adding reubrics file to course
+export interface SyllabusPayload {
+  course_id: string;
+  file: File;
+}
