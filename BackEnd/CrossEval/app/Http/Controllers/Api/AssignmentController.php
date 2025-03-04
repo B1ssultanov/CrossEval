@@ -45,35 +45,35 @@ class AssignmentController extends Controller
     public function create(Request $request)
     {
         $validateData = Validator::make($request->all(), [
-            'course_id'    => 'required|string',
-            'title'        => 'required|string',
-            'description'  => 'required|string',
-            'type'         => 'required|string|in:quiz,project,presentation,code,essay',
-            'isCrossCheck' => 'required|boolean',
-            'criteria'     => 'required|string',
-            'start_date'   => 'required|date|after:today',
-            'end_date'     => 'required|date|after:start_date',
-            'weight'       => 'required|numeric',
+            'course_id'         => 'required|string',
+            'title'             => 'required|string',
+            'description'       => 'required|string',
+            'type'              => 'required|string|in:quiz,project,presentation,code,essay',
+            'evaluation_method' => 'required|string|in:Cross-check,System-check,Manual-check',
+            'criteria'          => 'required|string',
+            'start_date'        => 'required|date|after:today',
+            'end_date'          => 'required|date|after:start_date',
+            'weight'            => 'required|numeric',
         ], [
-            'course_id.required'    => 'The course ID is required.',
-            'course_id.string'      => 'The course ID must be a valid string.',
-            'title.required'        => 'The title is required.',
-            'title.string'          => 'The title must be a valid string.',
-            'description.required'  => 'The description is required.',
-            'description.string'    => 'The description must be a valid string.',
-            'type.required'         => 'The type is required.',
-            'type.string'           => 'The type must be a string.',
-            'type.in'               => 'The type must be one of the following: quiz,project,presentation,code,essay.',
-            'isCrossCheck.required' => 'The cross-check flag is required.',
-            'isCrossCheck.boolean'  => 'The cross-check flag must be true or false.',
-            'criteria.required'     => 'The criteria is required.',
-            'criteria.string'       => 'The criteria must be a valid string.',
-            'start_date.required'   => 'The start date is required.',
-            'start_date.date'       => 'The start date must be a valid date and time.',
-            'end_date.required'     => 'The end date is required.',
-            'end_date.date'         => 'The end date must be a valid date and time.',
-            'weight.required'       => 'The weight is required.',
-            'weight.numeric'        => 'The weight must be a number.',
+            'course_id.required'         => 'The course ID is required.',
+            'course_id.string'           => 'The course ID must be a valid string.',
+            'title.required'             => 'The title is required.',
+            'title.string'               => 'The title must be a valid string.',
+            'description.required'       => 'The description is required.',
+            'description.string'         => 'The description must be a valid string.',
+            'type.required'              => 'The type is required.',
+            'type.string'                => 'The type must be a string.',
+            'type.in'                    => 'The type must be one of the following: quiz,project,presentation,code,essay.',
+            'evaluation_method.required' => 'The evaluation-method is required.',
+            'evaluation_method.boolean'  => 'The evaluation-method must be one of following: "Cross-check", "System-check", "Manual-check".',
+            'criteria.required'          => 'The criteria is required.',
+            'criteria.string'            => 'The criteria must be a valid string.',
+            'start_date.required'        => 'The start date is required.',
+            'start_date.date'            => 'The start date must be a valid date and time.',
+            'end_date.required'          => 'The end date is required.',
+            'end_date.date'              => 'The end date must be a valid date and time.',
+            'weight.required'            => 'The weight is required.',
+            'weight.numeric'             => 'The weight must be a number.',
         ]);
 
         if ($validateData->fails()) {
@@ -89,18 +89,18 @@ class AssignmentController extends Controller
             return response()->json( 'You are not the course supervisor.', 200);
         }
 
-        $assignment                 = Assignment::where('id', $request->assignment_id)->first() ?? new Assignment;
-        $assignment->user_id        = $teacher->id;
-        $assignment->course_id      = $course->id;
-        $assignment->type           = $request->type           ?? $assignment->type;
-        $assignment->title          = $request->title          ?? $assignment->title;
-        $assignment->description    = $request->description    ?? $assignment->description;
-        $assignment->start_date     = $request->start_date     ?? $assignment->start_date;
-        $assignment->end_date       = $request->end_date       ?? $assignment->end_date;
-        $assignment->weight         = $request->weight         ?? $assignment->weight;
-        $assignment->criteria       = $request->criteria       ?? $assignment->criteria;
-        $assignment->cross_check    = $request->isCrossCheck   ?? $assignment->cross_check;
-        $assignment->end_cross_date = $request->end_cross_date ?? $assignment->end_cross_date;
+        $assignment                        = Assignment::where('id', $request->assignment_id)->first() ?? new Assignment;
+        $assignment->user_id               = $teacher->id;
+        $assignment->course_id             = $course->id;
+        $assignment->type                  = $request->type              ?? $assignment->type;
+        $assignment->title                 = $request->title             ?? $assignment->title;
+        $assignment->description           = $request->description       ?? $assignment->description;
+        $assignment->start_date            = $request->start_date        ?? $assignment->start_date;
+        $assignment->end_date              = $request->end_date          ?? $assignment->end_date;
+        $assignment->weight                = $request->weight            ?? $assignment->weight;
+        $assignment->criteria              = $request->criteria          ?? $assignment->criteria;
+        $assignment->evaluation_method     = $request->evaluation_method ?? $assignment->evaluation_method;
+        $assignment->end_cross_date        = $request->end_cross_date    ?? $assignment->end_cross_date;
         $assignment->cross_check_processed = false;
 
         $assignment->save();
