@@ -35,6 +35,10 @@ class AssignmentSummaryResource extends JsonResource
             'status'            => $status,
         ];
 
+        if ($this->evaluation_method == 'Cross-check') {
+            $data += ['end_cross_date' => $this->end_cross_date];
+        }
+
         return $data;
     }
 }
