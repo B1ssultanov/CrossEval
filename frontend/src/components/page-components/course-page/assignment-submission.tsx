@@ -130,7 +130,7 @@ export default function AssignmentSubmission({
 
         <div className="mt-4">
           <h3 className="text-xl font-semibold text-indigo-500">Deadline</h3>
-          <p className="text-gray-600">{assignment.end_date}</p>
+          <p className="text-gray-600">{formatSubmissionDate(assignment.end_date)}</p>
         </div>
       </div>
 

@@ -179,8 +179,15 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
           </SelectContent>
         </Select>
 
-        <h3 className="text-lg font-semibold text-indigo-500">
-          Evalutaion method
+        <h3 className="text-lg font-semibold text-indigo-500 flex items-center gap-2">
+          Evalutaion method{" "}
+          <TooltipInfo
+            infoTexts={[
+              "Cross-check: students will peer-review evaluate themselves.",
+              "System-check: Automated check by CrossEval platform.",
+              "Manual-check: Human-reviewed assessment.",
+            ]}
+          />
         </h3>
         <div className="flex items-center space-x-2">
           {/* <Checkbox
@@ -192,13 +199,6 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
             <SelectTrigger id="evaluation-method">
               <SelectValue placeholder="Select evaluation method" />
               {/* Tooltip with explanations */}
-              <TooltipInfo
-                infoTexts={[
-                  "Cross-check: Peer-reviewed evaluation.",
-                  "System-check: Automated verification.",
-                  "Manual-check: Human-reviewed assessment.",
-                ]}
-              />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Cross-check">Cross-check</SelectItem>
@@ -230,7 +230,14 @@ export default function AssignmentForm({ courseId }: AssignmentFormProps) {
         </div>
       </div>
       <div className="flex-1 space-y-4">
-        <h3 className="text-lg font-semibold text-indigo-500">Total Weight</h3>
+        <h3 className="text-lg font-semibold text-indigo-500 flex gap-1 items-center">Total Weight
+        <TooltipInfo
+            infoTexts={[
+              "total weight of an assignment",
+              "Criterias in sum should be equal to Total Weight",
+            ]}
+          />
+        </h3>
         <Input
           type="number"
           placeholder="Assignment Weight"

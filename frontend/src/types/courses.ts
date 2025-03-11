@@ -5,7 +5,11 @@ export interface CreateCourseParams {
   group: string;
 }
 
-
+export interface CourseFetchById{
+  assignments: [],
+  course: Course,
+  role: string
+}
 // Define Course type
 export interface Course {
   id: number;
@@ -27,6 +31,7 @@ export interface Assignment {
   start_date: string;
   end_date: string;
   weight: number;
+  end_cross_date?: string; 
   // isCrossCheck: number;
   evaluation_method: string;
   criteria: { name: string; weight: number }[];

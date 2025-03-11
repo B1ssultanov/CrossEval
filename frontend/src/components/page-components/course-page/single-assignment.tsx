@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/table";
 import { CheckCircle } from "lucide-react";
 import { statusColors, typeColors } from "@/utils/colors";
-import { Assignment } from "@/api/courses";
+import { Assignment } from "@/types/courses";
 
 interface SingleAssignmentProps {
   assignment: Assignment;
+  isReview: boolean
 }
 
-export default function SingleAssignment({ assignment }: SingleAssignmentProps) {
+export default function SingleAssignment({ assignment, isReview }: SingleAssignmentProps) {
   return (
     <Table className="mt-6">
       <TableHeader className="border-b">
@@ -66,10 +67,10 @@ export default function SingleAssignment({ assignment }: SingleAssignmentProps) 
           </TableCell>
 
           {/* Start Date */}
-          <TableCell className="text-center">{assignment.start_date}</TableCell>
+          <TableCell className="text-center">{isReview ? assignment?.end_date : assignment?.start_date} </TableCell>
 
           {/* End Date */}
-          <TableCell className="text-center">{assignment.end_date}</TableCell>
+          <TableCell className="text-center">{isReview ? assignment?.end_cross_date : assignment.end_date}</TableCell>
 
           {/* Weight */}
           <TableCell className="text-center font-semibold">

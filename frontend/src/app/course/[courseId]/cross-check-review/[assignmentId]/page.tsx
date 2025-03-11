@@ -68,7 +68,7 @@ export default function CrossCheckSubmitPage() {
         </div>
 
         <div>
-          <h1 className="text-2xl">Cross-Check: Submit</h1>
+          <h1 className="text-2xl">Cross-Check: Review</h1>
         </div>
 
         <div>
@@ -80,7 +80,7 @@ export default function CrossCheckSubmitPage() {
       </section>
 
       {/* ✅ Pass assignment to the AssignmentTable component */}
-      {assignment && <SingleAssignment assignment={assignment} isReview={false} />}
+      {assignment && <SingleAssignment assignment={assignment} isReview={true} />}
 
       {assignment && <AssignmentSubmission courseId={courseId} assignment={assignment} />}
 

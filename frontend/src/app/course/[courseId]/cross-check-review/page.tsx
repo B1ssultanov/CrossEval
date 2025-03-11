@@ -3,7 +3,7 @@
 import {useParams, redirect} from 'next/navigation'
 import { useEffect } from 'react'
 
-export default function CrossCheckSubmitPageWithoutAssignmentID(){
+export default function CrossCheckReviewPageWithoutAssignmentID(){
   const params = useParams<{courseId: string}>();
 
   useEffect(() => {
