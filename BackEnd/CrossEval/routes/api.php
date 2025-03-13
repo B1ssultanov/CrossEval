@@ -32,9 +32,10 @@ Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/main', 'CourseController@mainInfo');
 
-        Route::get('/course',         'CourseController@detail');
-        Route::post('/course',        'CourseController@create');
-        Route::post('/course/invite', 'CourseController@invite');
+        Route::get('/course',               'CourseController@detail');
+        Route::post('/course',              'CourseController@create');
+        Route::post('/course/invite',       'CourseController@invite');
+        Route::get('/course/students/list', 'CourseController@students_list');
 
         Route::post('/syllabus', 'CourseController@syllabus');
 
