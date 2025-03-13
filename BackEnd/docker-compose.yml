@@ -1,0 +1,123 @@
+version: '3'
+
+networks:
+  crosseval_network:
+
+services:
+  nginx-server:
+    build:
+      context: .
+      dockerfile: nginx.dockerfile
+    container_name: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./CrossEval:/var/www/html:delegated
+    depends_on:
+      - php
+      - redis
+      - mysql
+      - mailhog
+    networks:
+      - crosseval_network
+
+  mysql:
+    image: mysql:5.7.34
+    container_name: mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: CrossEval
+      MYSQL_PASSWORD: CrossEval2025@
+      MYSQL_ROOT_PASSWORD: CrossEval2025@
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - crosseval_network
+
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: php
+    volumes:
+      - ./CrossEval:/var/www/html:delegated
+    networks:
+      - crosseval_network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - crosseval_network
+
+  composer:
+    build:
+      context: .
+      dockerfile: composer.dockerfile
+    container_name: composer
+    volumes:
+      - ./CrossEval:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+    user: laravel
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    networks:
+      - crosseval_network
+
+  npm:
+    image: node:20.14.0
+    container_name: npm
+    volumes:
+      - ../FrontEnd:/var/www/html
+    ports:
+      - 3000:3000
+      - 3001:3001
+    working_dir: /var/www/html
+#    entrypoint: ['npm']
+    command: ["npm", "run", "dev"]
+    networks:
+      - crosseval_network
+
+  artisan:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    container_name: artisan
+    volumes:
+      - ./CrossEval:/var/www/html:delegated
+    depends_on:
+      - mysql
+    working_dir: /var/www/html
+    user: laravel
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - crosseval_network
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - crosseval_network
+
+  adminer-crosseval:
+    image: adminer:4.7.7-standalone
+    container_name: adminer-crosseval
+    ports:
+      - 8080:8080
+    restart: always
+    networks:
+      - crosseval_network
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql

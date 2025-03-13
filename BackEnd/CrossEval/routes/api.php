@@ -20,13 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('test', [\App\Http\Controllers\HomeController::class, 'test']);
+
 Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
     Route::middleware('web')->group(function () {
         Route::post('register', [RegisteredUserController::class, 'store']);
 
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-        Route::post('test', [\App\Http\Controllers\HomeController::class, 'test']);
     });
 
     Route::middleware('auth')->group(function () {
