@@ -2,26 +2,27 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  fetchAssignment,
-  fetchCourseById,
-} from "@/api/courses";
+import { fetchAssignment, fetchCourseById } from "@/api/courses";
 import { CourseFetchById, Assignment } from "@/types/courses";
-import SingleAssignment from "@/components/page-components/course-page/single-assignment"; // ✅ Import the new component
+import SingleAssignment from "@/components/page-components/course-page/single-assignment";
 import { Loader } from "lucide-react";
-import AssignmentSubmission from "@/components/page-components/course-page/assignment-submission"; // Import the new component
+import { fetchCurrentUser } from "@/api/user";
+import AssignmentsToReview from "@/components/page-components/course-page/assignments-to-review";
+import AssignmentReview from "@/components/page-components/course-page/assignment-review";
 
-export default function CrossCheckSubmitPage() {
+export default function CrossCheckReviewPage() {
   const { courseId, assignmentId } = useParams<{
     courseId: string;
     assignmentId: string;
   }>();
 
-  // State with proper types
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [course, setCourse] = useState<CourseFetchById | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+  const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!assignmentId) return;
@@ -30,7 +31,6 @@ export default function CrossCheckSubmitPage() {
       try {
         const courseData = await fetchCourseById(Number(courseId));
         setCourse(courseData);
-        console.log('courseData', courseData)
       } catch (err) {
         setError("Failed to load course.");
       }
@@ -47,6 +47,16 @@ export default function CrossCheckSubmitPage() {
       }
     };
 
+    const getUserId = async () => {
+      try {
+        const user = await fetchCurrentUser();
+        setUserId(user.id);
+      } catch (err) {
+        setError("Failed to fetch user.");
+      }
+    };
+
+    getUserId();
     loadCourse();
     loadAssignment();
   }, [assignmentId]);
@@ -57,6 +67,7 @@ export default function CrossCheckSubmitPage() {
         <Loader className="size-12 animate-spin text-gray-500" />
       </div>
     );
+
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
@@ -79,11 +90,29 @@ export default function CrossCheckSubmitPage() {
         </div>
       </section>
 
-      {/* ✅ Pass assignment to the AssignmentTable component */}
+      {/* Assignment Details */}
       {assignment && <SingleAssignment assignment={assignment} isReview={true} />}
 
-      {assignment && <AssignmentSubmission courseId={courseId} assignment={assignment} />}
+      {/* List of assignments to review */}
+      {assignment && userId !== null && (
+        <AssignmentsToReview
+          assignmentId={Number(assignmentId)}
+          reviewerId={userId}
+          onSelectReview={setSelectedReviewId}
+          onAnswerIdSelect={setSelectedAnswerId}
+          selectedReviewId={selectedReviewId}
+        />
+      )}
 
+      {/* Assignment Review Section */}
+      {userId && selectedReviewId !== null && selectedAnswerId !== null && (
+        <AssignmentReview
+          answerId={selectedAnswerId}
+          courseId={courseId}
+          reviewerId={userId}
+          answerReviewId={selectedReviewId}
+        />
+      )}
     </div>
   );
 }

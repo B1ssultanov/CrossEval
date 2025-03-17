@@ -46,7 +46,8 @@ export default function SingleAssignment({ assignment, isReview }: SingleAssignm
                 statusColors[assignment.status] || ""
               }`}
             >
-              {assignment.status}
+              {/* {assignment.status} */}
+              {isReview ? 'to check' : assignment.status}
             </span>
           </TableCell>
 

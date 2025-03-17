@@ -53,23 +53,6 @@ export const loginUser = async (
   }
 };
 
-// MAIN PAGE API Function to fetch user data and courses
-// export const fetchUserData = async (role: "supervisor" | "student"): Promise<UserDataResponse> => {
-//   try {
-//     const response = await backendApiInstance.get<UserDataResponse>(`/main`, {
-//       params: { role }, // Pass role as a query parameter
-//     });
-
-//     return response.data;
-//   } catch (error: unknown) {
-//     if (isAxiosError<UserDataErrorResponse>(error)) {
-//       throw new Error(
-//         error.response?.data?.message || "Failed to fetch user data."
-//       );
-//     }
-//     throw new Error("An unknown error occurred while fetching user data.");
-//   }
-// };
 
 // Fetch user data and courses with optional search
 export const fetchUserData = async (
@@ -98,20 +81,6 @@ export const fetchUserData = async (
   }
 };
 
-// Function to fetch the current user
-// export const fetchCurrentUser = async (): Promise<User> => {
-//   try {
-//     const response = await backendApiInstance.get<UserResponse>("/user");
-//     return response.data.user;
-//   } catch (error: unknown) {
-//     if (isAxiosError<UserErrorResponse>(error)) {
-//       throw new Error(
-//         error.response?.data?.message || "Failed to fetch user data."
-//       );
-//     }
-//     throw new Error("An unknown error occurred while fetching user data.");
-//   }
-// };
 export const fetchCurrentUser = async (): Promise<User> => {
   try {
     const response = await backendApiInstance.get<{ user: User }>("/user");

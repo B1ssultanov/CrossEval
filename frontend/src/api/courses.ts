@@ -143,6 +143,36 @@ export const downloadRubricsFile = async (assignmentName:string, rubricsId:numbe
   }
 };
 
+// Download the rubrics file
+export const downloadSubmissionFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
+  try {
+    const response: Response = await fetch(`http://127.0.0.1:8000/file/${rubricsId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to download assignement submission file");
+    }
+
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = `assignment_submission_${assignmentName}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    throw new Error(`Failed to download ${name} file: ${(error as Error).message}`);
+  }
+};
+
 // For adding rubrics file to course
 export const uploadSyllabus = async (payload: SyllabusPayload) => {
   try {

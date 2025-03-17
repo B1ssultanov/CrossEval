@@ -78,8 +78,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-      <Card className="w-full max-w-2xl bg-white shadow-lg rounded-lg">
+    <div className="flex justify-center items-center w-full min-h-screen bg-gray-100 p-6">
+      <Card className="w-full bg-white shadow-lg rounded-lg">
         <CardHeader className="flex flex-col items-center">
           <Avatar className="w-24 h-24">
             <AvatarImage src={profile.image || "/assets/images/default-avatar.png"} alt="Profile" />

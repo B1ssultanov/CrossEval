@@ -183,7 +183,8 @@ export function CrossChecksTable({
                         statusColors[assignment?.status] || ""
                       }`}
                     >
-                      {assignment?.status}
+                      {/* {assignment?.status} */}
+                      To check
                     </span>
                   </TableCell>
 
