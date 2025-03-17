@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AssignmentSummaryResource;
 use App\Http\Resources\CourseSummaryResource;
+use App\Http\Resources\StudentsInfoResource;
 use App\Models\Answer;
 use App\Models\Assignment;
 use App\Models\Course;
@@ -14,6 +15,7 @@ use App\Services\Course\Syllabus\Create\Service as AddSyllabusService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -174,6 +176,35 @@ class CourseController extends Controller
         return response()->json([
             'student' => $user->name,
             'message' => 'Successfully added to course',
+        ]);
+    }
+
+    /**
+     * API to show the students list of the course
+     *
+     * @param Request       $request
+     * @return JsonResponse
+     */
+    public function students_list(Request $request): JsonResponse
+    {
+        $user   = User::where('token', $request->bearerToken())->first();
+        $course = Course::where('id', $request->course_id)->first();
+
+        if ( $course->supervisor_id != $user->id ){
+            return response()->json([
+                'message' => 'You are not the supervisor'
+            ]);
+        }
+
+        $students = DB::table('user_courses as uc')
+            ->join('users as u', 'u.id', '=', 'uc.user_id')
+            ->where('user_id', '!=', $user->id)
+            ->where('uc.course_id', $course->id)
+            ->get();
+
+        return response()->json([
+            'students'   => StudentsInfoResource::collection($students),
+            'supervisor' => new StudentsInfoResource($user)
         ]);
     }
 }
