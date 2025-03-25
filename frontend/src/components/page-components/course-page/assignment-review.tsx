@@ -12,9 +12,10 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Download, Loader, Send } from "lucide-react";
 import { downloadRubricsFile } from "@/api/courses";
-import {downloadSubmissionFile} from "@/api/courses";
+import { downloadSubmissionFile } from "@/api/courses";
 
 interface AssignmentReviewProps {
+  status: string | null;
   courseId: string;
   answerReviewId: number;
   reviewerId: number;
@@ -22,11 +23,13 @@ interface AssignmentReviewProps {
 }
 
 export default function AssignmentReview({
+  status,
   courseId,
   answerReviewId,
   reviewerId,
   answerId,
-}: AssignmentReviewProps) {
+  onReviewSubmitted,
+}: AssignmentReviewProps & { onReviewSubmitted: () => void }) {
   const { toast } = useToast();
   const [reviewData, setReviewData] = useState<AssignmentReviewResponse | null>(
     null
@@ -40,11 +43,13 @@ export default function AssignmentReview({
 
   useEffect(() => {
     const loadReviewData = async () => {
+      setLoading(true); // Reset loading each time a new student is selected
+      setReviewData(null); // Ensure fresh data load
       try {
         const data = await fetchAssignmentReview(answerReviewId);
         setReviewData(data);
 
-        // Initialize criteria grades
+        // Reset grading inputs
         const parsedCriteria = JSON.parse(data.assignment_info.criteria);
         const initialGrades: Record<string, number> = {};
         parsedCriteria.forEach((c: { name: string }) => {
@@ -52,6 +57,7 @@ export default function AssignmentReview({
         });
 
         setCriteriaGrades(initialGrades);
+        setComment(""); // Reset comment when switching students
       } catch (err) {
         toast({
           title: "Error",
@@ -63,8 +69,10 @@ export default function AssignmentReview({
       }
     };
 
-    loadReviewData();
-  }, [answerReviewId]);
+    if (answerReviewId) {
+      loadReviewData();
+    }
+  }, [answerReviewId]); // Refresh when answerReviewId changes
 
   // Функция для скачивания файла рубрик
   const handleDownloadRubrics = async () => {
@@ -154,6 +162,7 @@ export default function AssignmentReview({
         description: "Review submitted successfully!",
         variant: "success",
       });
+      onReviewSubmitted();
     } catch (err) {
       toast({
         title: "Error",
@@ -173,6 +182,7 @@ export default function AssignmentReview({
     );
 
   if (!reviewData) return <p className="text-red-500">No data available.</p>;
+
 
   const { assignment_info, answer_info } = reviewData;
   const parsedCriteria = JSON.parse(assignment_info.criteria);
@@ -262,7 +272,8 @@ export default function AssignmentReview({
 
         <Button
           onClick={handleSubmitReview}
-          disabled={submitting}
+          disabled={submitting || status !== "To Check"}
+          variant={"indigo"}
           className="w-full mt-4 flex items-center"
         >
           {submitting ? (

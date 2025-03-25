@@ -58,7 +58,7 @@ export function NavMain({
         ))}
         <SidebarSeparator />
 
-        {/* Collapsible My Courses Section */}
+        {/* Collapsible My Courses Section
         <Collapsible>
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer rounded-md hover:bg-gray-100">
@@ -91,7 +91,7 @@ export function NavMain({
               <p className="text-gray-500 text-sm">No courses available.</p>
             )}
           </CollapsibleContent>
-        </Collapsible>
+        </Collapsible> */}
       </SidebarMenu>
     </SidebarGroup>
   );

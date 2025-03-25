@@ -23,6 +23,8 @@ export default function CrossCheckReviewPage() {
   const [userId, setUserId] = useState<number | null>(null);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
+  const [triggerRefresh, setTriggerRefresh] = useState<number>(0); // New state
+  const [selectedAssignmentStatus, setSelectedAssignmentStatus] = useState<string | null>("");
 
   useEffect(() => {
     if (!assignmentId) return;
@@ -72,45 +74,56 @@ export default function CrossCheckReviewPage() {
 
   return (
     <div className="p-6">
-      <section className="flex w-full justify-between items-center font-bold text-gray-700">
+      <section className="flex w-full justify-between items-start font-bold text-gray-700">
         <div>
-          <p>Course</p>
-          <span>{course?.course?.name}</span>
+          <p className="font-bold text-mylightgray">Course</p>
+          <span className="text-lg font-bold">{course?.course?.name}</span>
         </div>
 
         <div>
           <h1 className="text-2xl">Cross-Check: Review</h1>
         </div>
 
-        <div>
-          <p>Course ID</p>
-          <span>
-            {course?.course?.code} {course?.course?.course_group}
-          </span>
+        <div className="text-end">
+          <p className="font-bold text-mylightgray">Course ID</p>
+          <div className="flex flex-col items-end text-lg font-bold">
+            <p className="truncate w-[130px]">{course?.course?.code}</p>
+            <p>{course?.course?.course_group}</p>
+          </div>
         </div>
       </section>
 
       {/* Assignment Details */}
-      {assignment && <SingleAssignment assignment={assignment} isReview={true} />}
+      {assignment && (
+        <SingleAssignment assignment={assignment} isReview={true} />
+      )}
 
       {/* List of assignments to review */}
       {assignment && userId !== null && (
         <AssignmentsToReview
+          setSelectedAssignmentStatus = {setSelectedAssignmentStatus}
           assignmentId={Number(assignmentId)}
           reviewerId={userId}
           onSelectReview={setSelectedReviewId}
           onAnswerIdSelect={setSelectedAnswerId}
           selectedReviewId={selectedReviewId}
+          triggerRefresh={triggerRefresh}
         />
       )}
 
       {/* Assignment Review Section */}
       {userId && selectedReviewId !== null && selectedAnswerId !== null && (
         <AssignmentReview
+          status={selectedAssignmentStatus}
           answerId={selectedAnswerId}
           courseId={courseId}
           reviewerId={userId}
           answerReviewId={selectedReviewId}
+          onReviewSubmitted={() => {
+            setTriggerRefresh((prev) => prev + 1); // Trigger refresh for assignments
+            setSelectedReviewId(null); // Reset selected review
+            setSelectedAnswerId(null); // Reset selected answer
+          }}
         />
       )}
     </div>

@@ -2,10 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  fetchAssignment,
-  fetchCourseById,
-} from "@/api/courses";
+import { fetchAssignment, fetchCourseById } from "@/api/courses";
 import { CourseFetchById, Assignment } from "@/types/courses";
 import SingleAssignment from "@/components/page-components/course-page/single-assignment"; // ✅ Import the new component
 import { Loader } from "lucide-react";
@@ -30,7 +27,7 @@ export default function CrossCheckSubmitPage() {
       try {
         const courseData = await fetchCourseById(Number(courseId));
         setCourse(courseData);
-        console.log('courseData', courseData)
+        console.log("courseData", courseData);
       } catch (err) {
         setError("Failed to load course.");
       }
@@ -41,6 +38,7 @@ export default function CrossCheckSubmitPage() {
         const assignmentData = await fetchAssignment(Number(assignmentId));
         setAssignment(assignmentData);
       } catch (err) {
+        console.error(err)
         setError("Failed to load assignment.");
       } finally {
         setLoading(false);
@@ -61,29 +59,33 @@ export default function CrossCheckSubmitPage() {
 
   return (
     <div className="p-6">
-      <section className="flex w-full justify-between items-center font-bold text-gray-700">
+      <section className="flex w-full justify-between items-start font-bold text-gray-700">
         <div>
-          <p>Course</p>
-          <span>{course?.course?.name}</span>
+          <h2 className="font-bold text-mylightgray">Course</h2>
+          <span className="text-lg font-bold">{course?.course?.name}</span>
         </div>
 
         <div>
-          <h1 className="text-2xl">Cross-Check: Submit</h1>
+          <h1 className="text-xl">Cross-Check: Submit</h1>
         </div>
 
-        <div>
-          <p>Course ID</p>
-          <span>
-            {course?.course?.code} {course?.course?.course_group}
-          </span>
+        <div className="text-end">
+          <h2 className="font-bold text-mylightgray">Course ID</h2>
+          <div className="flex flex-col items-end text-lg font-bold">
+            <p className="truncate w-[130px]">{course?.course?.code}</p>
+            <p>{course?.course?.course_group}</p>
+          </div>
         </div>
       </section>
 
       {/* ✅ Pass assignment to the AssignmentTable component */}
-      {assignment && <SingleAssignment assignment={assignment} isReview={false} />}
+      {assignment && (
+        <SingleAssignment assignment={assignment} isReview={false} />
+      )}
 
-      {assignment && <AssignmentSubmission courseId={courseId} assignment={assignment} />}
-
+      {assignment && (
+        <AssignmentSubmission courseId={courseId} assignment={assignment} />
+      )}
     </div>
   );
 }

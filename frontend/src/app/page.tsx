@@ -55,9 +55,14 @@ const Page = () => {
   }, [mode, shouldFetch]);
 
   return (
-    <div className="pt-6 px-14">
+    <div className="pt-6 px-14 relative">
       {/* Search Component */}
-      <SearchComponent role={mode} onSearchResults={(data) => setCourses(data.courses)} />
+      <div className="w-full flex items-center justify-center relative  ">
+        <SearchComponent
+          role={mode}
+          onSearchResults={(data) => setCourses(data.courses)}
+        />
+      </div>
 
       <h1 className="text-lg font-bold mb-4 text-gray-700">My Courses</h1>
 
@@ -89,12 +94,12 @@ const Page = () => {
               />
 
               {/* Course Name */}
-              <div className="absolute top-10 md:top-16 -left-4 right-0 px-4 font-bold text-base md:text-xl text-gray-800">
+              <div className="absolute top-10 md:top-16 -left-4 right-0 px-8 font-bold text-base md:text-xl text-gray-800 w-[200px]">
                 {course.name}
               </div>
 
               {/* Course Code */}
-              <div className="absolute bottom-12 md:bottom-24 -left-4 right-0 text-xs md:text-sm text-gray-800">
+              <div className="absolute bottom-12 md:bottom-24 -left-4 right-0 text-xs md:text-sm text-gray-800 px-8">
                 {course.code}
               </div>
 

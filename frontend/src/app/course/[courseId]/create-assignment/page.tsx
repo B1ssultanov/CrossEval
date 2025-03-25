@@ -26,26 +26,28 @@ export default function CreateAssignmentPage() {
 
   return (
     <div className="p-6 flex flex-col w-full">
-      <div className="flex w-full justify-between items-center px-6 mb-5">
+      <div className="flex w-full justify-between items-start px-6 mb-5">
         <div>
           <h2 className="font-bold text-mylightgray">Course</h2>
           <p className="text-lg font-bold">
             {courseName ? courseName : <Loader className="animate-spin" />}
           </p>
         </div>
-        <div className="text-2xl font-bold place-self-center flex flex-col items-center ">
-          <h1 className="text-indigo-500">
+        <div className="text-xl font-bold flex flex-col items-center max-w-">
+          <h1 className="text-gray-700 text-center">
             Creation of an assignment for the course{" "}
-            {courseName ? courseName : ""}
+            <span className="text-indigo-500">{courseName ? courseName : ""}</span>
           </h1>
           <p>{courseName ? "" : <Loader className="animate-spin" />}</p>
         </div>
-        <div>
+        <div className="text-end">
           <h2 className="font-bold text-mylightgray">Course ID</h2>
-          <p className="text-lg font-bold">
-            {courseCode ? courseCode : <Loader className="animate-spin" />}{" "}
-            {courseGroup ? courseGroup : ""}
-          </p>
+          <div className="flex flex-col items-end text-lg font-bold">
+            <p className="truncate w-[130px]">
+              {courseCode ? courseCode : <Loader className="animate-spin" />}
+            </p>
+            <p>{courseGroup ? courseGroup : ""}</p>
+          </div>
         </div>
       </div>
       <AssignmentForm courseId={Number(courseId)} />
