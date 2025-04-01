@@ -21,11 +21,12 @@ class StudentResource extends JsonResource
         $status     = $this->status;
 
         $data = [
-            'title'      => $this->title,
-            'grade'      => $grade,
-            'weight'     => $weight . '%',
-            'percentage' => $percentage . '%',
-            'status'     => $status,
+            'assignment_id' => $this->assignment_id,
+            'title'         => $this->title,
+            'grade'         => $grade,
+            'weight'        => $weight . '%',
+            'percentage'    => $percentage . '%',
+            'status'        => $status,
         ];
 
         return $data;
