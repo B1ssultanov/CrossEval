@@ -7,6 +7,7 @@ export interface AssignmentGrade {
   weight: string;
   percentage: string;
   status: string;
+  // assignemnt_id: number;
 }
 
 export interface StudentGradesResponse {

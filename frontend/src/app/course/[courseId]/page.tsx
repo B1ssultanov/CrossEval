@@ -11,6 +11,8 @@ import CourseSyllabus from "@/components/page-components/course-page/course-syll
 import CreateCourseSyllabus from "@/components/page-components/course-page/create-course-syllabus";
 import { CrossChecksTable } from "@/components/page-components/course-page/cross-check-table";
 import { Course } from "@/types/courses";
+import { Button } from "@/components/ui/button";
+import { CourseStudentList } from "@/components/page-components/course-page/course-students-list";
 
 interface Assignment {
   id: number;
@@ -29,6 +31,7 @@ const CoursePage = () => {
   const [course, setCourse] = useState<Course | null>(null);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [role, setRole] = useState<string | null>(null);
+  const [showStudents, setShowStudents] = useState(false);
 
   useEffect(() => {
     const loadCourseData = async () => {
@@ -85,12 +88,19 @@ const CoursePage = () => {
               <CreateCourseSyllabus courseId={courseId as string} />
             )
           )}
-        {!course?.syllabus_file_id && <div className="flex items-center text-mylightgray font-bold">No Syllabus yet</div>}
-
+          {!course?.syllabus_file_id && (
+            <div className="flex items-center text-mylightgray font-bold">
+              No Syllabus yet
+            </div>
+          )}
         </div>
 
-       
-        
+        <Button
+          variant="outline"
+          onClick={() => setShowStudents(!showStudents)}
+        >
+          {showStudents ? "Back to Assignments" : "Students List"}
+        </Button>
 
         {role === "Supervisor" && (
           <Link
@@ -102,11 +112,17 @@ const CoursePage = () => {
         )}
       </section>
 
-      {/* Assignments */}
-      <CrossChecksTable
-        courseId={courseId as string}
-        assignments={assignments}
-      />
+      {showStudents ? (
+        <div className="mt-6">
+          <h2 className="text-2xl font-semibold mb-4">Students in Course</h2>
+          <CourseStudentList courseId={Number(courseId)} />
+        </div>
+      ) : (
+        <CrossChecksTable
+          courseId={courseId as string}
+          assignments={assignments}
+        />
+      )}
     </div>
   );
 };

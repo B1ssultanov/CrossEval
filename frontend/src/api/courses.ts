@@ -195,3 +195,49 @@ export const uploadSyllabus = async (payload: SyllabusPayload) => {
     throw error;
   }
 };
+
+
+
+
+// Получение студентов курса
+export const fetchCourseStudents = async (courseId: number) => {
+  try {
+    const response = await backendApiInstance.get("/course/students/list", {
+      params: { course_id: courseId },
+    });
+    return response.data as {
+      students: {
+        id: number;
+        university_id: number;
+        name: string;
+        surname: string;
+      }[];
+      supervisor: {
+        id: number;
+        university_id: number;
+        name: string;
+        surname: string;
+      };
+    };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || "Failed to fetch course students");
+    }
+    throw error;
+  }
+};
+
+// Удаление студента с курса
+export const removeStudentFromCourse = async (courseId: number, userId: number) => {
+  try {
+    const response = await backendApiInstance.delete("/user/course", {
+      params: { course_id: courseId, user_id: userId },
+    });
+    return response.data as { message: string };
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || "Failed to remove student");
+    }
+    throw error;
+  }
+};
