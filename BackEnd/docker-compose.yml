@@ -77,7 +77,7 @@ services:
     image: node:20.14.0
     container_name: npm
     volumes:
-      - ../FrontEnd:/var/www/html
+      - ../frontend:/var/www/html
     ports:
       - 3000:3000
       - 3001:3001
