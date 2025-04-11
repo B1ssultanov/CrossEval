@@ -76,7 +76,7 @@ services:
   npm:
     build:
       context: ../
-      dockerfile: backend/npm.dockerfile
+      dockerfile: BackEnd/npm.dockerfile
     container_name: npm
     volumes:
       - ../frontend:/var/www/html
