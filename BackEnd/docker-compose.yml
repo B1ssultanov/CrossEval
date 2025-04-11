@@ -74,18 +74,15 @@ services:
       - crosseval_network
 
   npm:
-    image: node:20.14.0
+    build:
+      context: .
+      dockerfile: npm.dockerfile
     container_name: npm
-    volumes:
-      - ../frontend:/var/www/html
     ports:
       - 3000:3000
-      - 3001:3001
-    working_dir: /var/www/html
-#    entrypoint: ['npm']
-    command: ["npm", "run", "dev"]
     networks:
       - crosseval_network
+
 
   artisan:
     build:
