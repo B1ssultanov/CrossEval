@@ -1,15 +1,12 @@
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-COPY ../frontend/package*.json ./
-
+COPY frontend/package*.json ./
 RUN npm install
 
-COPY ../frontend .
-
+COPY frontend ./
 RUN npm run build
 
 EXPOSE 3000
-
 CMD ["npm", "start"]

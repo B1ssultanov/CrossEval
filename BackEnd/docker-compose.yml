@@ -75,11 +75,15 @@ services:
 
   npm:
     build:
-      context: .
-      dockerfile: npm.dockerfile
+      context: ../
+      dockerfile: backend/npm.dockerfile
     container_name: npm
+    volumes:
+      - ../frontend:/var/www/html
     ports:
       - 3000:3000
+    working_dir: /var/www/html
+    command: [ "npm", "start" ]
     networks:
       - crosseval_network
 
