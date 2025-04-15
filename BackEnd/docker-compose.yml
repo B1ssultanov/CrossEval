@@ -82,17 +82,17 @@ services:
 
   # NPM (Next.js) Service (run in production mode)
   npm:
-    build:
-      context: .
-      dockerfile: npm.dockerfile
+    image: node:20.14.0
     container_name: npm
     volumes:
       - ../frontend:/var/www/html
     ports:
       - 3000:3000
+    working_dir: /var/www/html
+    command: |
+      sh -c "npm install && npm run build && npm run start"
     networks:
       - crosseval_network
-    command: ["npm", "run", "start"]
     mem_limit: 1g
 
   # Artisan Service (for Laravel Artisan commands)
