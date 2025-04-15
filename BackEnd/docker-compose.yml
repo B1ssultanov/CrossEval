@@ -1,9 +1,8 @@
-version: '3'
-
 networks:
   crosseval_network:
 
 services:
+  # Nginx Service
   nginx-server:
     build:
       context: .
@@ -20,7 +19,9 @@ services:
       - mailhog
     networks:
       - crosseval_network
+    mem_limit: 512m
 
+  # MySQL Service
   mysql:
     image: mysql:5.7.34
     container_name: mysql
@@ -38,7 +39,9 @@ services:
       SERVICE_NAME: mysql
     networks:
       - crosseval_network
+    mem_limit: 1g
 
+  # PHP (Laravel) Service
   php:
     build:
       context: .
@@ -48,7 +51,9 @@ services:
       - ./CrossEval:/var/www/html:delegated
     networks:
       - crosseval_network
+    mem_limit: 512m
 
+  # Redis Service
   redis:
     image: redis:alpine
     container_name: redis
@@ -57,7 +62,9 @@ services:
       - 6379:6379
     networks:
       - crosseval_network
+    mem_limit: 256m
 
+  # Composer Service (for dependency management)
   composer:
     build:
       context: .
@@ -73,20 +80,22 @@ services:
     networks:
       - crosseval_network
 
+  # NPM (Next.js) Service (run in production mode)
   npm:
-    image: node:20.14.0
+    build:
+      context: .
+      dockerfile: npm.dockerfile
     container_name: npm
     volumes:
       - ../frontend:/var/www/html
     ports:
       - 3000:3000
-      - 3001:3001
-    working_dir: /var/www/html
-#    entrypoint: ['npm']
-    command: ["npm", "run", "dev"]
     networks:
       - crosseval_network
+    command: ["npm", "run", "start"]
+    mem_limit: 1g
 
+  # Artisan Service (for Laravel Artisan commands)
   artisan:
     build:
       context: .
@@ -102,6 +111,7 @@ services:
     networks:
       - crosseval_network
 
+  # Mailhog Service (only for development)
   mailhog:
     image: mailhog/mailhog:latest
     container_name: mailhog
@@ -111,6 +121,7 @@ services:
     networks:
       - crosseval_network
 
+  # Adminer (Web interface for MySQL)
   adminer-crosseval:
     image: adminer:4.7.7-standalone
     container_name: adminer-crosseval
@@ -121,3 +132,4 @@ services:
       - crosseval_network
     environment:
       ADMINER_DEFAULT_SERVER: mysql
+    mem_limit: 256m
