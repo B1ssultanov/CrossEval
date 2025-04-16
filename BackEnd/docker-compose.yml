@@ -87,6 +87,20 @@ services:
     networks:
       - crosseval_network
 
+  # npm:
+  #   image: node:20.14.0
+  #   container_name: npm
+  #   volumes:
+  #     - ../FrontEnd:/var/www/html:delegated # Ensure changes sync properly
+  #     - /var/www/html/node_modules # Prevents overwriting node_modules
+  #   ports:
+  #     - 3000:3000
+  #     - 3001:3001
+  #   working_dir: /var/www/html
+  #   command: ["npm", "run", "dev"]
+  #   networks:
+  #     - crosseval_network
+
   artisan:
     build:
       context: .
