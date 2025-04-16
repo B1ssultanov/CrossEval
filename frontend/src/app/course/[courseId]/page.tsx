@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchCourseById } from "@/api/courses";
 import { useToast } from "@/hooks/use-toast";
-import Image from "next/image";
 import Link from "next/link";
 import CourseCode from "@/components/page-components/course-page/course-code";
 import CourseSyllabus from "@/components/page-components/course-page/course-syllabus";

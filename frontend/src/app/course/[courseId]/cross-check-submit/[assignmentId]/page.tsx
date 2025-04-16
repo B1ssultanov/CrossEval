@@ -29,6 +29,8 @@ export default function CrossCheckSubmitPage() {
         setCourse(courseData);
         console.log("courseData", courseData);
       } catch (err) {
+        console.error(err)
+
         setError("Failed to load course.");
       }
     };

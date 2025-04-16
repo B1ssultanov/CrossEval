@@ -61,6 +61,7 @@ export default function AssignmentSubmission({
       setFile(null);
       router.push(`/course/${courseId}/`);
     } catch (error) {
+      console.error("Error submitting assignment:", error);
       toast({
         title: "Error",
         description: "Failed to submit the assignment.",
@@ -86,6 +87,7 @@ export default function AssignmentSubmission({
         variant: "success",
       });
     } catch (error) {
+      console.error("Error downloading rubrics:", error);
       toast({
         title: "Error",
         description: "Failed to download rubrics file",

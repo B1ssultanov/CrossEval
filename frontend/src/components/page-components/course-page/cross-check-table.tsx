@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CheckCircle, Circle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { statusColors, typeColors } from "@/utils/colors";
 
@@ -22,7 +22,6 @@ interface Assignment {
   weight: number;
   status: string;
 }
-import Link from "next/link";
 import { useEffect } from "react";
 
 interface CrossChecksTableProps {

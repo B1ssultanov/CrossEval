@@ -1,3 +1,4 @@
+//below for getting the assignments to review by this endpoint: /cross_review/check?assignment_id=59&reviewer_id=104
 export interface AnswerInfo {
   answer_review_id: number;
   answer_id: number;
@@ -12,6 +13,7 @@ export interface GetAssignmentsToReviewResponse {
 }
 
 
+//for submission review
 export interface AnswerReviewInfo {
   id: number;
   answer_id: number;
@@ -22,7 +24,10 @@ export interface AnswerReviewInfo {
   updated_at: string;
 }
 
-export interface AnswerInfo {
+
+
+//below is the interface for the assignment review response for this api endpoint: http://127.0.0.1:8000/api/v1/cross_review/{answer_review_id}
+export interface GetReviewAnswerInfo {
   status: string;
   file_id: number;
   comment: string | null;
@@ -46,7 +51,7 @@ export interface AssignmentInfo {
 }
 
 export interface AssignmentReviewResponse {
-  answer_info: AnswerInfo;
+  answer_info: GetReviewAnswerInfo;
   assignment_info: AssignmentInfo;
 }
 

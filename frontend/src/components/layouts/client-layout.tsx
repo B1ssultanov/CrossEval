@@ -1,7 +1,6 @@
 "use client";
 
 import { AppSidebar } from "@/components/shadcn-custom/sidebar/app-sidebar";
-import Link from "next/link";
 import { Provider } from "react-redux";
 import { store } from "@/store";
 import { Separator } from "@/components/ui/separator";

@@ -4,10 +4,12 @@ import { AnswerInfo } from "@/types/assignments";
 import { Loader, User } from "lucide-react";
 import clsx from "clsx";
 
+// In AssignmentsToReview component (updated props interface)
 interface AssignmentsToReviewProps {
   assignmentId: number;
   reviewerId: number;
   onSelectReview: (answerReviewId: number) => void;
+  onSelectReviewCriteria: (criteria: string | null) => void;
   selectedReviewId: number | null;
   onAnswerIdSelect: (answerId: number) => void;
   setSelectedAssignmentStatus: (status: string) => void;
@@ -18,6 +20,7 @@ export default function AssignmentsToReview({
   assignmentId,
   reviewerId,
   onSelectReview,
+  onSelectReviewCriteria,
   selectedReviewId,
   triggerRefresh,
   setSelectedAssignmentStatus,
@@ -47,6 +50,7 @@ export default function AssignmentsToReview({
           onAnswerIdSelect(firstToCheck.answer_id);
         }
       } catch (err) {
+        console.error(err);
         setError("Failed to load assignments to review.");
       } finally {
         setLoading(false);
@@ -56,9 +60,12 @@ export default function AssignmentsToReview({
     loadAssignments();
   }, [assignmentId, reviewerId, triggerRefresh]); // Ensure re-fetching works correctly
 
+  // In your click handler:
   const handleStudentClick = (assignment: AnswerInfo) => {
     onSelectReview(assignment.answer_review_id);
     onAnswerIdSelect(assignment.answer_id);
+    onSelectReviewCriteria(assignment.criteria);
+    console.log("Criteria Grades:", assignment.criteria);
   };
 
   if (loading)
@@ -80,7 +87,9 @@ export default function AssignmentsToReview({
         Assignments to Review:
       </h2> */}
       {assignments.every((assignment) => assignment.status === "Checked") ? (
-        <h2 className="text-center text-xl font-bold text-green-600 mb-8 mt-8">You successfully Reviewed all the students for this assignment</h2>
+        <h2 className="text-center text-xl font-bold text-green-600 mb-8 mt-8">
+          You successfully Reviewed all the students for this assignment
+        </h2>
       ) : (
         <h2 className="text-center text-xl font-bold text-gray-700 mb-8 mt-8">
           Choose the student to Review
@@ -100,8 +109,8 @@ export default function AssignmentsToReview({
               "bg-green-100 border-4 border-green-500"
             }`}
             onClick={() => {
-              handleStudentClick(assignment),
-                setSelectedAssignmentStatus(assignment.status);
+              handleStudentClick(assignment);
+              setSelectedAssignmentStatus(assignment.status);
             }}
           >
             <User
@@ -111,7 +120,6 @@ export default function AssignmentsToReview({
               )}
             />
             <p className="font-semibold">Student #{index}</p>
-            {/* <p className="text-sm text-gray-600">{assignment.comment || "No comment provided"}</p> */}
             <p
               className={clsx(
                 "text-xs text-gray-400",

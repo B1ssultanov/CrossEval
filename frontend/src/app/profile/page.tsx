@@ -41,6 +41,7 @@ export default function ProfilePage() {
         const userData = await fetchCurrentUser();
         setProfile(userData); // ✅ Now correctly assigning user data
       } catch (error) {
+        console.error("Error fetching user profile:", error);
         toast({
           variant: "destructive",
           title: "Error",
@@ -65,6 +66,7 @@ export default function ProfilePage() {
       setIsEditing(false);
       setSelectedImage(undefined);
     } catch (error) {
+      console.error("Error updating profile:", error);
       toast({
         variant: "destructive",
         title: "Error",

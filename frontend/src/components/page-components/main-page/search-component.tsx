@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect, useCallback } from "react";
 import debounce from "lodash/debounce";
 import { fetchUserData } from "@/api/user";
-import { UserDataResponse, SearchComponentProps } from "@/types/user";
+import { SearchComponentProps } from "@/types/user";
 import { useToast } from "@/hooks/use-toast";
 import { Loader, Search } from "lucide-react";
 

@@ -8,8 +8,8 @@ import { RootState } from "@/store";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader } from "lucide-react";
-import { UserDataResponse } from "@/types/user";
 import { SearchComponent } from "@/components/page-components/main-page/search-component";
+
 
 interface Course {
   id: number;
@@ -65,6 +65,7 @@ const Page = () => {
       </div>
 
       <h1 className="text-lg font-bold mb-4 text-gray-700">My Courses</h1>
+  
 
       {/* ✅ Show loading indicator while fetching */}
       {loading ? (

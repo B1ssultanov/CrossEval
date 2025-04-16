@@ -24,7 +24,13 @@ export default function CrossCheckReviewPage() {
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
   const [triggerRefresh, setTriggerRefresh] = useState<number>(0); // New state
-  const [selectedAssignmentStatus, setSelectedAssignmentStatus] = useState<string | null>("");
+  const [selectedAssignmentStatus, setSelectedAssignmentStatus] = useState<
+    string | null
+  >("");
+
+  const [selectedReviewCriteria, setSelectedReviewCriteria] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     if (!assignmentId) return;
@@ -34,6 +40,7 @@ export default function CrossCheckReviewPage() {
         const courseData = await fetchCourseById(Number(courseId));
         setCourse(courseData);
       } catch (err) {
+        console.error(err);
         setError("Failed to load course.");
       }
     };
@@ -43,6 +50,8 @@ export default function CrossCheckReviewPage() {
         const assignmentData = await fetchAssignment(Number(assignmentId));
         setAssignment(assignmentData);
       } catch (err) {
+        console.error(err);
+
         setError("Failed to load assignment.");
       } finally {
         setLoading(false);
@@ -54,6 +63,8 @@ export default function CrossCheckReviewPage() {
         const user = await fetchCurrentUser();
         setUserId(user.id);
       } catch (err) {
+        console.error(err);
+
         setError("Failed to fetch user.");
       }
     };
@@ -101,10 +112,11 @@ export default function CrossCheckReviewPage() {
       {/* List of assignments to review */}
       {assignment && userId !== null && (
         <AssignmentsToReview
-          setSelectedAssignmentStatus = {setSelectedAssignmentStatus}
+          setSelectedAssignmentStatus={setSelectedAssignmentStatus}
           assignmentId={Number(assignmentId)}
           reviewerId={userId}
           onSelectReview={setSelectedReviewId}
+          onSelectReviewCriteria={setSelectedReviewCriteria} // New callback
           onAnswerIdSelect={setSelectedAnswerId}
           selectedReviewId={selectedReviewId}
           triggerRefresh={triggerRefresh}
@@ -115,14 +127,15 @@ export default function CrossCheckReviewPage() {
       {userId && selectedReviewId !== null && selectedAnswerId !== null && (
         <AssignmentReview
           status={selectedAssignmentStatus}
-          answerId={selectedAnswerId}
           courseId={courseId}
+          answerId={selectedAnswerId}
           reviewerId={userId}
           answerReviewId={selectedReviewId}
+          existingCriteria={selectedReviewCriteria} // Pass the graded criteria here
           onReviewSubmitted={() => {
-            setTriggerRefresh((prev) => prev + 1); // Trigger refresh for assignments
-            setSelectedReviewId(null); // Reset selected review
-            setSelectedAnswerId(null); // Reset selected answer
+            setTriggerRefresh((prev) => prev + 1);
+            setSelectedReviewId(null);
+            setSelectedAnswerId(null);
           }}
         />
       )}

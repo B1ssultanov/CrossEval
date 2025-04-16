@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { fetchUserCourses, fetchStudentGrades, fetchSupervisorGrades, Course } from "@/api/grades";
 import { Loader, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -18,6 +17,8 @@ export default function GradesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
   const [selectedCourseName, setSelectedCourseName] = useState<string>("");
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [grades, setGrades] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
@@ -26,9 +27,12 @@ export default function GradesPage() {
   useEffect(() => {
     const loadCourses = async () => {
       try {
+        setPage(1);
+        console.log('just for build',totalPages)
         const response = await fetchUserCourses(mode);
         setCourses(response.courses);
       } catch (err) {
+        console.error(err);
         toast({ title: "Error", description: "Failed to load courses.", variant: "destructive" });
       } finally {
         setLoading(false);
@@ -50,6 +54,7 @@ export default function GradesPage() {
       }
       setTotalPages(response.totalPage);
     } catch (err) {
+      console.error(err);
       toast({ title: "Error", description: "Failed to load grades.", variant: "destructive" });
     } finally {
       setLoading(false);
@@ -135,7 +140,6 @@ export default function GradesPage() {
                     {/* http://localhost:3000/course/59/cross-check-review/55 */}
                     <Link href={`/course/${selectedCourse}/cross-check-review/${grade.assignment_id}`}>
                       <TableCell className="text-center bg-indigo-500 text-white rounded-lg">
-                        
                           View
                       </TableCell>
                     </Link>

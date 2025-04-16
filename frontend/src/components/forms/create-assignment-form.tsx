@@ -24,7 +24,6 @@ import {
 import { CalendarIcon, Plus, Minus, Upload } from "lucide-react";
 import { format, addDays } from "date-fns";
 import { createAssignment } from "@/api/courses";
-import { DateRange } from "react-day-picker";
 
 // Define prop types for receiving courseId
 interface AssignmentFormProps {

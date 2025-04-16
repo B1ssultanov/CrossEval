@@ -35,16 +35,19 @@ export default function RegisterPage() {
     resolver: zodResolver(registrationPasswordSchema),
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitEmail = (data: any) => {
     setFormData({ ...formData, ...data })
     setStep(2)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitPersonalInfo = (data: any) => {
     setFormData({ ...formData, ...data })
     setStep(3)
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitPassword = async (data: any) => {
     setFormData({ ...formData, ...data })
     // Here you would typically send the complete formData to your backend

@@ -24,6 +24,7 @@ export default function SchedulePage() {
         const response = await fetchSchedule();
         setAssignments(response.assignments);
       } catch (err) {
+        console.error(err);
         setError("Failed to load schedule.");
       } finally {
         setLoading(false);
@@ -33,6 +34,7 @@ export default function SchedulePage() {
     loadSchedule();
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEventClick = (eventInfo: any) => {
     const { assignmentId, courseId, type } = eventInfo.event.extendedProps;
     const path =

@@ -74,6 +74,7 @@ export interface RegisterUserPayload {
 
 // the type for a successful API response
 export interface RegisterUserSuccessResponse {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   token: string;
   message: string;

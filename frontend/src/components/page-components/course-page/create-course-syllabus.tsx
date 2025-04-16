@@ -55,6 +55,7 @@ export default function CreateCourseSyllabus({ courseId }: CreateCourseSyllabusP
       setFile(null);
       setOpen(false);
     } catch (error) {
+      console.error("Error uploading syllabus:", error);
       toast({
         title: "Error",
         description: "Failed to upload the syllabus.",

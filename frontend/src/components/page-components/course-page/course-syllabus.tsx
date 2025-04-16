@@ -23,6 +23,7 @@ const CourseSyllabus = ({ courseTitle, syllabusId }: CourseSyllabusProps) => {
         variant: "success",
       });
     } catch (error) {
+      console.error("Error downloading syllabus:", error);
       toast({
         title: "Error",
         description: "Failed to download syllabus file",

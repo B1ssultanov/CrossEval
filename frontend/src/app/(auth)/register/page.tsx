@@ -34,8 +34,6 @@ export default function RegisterPage() {
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -47,7 +45,6 @@ export default function RegisterPage() {
     },
   });
 
-  const formData = watch(); // Watch form values in real-time
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);

@@ -7,6 +7,58 @@ function isAxiosError<T>(error: unknown): error is AxiosError<T> {
   return (error as AxiosError<T>)?.isAxiosError !== undefined;
 }
 
+// Assuming your User interface is defined as:
+interface UserUpdate {
+  id: number;
+  university_id: number;
+  name: string;
+  surname: string;
+  email: string;
+  phone_number: string | null;
+  login: string | null;
+  gender: string | null;
+  course_grade: string | null;
+  faculty: string | null;
+  speciality: string | null;
+  academic_degree: string | null;
+  birthday: string | null;
+  status: string;
+  image: string | null;
+}
+
+// Update user profile data with FormData
+export const updateUserProfile = async (
+  updatedData: Partial<UserUpdate>,
+  imageFile?: File
+): Promise<User> => {
+  try {
+    const formData = new FormData();
+    Object.entries(updatedData).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        // Convert the value to a string for FormData. Adjust the conversion as needed.
+        formData.append(key, String(value));
+      }
+    });
+
+    // Append the image file if provided
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
+
+    const response = await backendApiInstance.post("/user/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw new Error("Failed to update profile.");
+  }
+};
+
+
 // Function to register a user
 export const registerUser = async (
   userData: RegisterUserPayload
@@ -93,29 +145,29 @@ export const fetchCurrentUser = async (): Promise<User> => {
   }
 };
 
-// Update user profile data with form-data
-export const updateUserProfile = async (updatedData: Record<string, any>, imageFile?: File) => {
-  try {
-    const formData = new FormData();
-    Object.entries(updatedData).forEach(([key, value]) => {
-      if (value !== null && value !== undefined) {
-        formData.append(key, value);
-      }
-    });
+// // Update user profile data with form-data
+// export const updateUserProfile = async (updatedData: Record<string, any>, imageFile?: File) => {
+//   try {
+//     const formData = new FormData();
+//     Object.entries(updatedData).forEach(([key, value]) => {
+//       if (value !== null && value !== undefined) {
+//         formData.append(key, value);
+//       }
+//     });
 
-    // Append image file if provided
-    if (imageFile) {
-      formData.append("image", imageFile);
-    }
+//     // Append image file if provided
+//     if (imageFile) {
+//       formData.append("image", imageFile);
+//     }
 
-    const response = await backendApiInstance.post("/user/profile", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+//     const response = await backendApiInstance.post("/user/profile", formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
 
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to update profile.");
-  }
-};
+//     return response.data;
+//   } catch (error) {
+//     throw new Error("Failed to update profile.");
+//   }
+// };

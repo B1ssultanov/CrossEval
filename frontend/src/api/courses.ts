@@ -1,6 +1,6 @@
 import { backendApiInstance } from "./index";
 import { AxiosError } from "axios";
-import {CreateCourseParams, AssignmentPayload, AssignmentAnswerPayload, FileBlob, SyllabusPayload} from "@/types/courses";
+import {CreateCourseParams, AssignmentPayload, AssignmentAnswerPayload, SyllabusPayload} from "@/types/courses";
 
 
 
