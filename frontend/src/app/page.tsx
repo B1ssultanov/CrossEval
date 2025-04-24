@@ -95,7 +95,7 @@ const Page = () => {
               />
 
               {/* Course Name */}
-              <div className="absolute top-10 md:top-16 -left-4 right-0 px-8 font-bold text-base md:text-xl text-gray-800 w-[200px]">
+              <div className="absolute top-10 md:top-16 -left-4 right-0 px-8 font-bold text-base md:text-xl text-gray-800 w-[200px] truncate">
                 {course.name}
               </div>
 

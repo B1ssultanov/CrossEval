@@ -116,7 +116,10 @@ export const submitAssignmentAnswer = async (payload: AssignmentAnswerPayload): 
 // Download the rubrics file
 export const downloadRubricsFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
   try {
-    const response: Response = await fetch(`http://127.0.0.1:8000/file/${rubricsId}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+    const baseOrigin = new URL(API_URL).origin;  // e.g. "http://127.0.0.1:8000"
+    const fileUrl = `${baseOrigin}/file/${rubricsId}`;
+    const response: Response = await fetch(fileUrl, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -145,8 +148,12 @@ export const downloadRubricsFile = async (assignmentName:string, rubricsId:numbe
 
 // Download the rubrics file
 export const downloadSubmissionFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+  const baseOrigin = new URL(API_URL).origin;  // e.g. "http://127.0.0.1:8000"
+  const fileUrl = `${baseOrigin}/file/${rubricsId}`;
+
   try {
-    const response: Response = await fetch(`http://127.0.0.1:8000/file/${rubricsId}`, {
+    const response: Response = await fetch(fileUrl, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
