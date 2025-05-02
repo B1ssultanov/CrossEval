@@ -31,20 +31,23 @@ class FindMissedAssignments extends Command
     {
         Log::info('The Finding missed Assignments command started working');
 
-        $currentDateTime = Carbon::now();
+        $assignments = Assignment::where('end_date', '<=', Carbon::now())->get();
 
-        $assignments = Assignment::whereBetween('end_date', [
-            $currentDateTime->subHours(),
-            $currentDateTime
-        ])->get();
+        if ($assignments->isNotEmpty()) {
+            Log::info('Assignments found: ', $assignments->pluck('id')->toArray());
 
-        if (isset($assignments)){
-            $answers = Answer::whereIn('assignment_id', $assignments->pluck('id'))->where('status', 'Available')->get();
+            $answers = Answer::whereIn('assignment_id', $assignments->pluck('id'))
+                ->whereIn('status', ['Available', 'Future'])
+                ->get();
 
-            foreach ($answers as $answer){
+            Log::info('Answers to update: ', $answers->pluck('id')->toArray());
+
+            foreach ($answers as $answer) {
                 $answer->status = 'Missed';
                 $answer->save();
             }
+        } else {
+            Log::info('No assignments found that are past due.');
         }
     }
 }
