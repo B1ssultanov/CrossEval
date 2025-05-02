@@ -12,7 +12,7 @@ export function Faq() {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">FAQ</div>
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl"><span className="text-indigo-500">F</span>requently <span className="text-indigo-500">A</span>sked <span className="text-indigo-500">Q</span>uestions</h2>
             <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Find answers to common questions about our platform.
             </p>
@@ -21,35 +21,35 @@ export function Faq() {
         <div className="mx-auto max-w-3xl mt-12">
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger>How does the free trial work?</AccordionTrigger>
+              <AccordionTrigger>How does the platform work?</AccordionTrigger>
               <AccordionContent>
-                Our free trial gives you full access to all features for 14 days. No credit card required. At the end of the trial, you can choose a plan that fits your needs or continue with the free tier.
+                You can login and then choose which mode you want to have, Student or Supervisor. If you are supervisor, you can create courses, if you are in student mode you will be able to join the courses. Create assignments as teacher and assess them as a student!
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger>Can I change my plan later?</AccordionTrigger>
+              <AccordionTrigger>How much does it cost to use this app?</AccordionTrigger>
               <AccordionContent>
-                Yes, you can upgrade, downgrade, or cancel your plan at any time. If you upgrade, the new features will be available immediately. If you downgrade, the changes will take effect at the end of your current billing cycle.
+                0 tenge. Our platform is totally free for everyone!
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger>Is there a limit to how many users I can add?</AccordionTrigger>
+              <AccordionTrigger>Is there a limit to how many users I can add to course?</AccordionTrigger>
               <AccordionContent>
-                The number of users depends on your plan. The Starter plan allows up to 5 users, Professional up to 20 users, and Enterprise has unlimited users. You can always upgrade your plan if you need to add more users.
+                No, there can be as much student as you want in a course.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
-              <AccordionTrigger>How secure is my data?</AccordionTrigger>
+              <AccordionTrigger>What if I forgot to access other students work&apos;s?</AccordionTrigger>
               <AccordionContent>
-                We take security seriously. All data is encrypted both in transit and at rest. We use industry-standard security practices and regularly undergo security audits. Our platform is compliant with GDPR, HIPAA, and other relevant regulations.
+                That means you will not get a grade for the assignment, but if there was problem on the side of a platform, you can contact as or your supervisor.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-5">
+            {/* <AccordionItem value="item-5">
               <AccordionTrigger>Do you offer custom integrations?</AccordionTrigger>
               <AccordionContent>
                 Yes, we offer custom integrations for Enterprise customers. Our team will work with you to understand your needs and develop integrations with your existing tools and systems. Contact our sales team for more information.
               </AccordionContent>
-            </AccordionItem>
+            </AccordionItem> */}
           </Accordion>
         </div>
       </div>
