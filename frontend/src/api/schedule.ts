@@ -2,6 +2,7 @@ import { backendApiInstance } from "./index";
 import { AxiosError } from "axios";
 
 export interface Assignment {
+  course_info: CourseInfo;
   id: number;
   title: string;
   type: string;
@@ -13,6 +14,16 @@ export interface Assignment {
   rubrics_id: number;
   status: string;
   end_cross_date: string;
+}
+
+interface CourseInfo {
+  code: string;
+  course_group: string;
+  id: number;
+  invite_code: string;
+  name: string;
+  syllabus_file_id: null | number;
+  teacher_name: string;
 }
 
 export interface GetScheduleResponse {

@@ -167,7 +167,8 @@ export default function SchedulePage() {
               })
               .slice(0, 3) // Limit to 3 assignments
               .map((assignment) => {
-                const courseId = 58; // Replace dynamically if available
+                console.log(assignment);
+                const courseId = assignment.course_info.id; // Replace dynamically if available
                 const isSubmitPeriod =
                   new Date(assignment.end_date) >= new Date();
                 const link = isSubmitPeriod

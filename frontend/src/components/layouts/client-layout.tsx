@@ -19,7 +19,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   // В будущем, страницы которые требуют запуска без сайдбара буду добавлять сюда
   const isNoSidebarPage =
-    /^\/(register|login|verify-email|reset-password|forgot-password|privacy-policy|offer-agreement|cookie-policy)$/.test(
+    /^\/(register|login|verify-email|reset-password|forgot-password|privacy-policy|offer-agreement|cookie-policy|landing-page)$/.test(
       pathname
     );
 

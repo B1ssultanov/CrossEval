@@ -18,14 +18,14 @@ export default function CreateOrJoinCourse() {
       {mode === "supervisor" ? (
         <>
           <Button variant="gray" className="mr-4" onClick={() => setIsCreateModalOpen(true)}>
-            Create course <CirclePlus className="ml-2" />
+            <span className="hidden md:block">Create course</span> <CirclePlus className="md:ml-2" />
           </Button>
           <CreateCourseModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
         </>
       ) : (
         <>
           <Button variant="gray" className="mr-4" onClick={() => setIsJoinModalOpen(true)}>
-            Join course <BookPlus className="ml-2" />
+            <span className="hidden md:block">Join course</span> <BookPlus className="md:ml-2" />
           </Button>
           <JoinCourseModal isOpen={isJoinModalOpen} onClose={() => setIsJoinModalOpen(false)} />
         </>

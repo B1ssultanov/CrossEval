@@ -13,7 +13,7 @@ export const backendApiInstance: AxiosInstance = axios.create({
 backendApiInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     // List of public endpoints that don't require authorization
-    const publicEndpoints = ["/login", "/register", "/verify-email", "/reset-password"];
+    const publicEndpoints = ["/login", "/register", "/verify-email", "/reset-password", "/landing-page"];
 
     // Check if the request URL matches any public endpoint
     if (publicEndpoints.some((endpoint) => config.url?.includes(endpoint))) {

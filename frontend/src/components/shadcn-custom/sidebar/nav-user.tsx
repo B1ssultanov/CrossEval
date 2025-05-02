@@ -1,14 +1,14 @@
 "use client";
 
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import {
   BadgeCheck,
-  Bell,
   ChevronsUpDown,
-  CreditCard,
   LogOut,
   Sparkles,
 } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -40,6 +40,7 @@ export function NavUser({
   const router = useRouter();
   const dispatch = useDispatch();
   const { isMobile } = useSidebar();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     // Remove tokens from localStorage
@@ -54,7 +55,7 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
@@ -91,7 +92,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setIsOpen(true)} aria-label="Feedback and Contact Us button">
                 <Sparkles />
                 Contact Us
               </DropdownMenuItem>
@@ -105,25 +106,38 @@ export function NavUser({
                 </DropdownMenuItem>
               </Link>
 
-              <Link href={"/billing"}>
+              {/* <Link href={"/billing"}>
                 <DropdownMenuItem>
                   <CreditCard />
                   Payment
                 </DropdownMenuItem>
-              </Link>
-
+              </Link> */}
+{/* 
               <DropdownMenuItem>
                 <Bell />
                 Notifications
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} aria-label="кнопка выйти">
               <LogOut />
               Log Out
             </DropdownMenuItem>
+            
           </DropdownMenuContent>
         </DropdownMenu>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Contact Information</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 py-4">
+            <p><strong>Phone:</strong> +7 707 649 21 97</p>
+            <p><strong>Email:</strong> zhanbolat.mukan2004@gmail.com</p>
+            <p><strong>Address:</strong> city Almaty, Abylai Khana st. 1/1, Kaskelen</p>
+          </div>
+        </DialogContent>
+      </Dialog>
       </SidebarMenuItem>
     </SidebarMenu>
   );

@@ -55,7 +55,7 @@ const Page = () => {
   }, [mode, shouldFetch]);
 
   return (
-    <div className="pt-6 px-14 relative">
+    <div className="pt-6 px-4 lg:px-14 relative">
       {/* Search Component */}
       <div className="w-full flex items-center justify-center relative  ">
         <SearchComponent
@@ -76,12 +76,12 @@ const Page = () => {
           </div>
         </div>
       ) : courses.length > 0 ? (
-        <div className="flex justify-center md:justify-start gap-3 md:gap-6 flex-wrap">
+        <div className="flex justify-center md:justify-start gap-3 md:gap-6 flex-wrap mt-10 md:mt-0">
           {courses.map((course, index) => (
             <Link
               key={course.id}
               href={`/course/${course.id}`}
-              className="relative w-32 h-44 md:w-48 md:h-72 flex flex-col items-center text-center hover:-mt-2 transition-all duration-100"
+              className="relative w-40 h-56 md:w-48 md:h-72 flex flex-col items-center text-center hover:-mt-2 transition-all duration-100"
             >
               {/* Folder Image */}
               <Image
@@ -95,17 +95,17 @@ const Page = () => {
               />
 
               {/* Course Name */}
-              <div className="absolute top-10 md:top-16 -left-4 right-0 px-8 font-bold text-base md:text-xl text-gray-800 w-[200px] truncate">
+              <div className="absolute top-10 md:top-16 -left-4 right-0 px-8 font-bold text-base md:text-xl text-gray-800 w-[180px] md:w-[200px] truncate">
                 {course.name}
               </div>
 
               {/* Course Code */}
-              <div className="absolute bottom-12 md:bottom-24 -left-4 right-0 text-xs md:text-sm text-gray-800 px-8">
+              <div className="absolute bottom-12 md:bottom-24 -left-4 right-0 text-xs md:text-sm text-gray-800 px-8 truncate">
                 {course.code}
               </div>
 
               {/* Instructor Name */}
-              <div className="absolute bottom-8 md:bottom-20 -left-4 right-0 text-xs md:text-sm text-gray-800 font-bold">
+              <div className="absolute bottom-8 md:bottom-20 -left-4 right-0 text-xs md:text-sm text-gray-800 font-bold truncate">
                 {course.teacher_name}
               </div>
             </Link>
