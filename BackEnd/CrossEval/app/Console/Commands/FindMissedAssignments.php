@@ -31,7 +31,7 @@ class FindMissedAssignments extends Command
     {
         Log::info('The Finding missed Assignments command started working');
 
-        $assignments = Assignment::where('end_date', '<=', Carbon::now())->get();
+        $assignments = Assignment::whereBetween('end_date', [Carbon::now()->subHour(), Carbon::now()])->get();
 
         if ($assignments->isNotEmpty()) {
             Log::info('Assignments found: ', $assignments->pluck('id')->toArray());
