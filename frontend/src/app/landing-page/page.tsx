@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle } from 'lucide-react'
+import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle, Contact } from 'lucide-react'
 import { Testimonials } from "@/components/page-components/landing-page/testimonials"
 // import { PricingCards } from "@/components/page-components/landing-page/pricing-cards"  
 import { Faq } from "@/components/page-components/landing-page/faq"
@@ -11,7 +11,9 @@ import { Navbar } from "@/components/page-components/landing-page/navbar"
 import { useRouter } from "next/navigation"
 import { Logo, LogosScroller } from "@/components/page-components/landing-page/logos-scroller"
 import { PlatformExplainer } from "@/components/page-components/landing-page/platform-explainer"
-import YouTubeEmbed from "@/components/page-components/landing-page/youtube-embed" 
+import PeopleInterract from "@/components/page-components/landing-page/people-interract"
+import ContactForm from "@/components/page-components/landing-page/contact-form"
+
 const logos: Logo[] = [
   { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
   { src: '/assets/logos/CrossEvalLogo.png', alt: 'Next.js', width: 120, height: 120 },
@@ -78,14 +80,18 @@ export default function LandingPage() {
       </section>
 
 
+
+      <PlatformExplainer />
+      
+      <PeopleInterract />
+
       {/* Logos Scroller Section */}
       <section className="w-full bg-gray-50">
         <LogosScroller logos={logos} duration={15} gapPx={24} />  
       </section>
+      {/* <YouTubeEmbed src="https://www.youtube.com/embed/jzdqW6aX4dE?si=LLI2tDVS7oKP-aoF&autoplay=1&mute=1" /> */}
 
-      <PlatformExplainer />
 
-      <YouTubeEmbed src="https://www.youtube.com/embed/jzdqW6aX4dE?si=KrfU_hwW-z0VT3r4" />
 
       {/* Features Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-white" id="features">
@@ -172,7 +178,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50" id="how-it-works">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -215,14 +221,18 @@ export default function LandingPage() {
         </div>
       </section>
 
+      
+
       {/* Testimonials Section */}
-      <Testimonials />
+      {/* <Testimonials /> */}
 
       {/* Pricing Section */}
       {/* <PricingCards /> */}
 
       {/* FAQ Section */}
       <Faq />
+
+      {/* <ContactForm /> */}
 
       {/* CTA Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-primary">
@@ -244,6 +254,8 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+
 
       {/* Footer */}
       <footer className="w-full py-12 md:py-24 lg:py-12 border-t">

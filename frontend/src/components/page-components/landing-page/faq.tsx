@@ -29,13 +29,13 @@ export function Faq() {
             <AccordionItem value="item-2">
               <AccordionTrigger>How much does it cost to use this app?</AccordionTrigger>
               <AccordionContent>
-                0 tenge. Our platform is totally free for everyone!
+                It is absolutely free. Our platform is totally free for everyone!
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger>Is there a limit to how many users I can add to course?</AccordionTrigger>
               <AccordionContent>
-                No, there can be as much student as you want in a course.
+                No, there can be as much students as you want in a course.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
