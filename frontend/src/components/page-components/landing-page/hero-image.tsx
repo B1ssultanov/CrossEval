@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import YouTubeEmbed from "./youtube-embed";
 export function HeroImage() {
   const [mounted, setMounted] = useState(false);

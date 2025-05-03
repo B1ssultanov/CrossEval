@@ -2,9 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle, Contact } from 'lucide-react'
-import { Testimonials } from "@/components/page-components/landing-page/testimonials"
-// import { PricingCards } from "@/components/page-components/landing-page/pricing-cards"  
+import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle } from 'lucide-react'
 import { Faq } from "@/components/page-components/landing-page/faq"
 import { HeroImage } from "@/components/page-components/landing-page/hero-image"
 import { Navbar } from "@/components/page-components/landing-page/navbar"
@@ -12,7 +10,6 @@ import { useRouter } from "next/navigation"
 import { Logo, LogosScroller } from "@/components/page-components/landing-page/logos-scroller"
 import { PlatformExplainer } from "@/components/page-components/landing-page/platform-explainer"
 import PeopleInterract from "@/components/page-components/landing-page/people-interract"
-import ContactForm from "@/components/page-components/landing-page/contact-form"
 
 const logos: Logo[] = [
   { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
