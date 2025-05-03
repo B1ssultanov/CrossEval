@@ -7,12 +7,12 @@ export interface AssignmentGrade {
   weight: string;
   percentage: string;
   status: string;
-  // assignemnt_id: number;
+  assignment_id: number;
 }
 
 export interface StudentGradesResponse {
   grades: AssignmentGrade[];
-  page: number;
+  page: string;
   totalPage: number;
   nbTotal: number;
 }
@@ -26,7 +26,7 @@ export interface SupervisorStudent {
 
 export interface SupervisorGradesResponse {
   students: SupervisorStudent[];
-  page: number;
+  page: string;
   totalPage: number;
   nbTotal: number;
 }

@@ -3,14 +3,13 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle } from 'lucide-react'
-import { Testimonials } from "@/components/page-components/landing-page/testimonials"
-// import { PricingCards } from "@/components/page-components/landing-page/pricing-cards"  
 import { Faq } from "@/components/page-components/landing-page/faq"
 import { HeroImage } from "@/components/page-components/landing-page/hero-image"
 import { Navbar } from "@/components/page-components/landing-page/navbar"
 import { useRouter } from "next/navigation"
 import { Logo, LogosScroller } from "@/components/page-components/landing-page/logos-scroller"
-
+import { PlatformExplainer } from "@/components/page-components/landing-page/platform-explainer"
+import PeopleInterract from "@/components/page-components/landing-page/people-interract"
 
 const logos: Logo[] = [
   { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
@@ -51,11 +50,11 @@ export default function LandingPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button size="lg" className="" variant={'indigo'} onClick={() => router.push}>
+                <Button size="lg" className="" variant={'indigo'} onClick={() => router.push('/')}>
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Link className="w-36 border font-thin text-sm hover:bg-gray-200 duration-100 transition-colors flex justify-center items-center rounded-md " href={'https://www.overleaf.com/read/ptpvrdtrvkgj#933f18'}>
+                <Link target="_blank" className="w-36 border font-thin text-sm hover:bg-gray-200 duration-100 transition-colors flex justify-center items-center rounded-md " href={'https://www.overleaf.com/read/ptpvrdtrvkgj#933f18'}>
                   Learn More
                 </Link>
               </div>
@@ -78,10 +77,17 @@ export default function LandingPage() {
       </section>
 
 
+
+      <PlatformExplainer />
+      
+      <PeopleInterract />
+
       {/* Logos Scroller Section */}
       <section className="w-full bg-gray-50">
         <LogosScroller logos={logos} duration={15} gapPx={24} />  
       </section>
+      {/* <YouTubeEmbed src="https://www.youtube.com/embed/jzdqW6aX4dE?si=LLI2tDVS7oKP-aoF&autoplay=1&mute=1" /> */}
+
 
 
       {/* Features Section */}
@@ -90,7 +96,7 @@ export default function LandingPage() {
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
               <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">Features</div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Everything You Need</h2>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-indigo-500">Everything You Need</h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Our platform provides all the tools you need to succeed. Here&apos;s what sets us apart.
               </p>
@@ -101,14 +107,14 @@ export default function LandingPage() {
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
                 <Zap className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold">Lightning Fast</h3>
+              <h3 className="text-xl font-bold text-indigo-500">Lightning Fast</h3>
               <p className="text-gray-500">
                 Our platform is optimized for speed, ensuring you can work efficiently without delays.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
-                <Shield className="h-6 w-6" />
+                <Shield className="h-6 w-6 text-indigo-500" />
               </div>
               <h3 className="text-xl font-bold">Secure & Reliable</h3>
               <p className="text-gray-500">
@@ -119,18 +125,18 @@ export default function LandingPage() {
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
                 <BarChart3 className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold">Advanced Analytics</h3>
+              <h3 className="text-xl font-bold text-indigo-500">Advanced Analytics</h3>
               <p className="text-gray-500">
                 Gain valuable insights with our comprehensive analytics and reporting tools.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
-                <Users className="h-6 w-6" />
+                <Users className="text-indigo-500 h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold">Team Collaboration</h3>
+              <h3 className="text-xl font-bold">Peer Assessment</h3>
               <p className="text-gray-500">
-                Work seamlessly with your team members with our collaborative features.
+                Save your time as a teacher and gain more knowledge as a student.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
@@ -150,31 +156,18 @@ export default function LandingPage() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold">Automation</h3>
+              <h3 className="text-xl font-bold text-indigo-500">Automation</h3>
               <p className="text-gray-500">
                 Automate repetitive tasks and workflows to save time and reduce errors.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
-              <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  />
-                </svg>
+              <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2 text-indigo-500">
+                <Phone />
               </div>
-              <h3 className="text-xl font-bold">Templates & Resources</h3>
+              <h3 className="text-xl font-bold">24/7 support</h3>
               <p className="text-gray-500">
-                Get started quickly with our library of templates and resources.
+                Dial us at any time, we will help.
               </p>
             </div>
           </div>
@@ -182,7 +175,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50" id="how-it-works">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
@@ -195,28 +188,28 @@ export default function LandingPage() {
           </div>
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-3 mt-12">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full text-white bg-indigo-500">
                 1
               </div>
               <h3 className="text-xl font-bold">Sign Up</h3>
               <p className="text-gray-500">
-                Create your account in minutes. No credit card required for the free trial.
+                Create your account in minutes.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500 text-white">
                 2
               </div>
-              <h3 className="text-xl font-bold">Configure</h3>
+              <h3 className="text-xl font-bold">Join a course</h3>
               <p className="text-gray-500">
-                Set up your workspace and customize it to fit your specific needs.
+                Join a course by course code teacher <br/>shared with you.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500 text-white">
                 3
               </div>
-              <h3 className="text-xl font-bold">Start Working</h3>
+              <h3 className="text-xl font-bold">Start Learning</h3>
               <p className="text-gray-500">
                 Begin using the CrossEval platform and see immediate improvements in your education flow.
               </p>
@@ -225,14 +218,18 @@ export default function LandingPage() {
         </div>
       </section>
 
+      
+
       {/* Testimonials Section */}
-      <Testimonials />
+      {/* <Testimonials /> */}
 
       {/* Pricing Section */}
       {/* <PricingCards /> */}
 
       {/* FAQ Section */}
       <Faq />
+
+      {/* <ContactForm /> */}
 
       {/* CTA Section */}
       <section className="w-full py-12 md:py-24 lg:py-32 bg-primary">
@@ -254,6 +251,8 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+
 
       {/* Footer */}
       <footer className="w-full py-12 md:py-24 lg:py-12 border-t">
