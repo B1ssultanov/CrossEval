@@ -21,7 +21,7 @@ services:
       - crosseval_network
     mem_limit: 512m
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # MySQL Service
   mysql:
@@ -39,7 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: CrossEval2025@
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
-      TZ: Asia/Almaty
+      TZ: Asia/Tashkent
     networks:
       - crosseval_network
     mem_limit: 1g
@@ -56,7 +56,7 @@ services:
       - crosseval_network
     mem_limit: 512m
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # Redis Service
   redis:
@@ -69,7 +69,7 @@ services:
       - crosseval_network
     mem_limit: 256m
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # Composer Service (for dependency management)
   composer:
@@ -87,7 +87,7 @@ services:
     networks:
       - crosseval_network
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # NPM (Next.js) Service (run in production mode)
   npm:
@@ -104,7 +104,7 @@ services:
       - crosseval_network
     mem_limit: 1g
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # npm:
   #   image: node:20.14.0
@@ -136,7 +136,7 @@ services:
     networks:
       - crosseval_network
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # Mailhog Service (only for development)
   mailhog:
@@ -148,7 +148,7 @@ services:
     networks:
       - crosseval_network
     environment:
-      - TZ=Asia/Almaty
+      - TZ=Asia/Tashkent
 
   # Adminer (Web interface for MySQL)
   adminer-crosseval:
@@ -161,5 +161,5 @@ services:
       - crosseval_network
     environment:
       ADMINER_DEFAULT_SERVER: mysql
-      TZ: Asia/Almaty
+      TZ: Asia/Tashkent
     mem_limit: 256m

@@ -2,7 +2,7 @@ FROM php:8.1.17-fpm-alpine
 
 RUN apk update && apk add --no-cache tzdata \
   && cp /usr/share/zoneinfo/Asia/Almaty /etc/localtime \
-  && echo "Asia/Almaty" > /etc/timezone
+  && echo "Asia/Tashkent" > /etc/timezone
 
 ADD ./php/www.conf /usr/local/etc/php-fpm.d/
 
