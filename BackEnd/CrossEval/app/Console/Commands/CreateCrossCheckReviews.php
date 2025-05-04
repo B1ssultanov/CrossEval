@@ -40,7 +40,7 @@ class CreateCrossCheckReviews extends Command
                 $user_answer = Answer::select('id', 'user_id')->where('status', Answer::STATUS_SUBMITTED)->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
                 $user_ids = $user_answer->pluck('user_id')->toArray();
 
-                Log::info('Found users:' . $user_ids);
+                Log::info('Found users: ' . implode(', ', $user_ids));
 
                 $groups = [];
                 $count = count($user_ids);
