@@ -1,38 +1,79 @@
-'use client'
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Zap, Shield, BarChart3, Users, Phone, Mail, Instagram, MessageCircle } from 'lucide-react'
-import { Faq } from "@/components/page-components/landing-page/faq"
-import { HeroImage } from "@/components/page-components/landing-page/hero-image"
-import { Navbar } from "@/components/page-components/landing-page/navbar"
-import { useRouter } from "next/navigation"
-import { Logo, LogosScroller } from "@/components/page-components/landing-page/logos-scroller"
-import { PlatformExplainer } from "@/components/page-components/landing-page/platform-explainer"
-import PeopleInterract from "@/components/page-components/landing-page/people-interract"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Zap,
+  Shield,
+  BarChart3,
+  Users,
+  Phone,
+  Mail,
+  Instagram,
+  MessageCircle,
+} from "lucide-react";
+import { Faq } from "@/components/page-components/landing-page/faq";
+import { HeroImage } from "@/components/page-components/landing-page/hero-image";
+import { Navbar } from "@/components/page-components/landing-page/navbar";
+import { useRouter } from "next/navigation";
+import {
+  Logo,
+  LogosScroller,
+} from "@/components/page-components/landing-page/logos-scroller";
+import { PlatformExplainer } from "@/components/page-components/landing-page/platform-explainer";
+import PeopleInterract from "@/components/page-components/landing-page/people-interract";
 
 const logos: Logo[] = [
-  { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/CrossEvalLogo.png', alt: 'Next.js', width: 120, height: 120 },
-  { src: '/assets/logos/iitu.jpeg', alt: 'Tailwind CSS', width: 120, height: 120 },
-  { src: '/assets/logos/narxoz.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/moodle.webp', alt: 'Next.js', width: 120, height: 120 },
-  { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/CrossEvalLogo.png', alt: 'Next.js', width: 120, height: 120 },
-  { src: '/assets/logos/iitu.jpeg', alt: 'Tailwind CSS', width: 120, height: 120 },
-  { src: '/assets/logos/narxoz.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/moodle.webp', alt: 'Next.js', width: 120, height: 120 },  
-  { src: '/assets/logos/sdu.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/CrossEvalLogo.png', alt: 'Next.js', width: 120, height: 120 },
-  { src: '/assets/logos/iitu.jpeg', alt: 'Tailwind CSS', width: 120, height: 120 },
-  { src: '/assets/logos/narxoz.svg', alt: 'React', width: 120, height: 120 },
-  { src: '/assets/logos/moodle.webp', alt: 'Next.js', width: 120, height: 120 },
-
-]
-
+  { src: "/assets/logos/sdu.svg", alt: "React", width: 120, height: 120 },
+  {
+    src: "/assets/logos/CrossEvalLogo.png",
+    alt: "Next.js",
+    width: 120,
+    height: 120,
+  },
+  {
+    src: "/assets/logos/iitu.jpeg",
+    alt: "Tailwind CSS",
+    width: 120,
+    height: 120,
+  },
+  { src: "/assets/logos/narxoz.svg", alt: "React", width: 120, height: 120 },
+  { src: "/assets/logos/moodle.webp", alt: "Next.js", width: 120, height: 120 },
+  { src: "/assets/logos/sdu.svg", alt: "React", width: 120, height: 120 },
+  {
+    src: "/assets/logos/CrossEvalLogo.png",
+    alt: "Next.js",
+    width: 120,
+    height: 120,
+  },
+  {
+    src: "/assets/logos/iitu.jpeg",
+    alt: "Tailwind CSS",
+    width: 120,
+    height: 120,
+  },
+  { src: "/assets/logos/narxoz.svg", alt: "React", width: 120, height: 120 },
+  { src: "/assets/logos/moodle.webp", alt: "Next.js", width: 120, height: 120 },
+  { src: "/assets/logos/sdu.svg", alt: "React", width: 120, height: 120 },
+  {
+    src: "/assets/logos/CrossEvalLogo.png",
+    alt: "Next.js",
+    width: 120,
+    height: 120,
+  },
+  {
+    src: "/assets/logos/iitu.jpeg",
+    alt: "Tailwind CSS",
+    width: 120,
+    height: 120,
+  },
+  { src: "/assets/logos/narxoz.svg", alt: "React", width: 120, height: 120 },
+  { src: "/assets/logos/moodle.webp", alt: "Next.js", width: 120, height: 120 },
+];
 
 export default function LandingPage() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -43,31 +84,34 @@ export default function LandingPage() {
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                  Make <span  className="text-indigo-500">Your</span> Evaluations <span className="text-indigo-500">Smarter</span> with <span className="text-indigo-500">CrossEval</span>
+                  Make <span className="text-indigo-500">Your</span> Evaluations{" "}
+                  <span className="text-indigo-500">Smarter</span> with{" "}
+                  <span className="text-indigo-500">CrossEval</span>
                 </h1>
                 <p className="max-w-[600px] text-gray-500 md:text-xl">
-                  Streamline your processes, boost productivity, and achieve more with our all-in-one solution.
+                  Streamline your processes, boost productivity, and achieve
+                  more with our all-in-one solution.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Button size="lg" className="" variant={'indigo'} onClick={() => router.push('/')}>
+                <Button
+                  size="lg"
+                  className=""
+                  variant={"indigo"}
+                  onClick={() => router.push("/")}
+                >
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Link target="_blank" className="w-36 border font-thin text-sm hover:bg-gray-200 duration-100 transition-colors flex justify-center items-center rounded-md " href={'https://www.overleaf.com/read/ptpvrdtrvkgj#933f18'}>
+                <Link
+                  href="/assets/files/Diploma_CrossEval_Documentation.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-36 border font-thin text-sm hover:bg-gray-200 duration-100 transition-colors flex justify-center items-center rounded-md"
+                >
                   Learn More
                 </Link>
               </div>
-              {/* <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="h-4 w-4 text-primary" />
-                  <span>14-day free trial</span>
-                </div>
-              </div> */}
             </div>
             <div className="flex items-center justify-center">
               <HeroImage />
@@ -76,29 +120,33 @@ export default function LandingPage() {
         </div>
       </section>
 
-
-
       <PlatformExplainer />
-      
+
       <PeopleInterract />
 
       {/* Logos Scroller Section */}
       <section className="w-full bg-gray-50">
-        <LogosScroller logos={logos} duration={15} gapPx={24} />  
+        <LogosScroller logos={logos} duration={15} gapPx={24} />
       </section>
       {/* <YouTubeEmbed src="https://www.youtube.com/embed/jzdqW6aX4dE?si=LLI2tDVS7oKP-aoF&autoplay=1&mute=1" /> */}
 
-
-
       {/* Features Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-white" id="features">
+      <section
+        className="w-full py-12 md:py-24 lg:py-32 bg-white"
+        id="features"
+      >
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">Features</div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-indigo-500">Everything You Need</h2>
+              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">
+                Features
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-indigo-500">
+                Everything You Need
+              </h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our platform provides all the tools you need to succeed. Here&apos;s what sets us apart.
+                Our platform provides all the tools you need to succeed.
+                Here&apos;s what sets us apart.
               </p>
             </div>
           </div>
@@ -107,9 +155,12 @@ export default function LandingPage() {
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
                 <Zap className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-indigo-500">Lightning Fast</h3>
+              <h3 className="text-xl font-bold text-indigo-500">
+                Lightning Fast
+              </h3>
               <p className="text-gray-500">
-                Our platform is optimized for speed, ensuring you can work efficiently without delays.
+                Our platform is optimized for speed, ensuring you can work
+                efficiently without delays.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
@@ -118,16 +169,20 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold">Secure & Reliable</h3>
               <p className="text-gray-500">
-                Your data is protected with enterprise-grade security and 99.9% uptime guarantee.
+                Your data is protected with enterprise-grade security and 99.9%
+                uptime guarantee.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
               <div className="inline-flex items-center justify-center rounded-lg bg-gray-100 p-2">
                 <BarChart3 className="h-6 w-6" />
               </div>
-              <h3 className="text-xl font-bold text-indigo-500">Advanced Analytics</h3>
+              <h3 className="text-xl font-bold text-indigo-500">
+                Advanced Analytics
+              </h3>
               <p className="text-gray-500">
-                Gain valuable insights with our comprehensive analytics and reporting tools.
+                Gain valuable insights with our comprehensive analytics and
+                reporting tools.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
@@ -136,7 +191,8 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold">Peer Assessment</h3>
               <p className="text-gray-500">
-                Save your time as a teacher and gain more knowledge as a student.
+                Save your time as a teacher and gain more knowledge as a
+                student.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
@@ -158,7 +214,8 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold text-indigo-500">Automation</h3>
               <p className="text-gray-500">
-                Automate repetitive tasks and workflows to save time and reduce errors.
+                Automate repetitive tasks and workflows to save time and reduce
+                errors.
               </p>
             </div>
             <div className="flex flex-col items-start space-y-4 p-6 border rounded-lg shadow-sm">
@@ -175,14 +232,22 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50" id="how-it-works">
+      <section
+        className="w-full py-12 md:py-24 lg:py-32 bg-gray-50"
+        id="how-it-works"
+      >
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">How It Works</div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Simple Process, Powerful Results</h2>
+              <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm">
+                How It Works
+              </div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                Simple Process, Powerful Results
+              </h2>
               <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Our platform is designed to be intuitive and easy to use. Here&apos;s how you can get started.
+                Our platform is designed to be intuitive and easy to use.
+                Here&apos;s how you can get started.
               </p>
             </div>
           </div>
@@ -192,9 +257,7 @@ export default function LandingPage() {
                 1
               </div>
               <h3 className="text-xl font-bold">Sign Up</h3>
-              <p className="text-gray-500">
-                Create your account in minutes.
-              </p>
+              <p className="text-gray-500">Create your account in minutes.</p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-500 text-white">
@@ -202,7 +265,8 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold">Join a course</h3>
               <p className="text-gray-500">
-                Join a course by course code teacher <br/>shared with you.
+                Join a course by course code teacher <br />
+                shared with you.
               </p>
             </div>
             <div className="flex flex-col items-center space-y-4 text-center">
@@ -211,14 +275,13 @@ export default function LandingPage() {
               </div>
               <h3 className="text-xl font-bold">Start Learning</h3>
               <p className="text-gray-500">
-                Begin using the CrossEval platform and see immediate improvements in your education flow.
+                Begin using the CrossEval platform and see immediate
+                improvements in your education flow.
               </p>
             </div>
           </div>
         </div>
       </section>
-
-      
 
       {/* Testimonials Section */}
       {/* <Testimonials /> */}
@@ -240,19 +303,23 @@ export default function LandingPage() {
                 Ready to Transform Your Workflow?
               </h2>
               <p className="max-w-[900px] text-gray-200 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Join the list of satisfied users who have improved their learning and teaching productivity with our platform.
+                Join the list of satisfied users who have improved their
+                learning and teaching productivity with our platform.
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" onClick={()=> router.push('/')} variant={'indigo'} className="text-white">
+              <Button
+                size="lg"
+                onClick={() => router.push("/")}
+                variant={"indigo"}
+                className="text-white"
+              >
                 Get Started Now
               </Button>
             </div>
           </div>
         </div>
       </section>
-
-
 
       {/* Footer */}
       <footer className="w-full py-12 md:py-24 lg:py-12 border-t">
@@ -356,5 +423,5 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
