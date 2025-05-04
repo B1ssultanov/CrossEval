@@ -48,6 +48,7 @@ export interface AssignmentPayload {
   description: string;
   start_date: string;
   end_date: string;
+  end_cross_date?: string; // Optional field for cross-check date
   weight: number;
   criteria: { name: string; weight: number }[];
   // isCrossCheck: string;
