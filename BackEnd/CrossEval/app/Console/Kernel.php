@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\CreateCrossCheckReviews::class,
         \App\Console\Commands\FindMissedAssignments::class,
+        \App\Console\Commands\StatusToAvailableCommand::class,
     ];
 
     /**
@@ -37,6 +38,8 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
         $schedule->command('app:find-missed-assignments')->everyMinute();
+
+        $schedule->command('app:status-to-available-command')->everyMinute();
     }
 
     /**

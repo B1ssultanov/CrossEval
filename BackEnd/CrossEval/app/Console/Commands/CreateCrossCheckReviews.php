@@ -39,36 +39,41 @@ class CreateCrossCheckReviews extends Command
             $currentDateTime->addMinutes(5)
         ])->get();
 
-        foreach ($assignments as $assignment) {
-            $user_answer = Answer::select('id', 'user_id')->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
-            $user_ids    = $user_answer->pluck('user_id')->toArray();
+        if ($assignments->isNotEmpty()) {
+            foreach ($assignments as $assignment) {
+                $user_answer = Answer::select('id', 'user_id')->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
+                $user_ids = $user_answer->pluck('user_id')->toArray();
 
-            $groups = [];
-            $count  = count($user_ids);
+                $groups = [];
+                $count = count($user_ids);
 
-            if ( $count <= 5 ){
-                $groups = $user_ids;
-            } else {
-                $index = 0;
-                $groups_by_3 = (4 - ($count % 4)) % 4;
-                $groups = $this->divide_groups($groups_by_3, $user_ids, $index);
-            }
-
-            foreach ($groups as $group) {
-                $answer_ids = $user_answer->whereIn('user_id', $group)->pluck('id')->toArray();
-
-                $permutations = $this->generatePermutations($group, $answer_ids);
-
-                $dataToInsert = [];
-                foreach ($permutations as $pair) {
-                    $dataToInsert[] = [
-                        'reviewer_id' => $pair[0],
-                        'answer_id'   => $pair[1],
-                    ];
+                if ($count <= 5) {
+                    $groups = $user_ids;
+                } else {
+                    $index = 0;
+                    $groups_by_3 = (4 - ($count % 4)) % 4;
+                    $groups = $this->divide_groups($groups_by_3, $user_ids, $index);
                 }
 
-                AnswerReview::insertOrIgnore($dataToInsert);
+                foreach ($groups as $group) {
+                    $answer_ids = $user_answer->whereIn('user_id', $group)->pluck('id')->toArray();
+
+                    $permutations = $this->generatePermutations($group, $answer_ids);
+
+                    $dataToInsert = [];
+                    foreach ($permutations as $pair) {
+                        $dataToInsert[] = [
+                            'reviewer_id' => $pair[0],
+                            'answer_id' => $pair[1],
+                        ];
+                    }
+
+                    AnswerReview::insertOrIgnore($dataToInsert);
+                }
             }
+            Log::info('Successfully added users into groups');
+        } else {
+            Log::info('Not found the Assignment to divide into groups');
         }
     }
 
