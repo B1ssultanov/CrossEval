@@ -39,7 +39,7 @@ class StatusToAvailableCommand extends Command
             Log::info('Assignments found: ', $assignments->pluck('id')->toArray());
 
             $answers = Answer::whereIn('assignment_id', $assignments->pluck('id'))
-                ->whereIn('status', 'Future')
+                ->where('status', 'Future')
                 ->get();
 
             Log::info('Answers to update: ', $answers->pluck('id')->toArray());
