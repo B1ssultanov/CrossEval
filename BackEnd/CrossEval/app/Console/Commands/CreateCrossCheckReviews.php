@@ -67,7 +67,7 @@ class CreateCrossCheckReviews extends Command
                     AnswerReview::insertOrIgnore($dataToInsert);
                 }
 
-                $assignment->cross_check_processed = True;
+                $assignment->cross_check_processed = true;
                 $assignment->save();
             }
             Log::info('Successfully added users into groups');
