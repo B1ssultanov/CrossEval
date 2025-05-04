@@ -58,6 +58,9 @@ export const createAssignment = async (payload: AssignmentPayload) => {
     formData.append("description", payload.description);
     formData.append("start_date", payload.start_date);
     formData.append("end_date", payload.end_date);
+    if (payload.end_cross_date) {
+      formData.append("end_cross_date", payload.end_cross_date);
+    }
     formData.append("weight", payload.weight.toString());
     formData.append("criteria", JSON.stringify(payload.criteria));
     // formData.append("isCrossCheck", payload.isCrossCheck);
