@@ -34,10 +34,7 @@ class CreateCrossCheckReviews extends Command
         Log::info('Cross-check review command started for assignments.');
         $currentDateTime = Carbon::now();
 
-        $assignments = Assignment::whereBetween('end_date', [
-            $currentDateTime,
-            $currentDateTime->addMinutes(5)
-        ])->get();
+        $assignments = Assignment::whereBetween('end_date', [Carbon::now()->subHour(), Carbon::now()])->get();
 
         if ($assignments->isNotEmpty()) {
             foreach ($assignments as $assignment) {
