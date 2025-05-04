@@ -31,9 +31,7 @@ class StatusToAvailableCommand extends Command
     {
         Log::info('The Finding started Assignments command started working');
 
-//        $assignments = Assignment::whereBetween('start_date', [Carbon::now()->subHour(), Carbon::now()])->get();
-
-        $assignments = Assignment::where('start_date', '<=', Carbon::now())->get();
+        $assignments = Assignment::whereBetween('start_date', [Carbon::now()->subHour(), Carbon::now()])->get();
 
         if ($assignments->isNotEmpty()) {
             Log::info('Assignments found: ', $assignments->pluck('id')->toArray());
