@@ -32,7 +32,7 @@ class AnswerReviewResource extends JsonResource
             'answer_id'        => $this->answer_id,
             'grade'            => $overall,
             'criteria'         => $this->criteria_grade,
-            'comment'          => $this->comment,
+            'comment'          => $answer_review->comment,
             'status'           => $status,
         ];
 
