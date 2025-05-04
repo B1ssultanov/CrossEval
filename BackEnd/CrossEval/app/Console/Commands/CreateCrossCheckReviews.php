@@ -8,7 +8,6 @@ use App\Models\Assignment;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use function Sodium\add;
 
 class CreateCrossCheckReviews extends Command
 {
@@ -40,6 +39,8 @@ class CreateCrossCheckReviews extends Command
             foreach ($assignments as $assignment) {
                 $user_answer = Answer::select('id', 'user_id')->where('status', Answer::STATUS_SUBMITTED)->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
                 $user_ids = $user_answer->pluck('user_id')->toArray();
+
+                Log::info('Found users:' . $user_ids);
 
                 $groups = [];
                 $count = count($user_ids);
