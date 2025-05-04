@@ -34,11 +34,11 @@ class CreateCrossCheckReviews extends Command
         Log::info('Cross-check review command started for assignments.');
         $currentDateTime = Carbon::now();
 
-        $assignments = Assignment::whereBetween('end_date', [Carbon::now()->subHour(), Carbon::now()])->get();
+        $assignments = Assignment::whereBetween('end_date', [Carbon::now()->subHour(), Carbon::now()])->where('cross_check_processed', false)->get();
 
         if ($assignments->isNotEmpty()) {
             foreach ($assignments as $assignment) {
-                $user_answer = Answer::select('id', 'user_id')->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
+                $user_answer = Answer::select('id', 'user_id')->where('status', Answer::STATUS_SUBMITTED)->where('assignment_id', $assignment->id)->orderBy('id', 'desc')->limit(1000)->get()->shuffle();
                 $user_ids = $user_answer->pluck('user_id')->toArray();
 
                 $groups = [];
@@ -64,9 +64,11 @@ class CreateCrossCheckReviews extends Command
                             'answer_id' => $pair[1],
                         ];
                     }
-
                     AnswerReview::insertOrIgnore($dataToInsert);
                 }
+
+                $assignment->cross_check_processed = True;
+                $assignment->save();
             }
             Log::info('Successfully added users into groups');
         } else {

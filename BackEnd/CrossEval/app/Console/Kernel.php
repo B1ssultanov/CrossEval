@@ -25,17 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call(function () {
-            $assignments = Assignment::where('end_date', '<=', Carbon::now())
-                ->where('cross_check_processed', false)
-                ->get();
-
-            foreach ($assignments as $assignment) {
-                \Artisan::call('app:create-cross-check-reviews');
-
-                $assignment->update(['cross_check_processed' => true]);
-            }
-        })->everyMinute();
+        $schedule->command('app:create-cross-check-reviews')->everyMinute();
 
         $schedule->command('app:find-missed-assignments')->everyMinute();
 
