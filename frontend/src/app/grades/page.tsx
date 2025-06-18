@@ -74,9 +74,7 @@ export default function GradesPage() {
 
   // Dialog state
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [pendingAssignmentId, setPendingAssignmentId] = useState<number | null>(
-    null
-  );
+  const [pendingAnswerId, setPendingAnswerId] = useState<number | null>(null);
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -155,23 +153,19 @@ export default function GradesPage() {
     );
 
   const onCellClick = (cell?: AssignmentGrade) => {
-    if (!cell || cell.grade === undefined) return;
-    if (!cell.grade) return;
-    // Use the correctly spelled property
-    setPendingAssignmentId(cell.assignment_id);
+    if (!cell || cell.answer_id === undefined) return;
+    setPendingAnswerId(cell.answer_id); // именно answer_id, а не assignment_id
     setDialogOpen(true);
   };
-
+  
   const confirmDialog = () => {
-    if (pendingAssignmentId && selectedCourse) {
+    if (pendingAnswerId && selectedCourse) {
       router.push(
-        `/course/${selectedCourse}/cross-check-review/${pendingAssignmentId}`
+        `/course/${selectedCourse}/cross-check-review-history/${pendingAnswerId}`
       );
-    }
-    if (!pendingAssignmentId) {
-      alert("no pending assignment id");
-    } else if (!selectedCourse) {
-      alert("no selected course");
+    } else {
+      if (!pendingAnswerId) alert("No answer_id provided");
+      if (!selectedCourse) alert("No course selected");
     }
     setDialogOpen(false);
   };
