@@ -93,3 +93,26 @@ export const fetchUserCourses = async (role: "supervisor" | "student"): Promise<
     throw error;
   }
 };
+
+
+// Export grades for selected assignments
+export const exportSupervisorGrades = async (
+  courseId: number,
+  assignmentIds: number[]
+): Promise<Blob> => {
+  try {
+    const response = await backendApiInstance.get(`/grades/export`, {
+      params: {
+        course_id: courseId,
+        assignment_ids: assignmentIds.join(","),
+      },
+      responseType: "blob", // Important for file download
+    });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || "Failed to export grades.");
+    }
+    throw error;
+  }
+};
