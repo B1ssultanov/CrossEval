@@ -31,9 +31,10 @@ class UserController extends Controller
 
         $user    = User::where('token', $request->bearerToken())->first();
         $answers = DB::table('answers as an')
-            ->join('assignments as as', 'as.id', '=', 'an.assignment_id')
-            ->where('as.course_id', '=', $request->course_id)
+            ->join('assignments as a', 'a.id', '=', 'an.assignment_id')
+            ->where('a.course_id', '=', $request->course_id)
             ->where('an.user_id', '=', $user->id)
+            ->select('a.*', 'an.*')
             ->get();
 
         $nbTotal   = $answers->count();
