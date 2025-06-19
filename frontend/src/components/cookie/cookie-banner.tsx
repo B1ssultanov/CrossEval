@@ -43,30 +43,14 @@ const CookieBanner: React.FC = () => {
         <div>
           <CookieIcon className="size-14 mb-4" />
           <p className="text-sm mb-4">
-            Нажав &quot;Принять все файлы cookie&quot;, вы соглашаетесь с тем,
-            что мы можем хранить файлы cookie на вашем устройстве и раскрывать
-            информацию в соответствии с нашей{" "}
-            <a
-              rel="noreferrer"
-              target="_blank"
-              href="/cookie-policy"
-              className="underline text-blue-400 mb-4 cursor-pointer"
-            >
-              политикой использования файлов cookie
-            </a>
+            By continuing usage of this website you confirm that you will be using cookie.
           </p>
           <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
             <Button
               onClick={acceptAllCookies}
               className="bg-blue-500 w-full text-white hover:bg-blue-600"
             >
-              Принять файлы cookie
-            </Button>
-            <Button
-              onClick={acceptNecessaryCookies}
-              className="border-white text-white bg-gray-500 hover:bg-gray-700 w-full"
-            >
-              Только необходимые
+              Ok
             </Button>
           </div>
         </div>

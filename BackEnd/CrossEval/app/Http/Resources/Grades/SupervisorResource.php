@@ -17,9 +17,10 @@ class SupervisorResource extends JsonResource
     public function toArray(Request $request): array
     {
         $answers = DB::table('answers as an')
-            ->join('assignments as as', 'as.id', '=', 'an.assignment_id')
-            ->where('as.course_id', '=', $this->course_id)
+            ->join('assignments as a', 'a.id', '=', 'an.assignment_id')
+            ->where('a.course_id', '=', $this->course_id)
             ->where('an.user_id', '=', $this->user_id)
+            ->select('a.*', 'an.*')
             ->get();
 
         $data = [
