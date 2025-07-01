@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Auth\Notifications\ResetPassword;
 
 class User extends Authenticatable
 {
@@ -71,6 +71,15 @@ class User extends Authenticatable
      * Status indicating that the user is banned
      */
     public const STATUS_BAN = 'ban';
+
+    public function sendPasswordResetNotification($token)
+    {
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return config('app.frontend_url') . '/reset-password?token=' . $token . '&email=' . urlencode($user->email);
+        });
+
+        $this->notify(new ResetPassword($token));
+    }
 
     /**
      * Returns the Students city
