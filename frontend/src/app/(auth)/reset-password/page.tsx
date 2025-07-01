@@ -59,9 +59,12 @@ const PasswordReset: React.FC = () => {
 
     setSubmitting(true);
     try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get("email");
+
       const response = await axios.post(
-        "https://api.atlantys.kz/api/v1/auth/reset-password",
-        { token, new_password: newPassword },
+          `${process.env.NEXT_PUBLIC_API_URL}/reset-password`,
+        { token, email, password: newPassword, password_confirmation: newPassword },
         {
           headers: {
             "Content-Type": "application/json",
