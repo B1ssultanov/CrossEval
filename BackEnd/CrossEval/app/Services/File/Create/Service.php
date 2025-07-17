@@ -31,7 +31,7 @@ class Service
      */
     public function execute(UploadedFile $file, string $path, string $storage = 'public'): File
     {
-        $fileName = time() . '.' . $file->extension();
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
         $filePath = public_path($path) . $fileName;
 
         switch($storage) {

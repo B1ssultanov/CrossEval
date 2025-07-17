@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +26,10 @@ Route::get('test', [\App\Http\Controllers\HomeController::class, 'test']);
 Route::prefix('v1')->namespace('App\Http\Controllers\Api')->group(function () {
     Route::middleware('web')->group(function () {
         Route::post('register', [RegisteredUserController::class, 'store']);
+        Route::post('login',    [AuthenticatedSessionController::class, 'store'])->middleware('throttle:5,1');
 
-        Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:5,1');
+        Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot_password']);
+        Route::post('/reset-password', [ForgotPasswordController::class, 'reset_password']);
     });
 
     Route::middleware('auth')->group(function () {
