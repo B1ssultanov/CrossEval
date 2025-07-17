@@ -121,7 +121,7 @@ export default function AssignmentReview({
     try {
       await downloadSubmissionFile(
         reviewData?.assignment_info?.title || "",
-        Number(reviewData?.assignment_info?.rubrics_id),
+        Number(reviewData?.answer_info?.file_id),
         "submission"
       );
       toast({

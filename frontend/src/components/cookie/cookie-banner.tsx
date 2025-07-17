@@ -22,11 +22,11 @@ const CookieBanner: React.FC = () => {
     console.log("All cookies accepted");
   };
 
-  const acceptNecessaryCookies = () => {
-    localStorage.setItem("cookieConsent", "necessary-only");
-    setBannerVisible(false);
-    console.log("Only necessary cookies accepted");
-  };
+  // const acceptNecessaryCookies = () => {
+  //   localStorage.setItem("cookieConsent", "necessary-only");
+  //   setBannerVisible(false);
+  //   console.log("Only necessary cookies accepted");
+  // };
 
   if (!isBannerVisible) {
     return null;
