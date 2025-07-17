@@ -43,6 +43,7 @@
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.7",
     "framer-motion": "^12.9.4",
+    "js-file-download": "^0.4.12",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.468.0",

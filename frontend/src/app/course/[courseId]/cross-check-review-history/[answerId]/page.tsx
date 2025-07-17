@@ -27,8 +27,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function CrossCheckReviewHistoryPage() {
-  const { answerId } = useParams<{
-    // courseId: string;
+  const { courseId, answerId } = useParams<{
+    courseId: string;
     answerId: string;
   }>();
 
