@@ -207,4 +207,56 @@ class CourseController extends Controller
             'supervisor' => new StudentsInfoResource($user)
         ]);
     }
+
+    /**
+     * This function updates Course information
+     *
+     * @param Request $request
+     * @param $course_id
+     * @return JsonResponse
+     */
+    public function update(Request $request, $course_id): JsonResponse
+    {
+        $user   = User::where('token', $request->bearerToken())->first();
+        $course = Course::where('id', $course_id)->first();
+
+        if ( $user->id == $course->supervisor_id ){
+            $course->code = $request->code ?? $course->code;
+            $course->name = $request->name ?? $course->name;
+
+            return response()->json([
+                'Course'  => $course,
+                'message' => 'Course successfully updated'
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'You are not allowed to change the course information!'
+        ]);
+    }
+
+    /**
+     * This function deletes a Course
+     *
+     * @param Request $request
+     * @param $course_id
+     * @return JsonResponse
+     */
+    public function delete(Request $request, $course_id): JsonResponse
+    {
+        $user   = User::where('token', $request->bearerToken())->first();
+        $course = Course::where('id', $course_id)->first();
+
+        if ( $course->supervisor_id == $user->id ){
+            $course->delete();
+
+            return response()->json([
+                'message' => 'You successfully deleted the course!'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'You are not allowed to delete this course!'
+        ]);
+    }
 }

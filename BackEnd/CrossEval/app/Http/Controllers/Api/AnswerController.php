@@ -8,7 +8,9 @@ use App\Http\Resources\AnswerResource;
 use App\Http\Resources\AnswerReviewResource;
 use App\Models\Answer;
 use App\Models\AnswerReview;
+use App\Models\Assignment;
 use App\Models\Course;
+use App\Models\File;
 use App\Models\User;
 use App\Services\Answer\Create\Service as CreateAnswerService;
 use Carbon\Carbon;
@@ -121,5 +123,40 @@ class AnswerController extends Controller
                 'message' => 'You are not the supervisor.'
             ]);
         }
+    }
+
+    /**
+     * This function deletes a Users answer for the assignment.
+     *
+     * @param Request $request
+     * @param $answer_id
+     * @return JsonResponse
+     */
+    public function delete(Request $request, $answer_id): JsonResponse
+    {
+        $answer     = Answer::where('id', $answer_id)->first();
+        $user       = User::where('token', $request->bearerToken())->first();
+        $assignment = Assignment::where('id', $answer->assignment_id)->first();
+        $file       = File::where('id', $answer->file_id)->first();
+
+        if ( $user->id == $answer->user_id && $assignment->end_date > Carbon::now() ) {
+
+            $file->delete();
+
+            $answer->status         = Answer::STATUS_AVAILABLE;
+            $answer->file_id        = null;
+            $answer->submitted_date = null;
+            $answer->comment        = null;
+
+            $answer->save();
+
+            return response()->json([
+                'message' => 'You are successfully deleted your answer!'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'You are not allowed to delete this answer!'
+        ]);
     }
 }

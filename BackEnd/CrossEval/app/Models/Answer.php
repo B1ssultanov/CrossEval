@@ -18,6 +18,8 @@ class Answer extends Model
     const STATUS_DONE = 'Done';
     const STATUS_MISSED = 'Missed';
 
+    const STATUS_AVAILABLE = 'Available';
+
     /**
      * The attributes that are mass assignable.
      *
