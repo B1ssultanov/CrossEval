@@ -119,9 +119,8 @@ export const submitAssignmentAnswer = async (payload: AssignmentAnswerPayload): 
 // Download the rubrics file
 export const downloadRubricsFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-    const baseOrigin = new URL(API_URL).origin;  // e.g. "http://127.0.0.1:8000"
-    const fileUrl = `${baseOrigin}/file/${rubricsId}`;
+    // Use Next rewrite: /file/* -> BACKEND_ORIGIN/file/*
+    const fileUrl = `/file/${rubricsId}`;
     const response: Response = await fetch(fileUrl, {
       method: "GET",
       headers: {
@@ -151,9 +150,8 @@ export const downloadRubricsFile = async (assignmentName:string, rubricsId:numbe
 
 // Download the rubrics file
 export const downloadSubmissionFile = async (assignmentName:string, rubricsId:number, name:string): Promise<void> => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const baseOrigin = new URL(API_URL).origin;  // e.g. "http://127.0.0.1:8000"
-  const fileUrl = `${baseOrigin}/file/${rubricsId}`;
+  // Use Next rewrite: /file/* -> BACKEND_ORIGIN/file/*
+  const fileUrl = `/file/${rubricsId}`;
 
   try {
     const response: Response = await fetch(fileUrl, {

@@ -2,6 +2,13 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+## Backend API (important)
+
+The frontend expects a backend running separately (default: `http://127.0.0.1:8000`).
+
+- Create `frontend/.env.local` (see `frontend/ENV.md`)
+- Run backend, then run frontend:
+
 First, run the development server:
 
 ```bash

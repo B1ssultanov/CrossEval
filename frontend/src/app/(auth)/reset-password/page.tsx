@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
+import { backendApiInstance } from "@/api";
 import Lottie from "lottie-react";
 import successAnimation from "@/animations/lottie/fireworks.json";
 
@@ -62,8 +63,8 @@ const PasswordReset: React.FC = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const email = urlParams.get("email");
 
-      const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/reset-password`,
+      const response = await backendApiInstance.post(
+        "reset-password",
         { token, email, password: newPassword, password_confirmation: newPassword },
         {
           headers: {

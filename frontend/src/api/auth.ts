@@ -4,7 +4,8 @@ import { backendApiInstance } from "./index";
 // Login
 export const login = async (email: string, password: string) => {
   try {
-    const response = await backendApiInstance.post("auth/login", {
+    // Backend route: POST /api/v1/login
+    const response = await backendApiInstance.post("login", {
       email,
       password,
     });
@@ -27,7 +28,8 @@ export const login = async (email: string, password: string) => {
 // Register
 export const register = async (email: string, password: string) => {
   try {
-    const response = await backendApiInstance.post("auth/register", {
+    // Backend route: POST /api/v1/register
+    const response = await backendApiInstance.post("register", {
       email,
       password,
     });
@@ -51,7 +53,8 @@ export const register = async (email: string, password: string) => {
 // Verify Email
 export const verifyEmail = async (token: string) => {
   try {
-    const response = await backendApiInstance.post("auth/verify-email", {
+    // NOTE: backend route may be missing in this repo; keep as-is for now
+    const response = await backendApiInstance.post("verify-email", {
       token,
     });
     return response.data;

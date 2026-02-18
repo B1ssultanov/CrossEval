@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import axios from "axios";
+import { backendApiInstance } from "@/api";
 
 interface PasswordResetModalProps {
   isOpen: boolean;
@@ -29,16 +29,8 @@ export function PasswordResetModal({ isOpen, onClose }: PasswordResetModalProps)
     setLoading(true);
 
     try {
-      const response = await axios.post(
-        "https://api.atlantys.kz/api/v1/auth/request-reset-password",
-        { email },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      );
+      // Backend route: POST /api/v1/forgot-password
+      const response = await backendApiInstance.post("forgot-password", { email });
 
       if (response.status === 200) {
         console.log('successfuly send the reset link to email')

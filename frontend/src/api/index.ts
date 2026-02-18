@@ -4,7 +4,13 @@ import axios, {
   AxiosResponse,
 } from "axios";
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+/**
+ * API base URL used in the browser.
+ *
+ * Recommended for local dev: set NEXT_PUBLIC_API_URL=/api/v1 and use Next rewrites (see next.config.js)
+ * Fallback keeps the app functional even if env is missing.
+ */
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 
 export const backendApiInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -12,8 +18,21 @@ export const backendApiInstance: AxiosInstance = axios.create({
 
 backendApiInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+    // IMPORTANT: if url starts with "/", axios treats it as absolute-from-origin and drops "/api/v1"
+    // Strip leading slash so all calls correctly become: `${baseURL}/${url}`
+    if (config.url?.startsWith("/")) {
+      config.url = config.url.slice(1);
+    }
+
     // List of public endpoints that don't require authorization
-    const publicEndpoints = ["/login", "/register", "/verify-email", "/reset-password", "/landing-page"];
+    const publicEndpoints = [
+      "login",
+      "register",
+      "forgot-password",
+      "reset-password",
+      "verify-email",
+      "landing-page",
+    ];
 
     // Check if the request URL matches any public endpoint
     if (publicEndpoints.some((endpoint) => config.url?.includes(endpoint))) {
@@ -60,7 +79,14 @@ backendApiInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    const publicEndpoints = ["/login", "/register", "/verify-email", "/reset-password"];
+    // Same list as in request interceptor (without leading "/")
+    const publicEndpoints = [
+      "login",
+      "register",
+      "forgot-password",
+      "reset-password",
+      "verify-email",
+    ];
     // If 401 Unauthorized and the request is not retried
     if (
       error.response?.status === 401 &&
